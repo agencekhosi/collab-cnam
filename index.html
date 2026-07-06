@@ -55,6 +55,9 @@
   .tlinks a.primary{background:var(--accent); color:#fff; border-color:transparent;}
   .tlinks a:hover{border-color:var(--accent); color:var(--accent-deep);}
   .tlinks a.primary:hover{color:#fff; filter:brightness(1.06);}
+  .hint{margin:16px 0 0; font-size:13px; color:var(--ink-faint); line-height:1.5;}
+  .hint b{color:var(--ink-soft);}
+  code{background:var(--paper); border:1px solid var(--line); border-radius:5px; padding:1px 6px; font-size:12px; font-family:ui-monospace, "SFMono-Regular", Menlo, monospace;}
 
   footer{margin:40px 0 60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
   @media (max-width:760px){ .hero-grid{grid-template-columns:1fr;} .hero-img{margin-top:8px;} .cards, .tools-grid{grid-template-columns:1fr;} }
@@ -101,7 +104,8 @@
         <p>Analyse la concurrence sur un sujet et propose un premier brouillon.</p>
         <div class="tlinks">
           <a class="primary" href="https://chatgpt.com/g/g-6a4bfa89eaf4819191a62813459cfdab-redacteur-cnam-pays-de-la-loire" target="_blank" rel="noopener">Ouvrir le GPT</a>
-          <a href="redacteur-cnam.skill" download>Télécharger la skill</a>
+          <a href="gpt-redacteur-cnam.zip" download>Config GPT (.zip)</a>
+          <a href="redacteur-cnam.skill" download>Skill Claude</a>
         </div>
       </div>
       <div class="tool">
@@ -109,10 +113,12 @@
         <p>Relit une page et propose des corrections avant publication.</p>
         <div class="tlinks">
           <a class="primary" href="https://chatgpt.com/g/g-6a4c0c4ad6048191844d944a428b3d40-auditeur-cnam-pays-de-la-loire" target="_blank" rel="noopener">Ouvrir le GPT</a>
-          <a href="audit-cnam.skill" download>Télécharger la skill</a>
+          <a href="gpt-auditeur-cnam.zip" download>Config GPT (.zip)</a>
+          <a href="audit-cnam.skill" download>Skill Claude</a>
         </div>
       </div>
     </div>
+    <p class="hint">Pour créer ou mettre à jour votre propre GPT : téléchargez la config, puis dans ChatGPT faites <b>Explore GPTs → Create → Configure</b> et suivez le fichier <code>configuration-gpt.md</code>.</p>
   </section>
 
   <section class="tools-sec">
