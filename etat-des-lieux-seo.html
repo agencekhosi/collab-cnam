@@ -23,7 +23,7 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased; font-feature-settings: "kern" 1; }
   .tnum { font-variant-numeric: tabular-nums; }
-  .inner { max-width: 1000px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 48px); }
+  .inner { max-width: 1080px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 48px); }
 
   .band { background: transparent; color: var(--ink); position: relative; padding: clamp(18px, 3vw, 36px) 0 clamp(14px, 2.5vw, 26px); }
   .band::after { content: none; }
@@ -222,25 +222,8 @@
     .lede.indent { margin-left: 0; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  /* Site header */
-  .site-header{border-bottom:1px solid var(--line); background:var(--card);}
-  .site-header .inner{display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:12px; padding-bottom:12px;}
-  .brand{display:inline-flex; align-items:center; gap:11px; text-decoration:none; color:var(--ink);}
-  .logo-img{height:30px; width:auto; display:block;}
-  .brand-x{font-weight:700; font-size:14px; color:var(--ink-faint); letter-spacing:.01em;}
-  .site-nav{display:flex; gap:6px; flex-wrap:wrap;}
-  .site-nav a{font-size:13.5px; font-weight:600; text-decoration:none; color:var(--ink-soft); padding:7px 12px; border-radius:999px;}
-  .site-nav a:hover{color:var(--accent-deep); background:var(--tint);}
-  .site-nav a.active{color:var(--accent); background:#fee5e6;}
-  @media (max-width:600px){ .brand-x{display:none;} }
 </style>
-
-<header class="site-header">
-  <div class="inner">
-    <a class="brand" href="index.html" aria-label="Retour à l'accueil"><img class="logo-img" src="__LOGO__" alt="Cnam Pays de la Loire"><span class="brand-x">× KHOSI</span></a>
-    <nav class="site-nav"><a href="index.html">Accueil</a><a href="etat-des-lieux-seo.html" class="active">État des lieux SEO</a><a href="checklist.html">Checklist</a></nav>
-  </div>
-</header>
+<script src="header.js" defer></script>
 
 <header class="band">
   <div class="inner">
@@ -425,10 +408,20 @@
   <!-- Section 5 -->
   <section>
     <div class="sec-head"><span class="sec-n">5</span><h2>Ce que ça dit pour la <mark>rédaction</mark></h2></div>
+    <div class="donut-group" style="margin-bottom:16px;">
+      <h3>Catalogue formation vs reste du site</h3>
+      <p class="gh">Les fiches formation (Détail + Listing) face à toutes les autres pages (Home, Campus, Pages, Actualités).</p>
+      <div class="donut-pair">
+        <div class="donut-wrap"><div class="donut" id="dFormC"><div class="donut-hole"><span class="dl">Clics</span><span class="dv">30&nbsp;206</span></div></div></div>
+        <div class="donut-wrap"><div class="donut" id="dFormI"><div class="donut-hole"><span class="dl">Impressions</span><span class="dv">2,50&nbsp;M</span></div></div></div>
+      </div>
+      <div class="dlegend" id="legForm"></div>
+    </div>
     <div class="takes">
       <div class="take"><h3>Rendre le catalogue visible</h3><p>1&nbsp;M d'impressions dorment sur les fiches formation en position&nbsp;39. Titres, chapô et contenu des <b>Détail Formation</b> = priorité&nbsp;n°1.</p></div>
       <div class="take"><h3>Attaquer Numérique &amp; Commerce</h3><p>Grosse demande, CTR proche de zéro (0,08&nbsp;% / 0,14&nbsp;%). Ces domaines sont vus mais pas travaillés&nbsp;: fort retour sur effort éditorial.</p></div>
       <div class="take good"><h3>Répliquer Santé &amp; Social</h3><p>Seule verticale qui performe (CTR 1,60&nbsp;%). Elle sert de <b>modèle</b>&nbsp;: comprendre pourquoi elle marche et l'étendre aux autres.</p></div>
+      <div class="take"><h3>Hors formation, viser les Pages</h3><p>Les autres pages captent <b>77&nbsp;% des clics</b> pour 47&nbsp;% des impressions, mais surtout via <b>Home et Campus</b> (trafic de marque, peu de levier éditorial). Le gisement à travailler hors catalogue, ce sont les <b>Pages</b> institutionnelles et thématiques&nbsp;: 667&nbsp;k impressions, CTR 0,6&nbsp;%.</p></div>
     </div>
   </section>
 
@@ -553,6 +546,10 @@
     {n:'Métiers & débouchés',         clics:16,    imp:7759,    c:'#704088'},
     {n:'Reconversion & orientation',  clics:43,    imp:4541,    c:'#b89048'}
   ];
+  var FORM = [
+    {n:'Pages formation (Détail + Listing)',              clics:6834,  imp:1322580, c:'#5898d8'},
+    {n:'Autres pages (Home, Campus, Pages, Actualités)',  clics:23372, imp:1173900, c:'#3f5c6b'}
+  ];
   function draw(id, items, key){
     var el = document.getElementById(id); if(!el) return;
     var t = items.reduce(function(s,x){return s+x[key];},0);
@@ -598,6 +595,7 @@
   }
   draw('dPageC', PAGE, 'clics'); draw('dPageI', PAGE, 'imp'); legend('legPage', PAGE);
   draw('dKwC', KW, 'clics');     draw('dKwI', KW, 'imp');     legend('legKw', KW);
+  draw('dFormC', FORM, 'clics'); draw('dFormI', FORM, 'imp'); legend('legForm', FORM);
 })();
 </script>
 <script>
