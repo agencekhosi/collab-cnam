@@ -25,16 +25,20 @@
   .tnum { font-variant-numeric: tabular-nums; }
   .inner { max-width: 1000px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 48px); }
 
-  .band { background: linear-gradient(158deg, #005e94 0%, #053857 100%); color: var(--on-band); position: relative; padding: clamp(30px, 5vw, 58px) 0 clamp(40px, 5vw, 60px); }
-  .band::after { content: ""; position: absolute; left: 0; right: 0; bottom: -13px; height: 14px; z-index: 2; background: radial-gradient(circle at 14px -1px, #053857 0 10.5px, transparent 11.5px) 0 0 / 28px 14px repeat-x; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: #fff; margin: 0 0 18px; background: linear-gradient(135deg, #c5243e, #83112a); padding: 6px 14px 6px 12px; border-radius: 999px; box-shadow: 0 3px 10px -4px rgba(197,36,62,.6); }
+  .band { background: transparent; color: var(--ink); position: relative; padding: clamp(18px, 3vw, 36px) 0 clamp(14px, 2.5vw, 26px); }
+  .band::after { content: none; }
+  .crumbs { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; margin: 0 0 18px; color: var(--ink-faint); }
+  .crumbs a { color: var(--accent-deep); font-weight: 600; text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .crumbs .sep { color: var(--line-strong); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: #fff; margin: 0 0 18px; background: var(--accent); padding: 6px 14px 6px 12px; border-radius: 999px; }
   .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; display: inline-block; }
-  h1 { font-family: var(--disp); font-weight: 800; font-size: clamp(30px, 5.6vw, 54px); line-height: 1.06; letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance; max-width: 15ch; }
-  h1 mark { background: linear-gradient(135deg, #c5243e, #9a1730); color: #fff; padding: .02em .28em; border-radius: 8px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-  h2 mark { background: linear-gradient(135deg, #c5243e, #9a1730); color: #fff; padding: .02em .24em; border-radius: 7px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-  .sub { font-size: clamp(15px, 2vw, 18px); color: var(--on-band-faint); margin: 0; max-width: 60ch; line-height: 1.5; }
-  .source { margin-top: 22px; font-size: 13px; color: var(--on-band-faint); display: flex; flex-wrap: wrap; gap: 6px 20px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 16px; }
-  .source b { color: var(--on-band); font-weight: 600; }
+  h1 { font-family: var(--disp); font-weight: 800; font-size: clamp(30px, 5.6vw, 52px); line-height: 1.06; letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance; color: var(--ink); max-width: 18ch; }
+  h1 mark { background: var(--accent); color: #fff; padding: .02em .28em; border-radius: 8px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  h2 mark { background: var(--accent); color: #fff; padding: .02em .24em; border-radius: 7px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .sub { font-size: clamp(15px, 2vw, 18px); color: var(--ink-soft); margin: 0; max-width: 60ch; line-height: 1.5; }
+  .source { margin-top: 22px; font-size: 13px; color: var(--ink-faint); display: flex; flex-wrap: wrap; gap: 6px 20px; border-top: 1px solid var(--line); padding-top: 16px; }
+  .source b { color: var(--ink-soft); font-weight: 600; }
 
   .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 30px auto 0; position: relative; z-index: 3; }
   .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 13px; padding: 17px 19px; box-shadow: var(--shadow); }
@@ -69,7 +73,7 @@
 
   section { margin-top: 48px; }
   .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
-  .sec-n { font-family: var(--disp); font-size: 14px; color: #fff; font-weight: 800; background: linear-gradient(135deg, #c5243e, #83112a); border-radius: 10px; width: 31px; height: 31px; display: grid; place-items: center; flex: none; box-shadow: 0 4px 12px -5px rgba(197,36,62,.7); }
+  .sec-n { font-family: var(--disp); font-size: 14px; color: #fff; font-weight: 800; background: var(--accent); border-radius: 10px; width: 31px; height: 31px; display: grid; place-items: center; flex: none; }
   h2 { font-family: var(--disp); font-size: clamp(21px, 3vw, 28px); font-weight: 800; letter-spacing: -.015em; margin: 0; text-wrap: balance; }
   .lede { color: var(--ink-soft); margin: 10px 0 22px; max-width: 70ch; font-size: 15.5px; }
   .lede.indent { margin-left: 44px; }
@@ -175,7 +179,7 @@
   .seg-btns { display: flex; gap: 8px; }
   .btn { font-family: inherit; font-size: 12px; font-weight: 600; padding: 7px 15px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--card); color: var(--ink); cursor: pointer; transition: background .12s, border-color .12s, color .12s, filter .12s; }
   .btn:hover { border-color: var(--accent); color: var(--accent-deep); }
-  .btn.primary { background: linear-gradient(135deg, #c5243e, #83112a); color: #fff; border-color: transparent; box-shadow: 0 3px 10px -4px rgba(197,36,62,.6); }
+  .btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
   .btn.primary:hover { color: #fff; border-color: transparent; filter: brightness(1.07); }
   .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .btn.ok { border-color: var(--good); color: var(--good); }
@@ -199,7 +203,7 @@
   .card-sub { margin: 0 0 14px; font-family: var(--disp); font-size: 15px; font-weight: 800; color: var(--ink); }
   .roadmap { display: grid; gap: 12px; }
   .rm-step { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
-  .rm-num { width: 28px; height: 28px; border-radius: 9px; background: linear-gradient(135deg, #c5243e, #83112a); color: #fff; font-weight: 800; font-size: 14px; display: grid; place-items: center; }
+  .rm-num { width: 28px; height: 28px; border-radius: 9px; background: var(--accent); color: #fff; font-weight: 800; font-size: 14px; display: grid; place-items: center; }
   .rm-step.def .rm-num { background: #2b6c86; }
   .rm-txt { font-size: 14.5px; color: var(--ink-soft); padding-top: 3px; line-height: 1.5; }
   .rm-txt b { color: var(--ink); }
@@ -222,7 +226,8 @@
 
 <header class="band">
   <div class="inner">
-    <p class="eyebrow">Atelier éditorial · Point&nbsp;1</p>
+    <nav class="crumbs"><a href="index.html">Accueil</a> <span class="sep">/</span> <a href="checklist.html">Checklist de rédaction</a> <span class="sep">/</span> <span>État des lieux SEO</span></nav>
+    <p class="eyebrow">Refonte 2026 · Diagnostic</p>
     <h1>État des lieux <mark>SEO</mark> du site actuel</h1>
     <p class="sub">Où le site se positionne aujourd'hui, ce qu'il capte réellement, et où se trouve le gisement que la refonte éditoriale doit aller chercher.</p>
     <div class="source">
