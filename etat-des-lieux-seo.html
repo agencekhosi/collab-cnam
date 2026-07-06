@@ -249,7 +249,16 @@
   <!-- Overview donuts -->
   <section class="overview">
     <h2>Répartition en <mark>un coup d'œil</mark></h2>
-    <p class="lede">Les mêmes volumes en parts&nbsp;: par type de page et par type de mot-clé, côté clics et côté impressions.</p>
+    <p class="lede">Les mêmes volumes en parts&nbsp;: d'abord formation / home / reste du site, puis par type de page et par type de mot-clé, côté clics et côté impressions.</p>
+    <div class="donut-group" style="margin-bottom:14px;">
+      <h3>Catalogue formation, home, et reste du site</h3>
+      <p class="gh">Les fiches formation (Détail + Listing), la home isolée, et le reste des pages (Campus, Pages, Actualités).</p>
+      <div class="donut-pair">
+        <div class="donut-wrap"><div class="donut" id="dFormC"><div class="donut-hole"><span class="dl">Clics</span><span class="dv">30&nbsp;206</span></div></div></div>
+        <div class="donut-wrap"><div class="donut" id="dFormI"><div class="donut-hole"><span class="dl">Impressions</span><span class="dv">2,50&nbsp;M</span></div></div></div>
+      </div>
+      <div class="dlegend" id="legForm"></div>
+    </div>
     <div class="donut-groups">
       <div class="donut-group">
         <h3>Par type de page</h3>
@@ -408,20 +417,11 @@
   <!-- Section 5 -->
   <section>
     <div class="sec-head"><span class="sec-n">5</span><h2>Ce que ça dit pour la <mark>rédaction</mark></h2></div>
-    <div class="donut-group" style="margin-bottom:16px;">
-      <h3>Catalogue formation vs reste du site</h3>
-      <p class="gh">Les fiches formation (Détail + Listing) face à toutes les autres pages (Home, Campus, Pages, Actualités).</p>
-      <div class="donut-pair">
-        <div class="donut-wrap"><div class="donut" id="dFormC"><div class="donut-hole"><span class="dl">Clics</span><span class="dv">30&nbsp;206</span></div></div></div>
-        <div class="donut-wrap"><div class="donut" id="dFormI"><div class="donut-hole"><span class="dl">Impressions</span><span class="dv">2,50&nbsp;M</span></div></div></div>
-      </div>
-      <div class="dlegend" id="legForm"></div>
-    </div>
     <div class="takes">
       <div class="take"><h3>Rendre le catalogue visible</h3><p>1&nbsp;M d'impressions dorment sur les fiches formation en position&nbsp;39. Titres, chapô et contenu des <b>Détail Formation</b> = priorité&nbsp;n°1.</p></div>
       <div class="take"><h3>Attaquer Numérique &amp; Commerce</h3><p>Grosse demande, CTR proche de zéro (0,08&nbsp;% / 0,14&nbsp;%). Ces domaines sont vus mais pas travaillés&nbsp;: fort retour sur effort éditorial.</p></div>
       <div class="take good"><h3>Répliquer Santé &amp; Social</h3><p>Seule verticale qui performe (CTR 1,60&nbsp;%). Elle sert de <b>modèle</b>&nbsp;: comprendre pourquoi elle marche et l'étendre aux autres.</p></div>
-      <div class="take"><h3>Hors formation, viser les Pages</h3><p>Les autres pages captent <b>77&nbsp;% des clics</b> pour 47&nbsp;% des impressions, mais surtout via <b>Home et Campus</b> (trafic de marque, peu de levier éditorial). Le gisement à travailler hors catalogue, ce sont les <b>Pages</b> institutionnelles et thématiques&nbsp;: 667&nbsp;k impressions, CTR 0,6&nbsp;%.</p></div>
+      <div class="take"><h3>Hors formation, viser les Pages</h3><p>La <b>home</b> capte à elle seule <b>37&nbsp;% des clics</b> pour 9&nbsp;% des impressions&nbsp;: du trafic de marque, aucun levier éditorial. Une fois isolée, le gisement hors catalogue, ce sont les <b>Pages</b> institutionnelles et thématiques&nbsp;: 667&nbsp;k impressions, CTR 0,6&nbsp;%.</p></div>
     </div>
   </section>
 
@@ -547,8 +547,9 @@
     {n:'Reconversion & orientation',  clics:43,    imp:4541,    c:'#b89048'}
   ];
   var FORM = [
-    {n:'Pages formation (Détail + Listing)',              clics:6834,  imp:1322580, c:'#5898d8'},
-    {n:'Autres pages (Home, Campus, Pages, Actualités)',  clics:23372, imp:1173900, c:'#3f5c6b'}
+    {n:'Pages formation (Détail + Listing)',       clics:6834,  imp:1322580, c:'#5898d8'},
+    {n:'Home',                                     clics:11112, imp:223120,  c:'#d078a8'},
+    {n:'Autres pages (Campus, Pages, Actualités)', clics:12260, imp:950780,  c:'#3f5c6b'}
   ];
   function draw(id, items, key){
     var el = document.getElementById(id); if(!el) return;
