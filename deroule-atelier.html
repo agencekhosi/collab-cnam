@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Déroulé de l'atelier · CNAM Pays de la Loire</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --paper:#fcfdfd; --card:#fff; --ink:#18232a; --ink-soft:#375363; --ink-faint:#6f8695;
+    --line:#deeaef; --line-strong:#97bcc9; --accent:#c5243e; --accent-deep:#981935; --tint:#deeaef;
+    --good:#147a55; --good-soft:#e3f0ea;
+    --shadow:0 1px 2px rgba(24,35,42,.06), 0 10px 26px -14px rgba(24,35,42,.20);
+    --sans:'Raleway', ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased;}
+  .inner{max-width:1080px; margin:0 auto; padding:0 clamp(18px,4vw,44px);}
+
+  .hero{padding:clamp(18px,3vw,36px) 0 clamp(12px,2vw,18px);}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#fff; margin:0 0 16px; background:var(--accent); padding:6px 14px 6px 12px; border-radius:999px;}
+  .eyebrow::before{content:""; width:6px; height:6px; border-radius:50%; background:#fff;}
+  h1{font-size:clamp(28px,5vw,44px); font-weight:800; line-height:1.07; letter-spacing:-.02em; margin:0 0 14px; text-wrap:balance; color:var(--ink); max-width:20ch;}
+  h1 mark{background:var(--accent); color:#fff; padding:.02em .26em; border-radius:0; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .sub{font-size:clamp(15px,2vw,17px); color:var(--ink-soft); margin:0; max-width:62ch;}
+
+  .essentiel{background:var(--good-soft); border:1px solid color-mix(in srgb,var(--good) 28%,transparent); border-radius:16px; padding:22px 24px; margin-top:24px;}
+  .essentiel h3{margin:0 0 13px; font-size:16px; font-weight:800; color:var(--ink);}
+  .essentiel ul{margin:0; padding:0; list-style:none; display:grid; gap:9px;}
+  .essentiel li{position:relative; padding-left:26px; font-size:14.5px; color:var(--ink-soft); line-height:1.45;}
+  .essentiel li::before{content:""; position:absolute; left:2px; top:6px; width:11px; height:11px; border-radius:50%; background:var(--good);}
+  .essentiel li b{color:var(--ink);}
+
+  .sec-title{font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; color:var(--ink-faint); margin:38px 0 4px;}
+
+  .phase{margin-top:20px;}
+  .ph-head{display:flex; align-items:center; gap:13px; margin-bottom:6px; flex-wrap:wrap;}
+  .ph-n{font-size:14px; color:#fff; font-weight:800; background:var(--accent); border-radius:10px; width:31px; height:31px; display:grid; place-items:center; flex:none;}
+  .ph-head h2{font-size:clamp(19px,3vw,23px); font-weight:800; letter-spacing:-.015em; margin:0; text-wrap:balance;}
+  .ph-head h2 mark{background:var(--accent); color:#fff; padding:.02em .22em; border-radius:0; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .fmt{margin-left:auto; font-size:11px; letter-spacing:.06em; text-transform:uppercase; font-weight:800; color:#005e94; background:#e6f2f9; border:1px solid #bfe0f0; padding:5px 11px; border-radius:999px; white-space:nowrap;}
+  .ph-sub{font-size:13.5px; color:var(--ink-faint); margin:0 0 12px 44px;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:18px 22px; transition:border-color .15s;}
+  .card:hover{border-color:var(--line-strong);}
+  .do{margin:0; padding:0; list-style:none; display:grid; gap:10px;}
+  .do li{position:relative; padding-left:22px; font-size:15px; color:var(--ink-soft); line-height:1.5;}
+  .do li::before{content:""; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:50%; background:var(--line-strong);}
+  .do li b{color:var(--ink);}
+  .outcome{margin:15px 0 2px; background:var(--good-soft); border:1px solid color-mix(in srgb,var(--good) 28%,transparent); border-radius:11px; padding:12px 16px; font-size:14px; color:var(--ink); line-height:1.5;}
+  .outcome .olab{display:block; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:800; color:var(--good); margin-bottom:3px;}
+
+  .pause{margin:22px 0; padding:16px 22px; text-align:center; border:2px dashed var(--line-strong); border-radius:16px; background:#fff;}
+  .pause b{color:var(--accent-deep); font-size:16px; font-weight:800;}
+  .pause span{display:block; font-size:14px; color:var(--ink-soft); margin-top:5px;}
+
+  .note{margin-top:34px; background:var(--tint); border:1px solid var(--line-strong); border-radius:18px; padding:clamp(20px,3vw,28px);}
+  .note h2{font-size:20px; font-weight:800; margin:0 0 8px; letter-spacing:-.01em;}
+  .note h2 .k{color:var(--accent);}
+  .note p{margin:0; font-size:15px; color:var(--ink-soft); line-height:1.55;}
+  .note p b{color:var(--ink);}
+
+  footer{margin:44px 0 60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+  footer a{color:var(--accent-deep); font-weight:600; text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+
+  @media (max-width:640px){ .ph-sub{margin-left:0;} .fmt{margin-left:0;} }
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important;} }
+</style>
+<script src="header.js" defer></script>
+</head>
+<body>
+
+<div class="inner">
+  <header class="hero">
+    <p class="eyebrow">Atelier éditorial · Refonte 2026</p>
+    <h1>Déroulé de <mark>l'atelier éditorial</mark></h1>
+    <p class="sub">Une séance pour lancer la réécriture des contenus de la refonte et prendre en main les bonnes pratiques de rédaction web. Cet espace reste votre point de repère : la méthode et les outils y restent accessibles après l'atelier.</p>
+  </header>
+
+  <div class="essentiel">
+    <h3>Ce que vous en repartez</h3>
+    <ul>
+      <li>Votre <b>périmètre de pages à réécrire</b>, clairement identifié.</li>
+      <li>Les <b>assistants de rédaction pris en main</b> sur une page réelle du site.</li>
+      <li>La <b>méthode à portée de main</b>, disponible à tout moment sur cet espace.</li>
+    </ul>
+  </div>
+
+  <p class="sec-title">Le déroulé, étape par étape</p>
+
+  <!-- Étape 1 -->
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">1</span><h2>Ouverture</h2><span class="fmt">Présentation</span></div>
+    <p class="ph-sub">Poser les objectifs de la séance.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Objectifs de l'atelier et <b>enjeux de la réécriture</b> pour la refonte.</li>
+        <li>Présentation de <b>cet espace de travail</b>, votre point d'entrée pour la suite.</li>
+      </ul>
+      <div class="outcome"><span class="olab">À l'issue</span>Le cadre et les objectifs de la séance sont partagés par tous.</div>
+    </div>
+  </section>
+
+  <!-- Étape 2 -->
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">2</span><h2>Organiser la <mark>réécriture</mark></h2><span class="fmt">En groupe</span></div>
+    <p class="ph-sub">De l'état des lieux à la répartition des pages.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Tour d'horizon de l'<b>État des lieux SEO</b> du site, par type de page.</li>
+        <li>Présentation de la <b>priorisation</b> des contenus à retravailler.</li>
+        <li><b>Répartition des pages</b> entre les participants.</li>
+      </ul>
+      <div class="outcome"><span class="olab">À l'issue</span>Chacun connaît son périmètre de pages à réécrire.</div>
+    </div>
+  </section>
+
+  <div class="pause">
+    <b>Pause</b>
+    <span>Un temps de respiration avant la partie pratique.</span>
+  </div>
+
+  <!-- Étape 3 -->
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">3</span><h2>Les bonnes pratiques de <mark>rédaction</mark></h2><span class="fmt">Atelier collectif</span></div>
+    <p class="ph-sub">La méthode appliquée à un cas réel.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Application de la <b>checklist</b> à une page réelle du site.</li>
+        <li>Amélioration du contenu <b>ensemble, étape par étape</b>.</li>
+      </ul>
+      <div class="outcome"><span class="olab">À l'issue</span>La méthode est comprise sur un exemple concret.</div>
+    </div>
+  </section>
+
+  <!-- Étape 4 -->
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">4</span><h2>Prise en main des <mark>assistants</mark></h2><span class="fmt">Atelier pratique</span></div>
+    <p class="ph-sub">Chacun manipule les outils. Un ordinateur par participant est nécessaire.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Découverte de l'<b>auditeur</b> et du <b>rédacteur</b> (dans ChatGPT ou Claude).</li>
+        <li>Test sur <b>une de vos pages</b>.</li>
+        <li>Partage de quelques <b>premiers retours</b>.</li>
+      </ul>
+      <div class="outcome"><span class="olab">À l'issue</span>Chacun sait utiliser les assistants en autonomie.</div>
+    </div>
+  </section>
+
+  <!-- Étape 5 -->
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">5</span><h2>Clôture</h2><span class="fmt">Échanges</span></div>
+    <p class="ph-sub">Synthèse et prochaines étapes.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Synthèse de la séance et rappel des <b>ressources disponibles</b> sur cet espace.</li>
+        <li><b>Prochaines étapes</b> de la réécriture.</li>
+      </ul>
+      <div class="outcome"><span class="olab">À l'issue</span>Chacun repart avec un plan d'action clair.</div>
+    </div>
+  </section>
+
+  <div class="note">
+    <h2><span class="k">Bon à savoir</span></h2>
+    <p>L'atelier pratique nécessite <b>un ordinateur par participant</b>. La checklist de rédaction et les assistants restent <b>accessibles à tout moment sur cet espace</b>, pour poursuivre la réécriture après la séance.</p>
+  </div>
+
+  <footer>
+    <span>Cnam Pays de la Loire × KHOSI · Atelier éditorial</span>
+    <span><a href="index.html">Retour à l'accueil</a></span>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -5,7 +5,8 @@
   var NAV = [
     {href:"index.html",              label:"Accueil"},
     {href:"etat-des-lieux-seo.html", label:"État des lieux SEO"},
-    {href:"checklist.html",          label:"Checklist"}
+    {href:"checklist.html",          label:"Checklist"},
+    {href:"deroule-atelier.html",    label:"Déroulé"}
   ];
   var css = ""
     + ".site-header{border-bottom:1px solid #deeaef; background:#fff; font-family:inherit;}"
