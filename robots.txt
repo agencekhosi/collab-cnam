@@ -1,0 +1,3 @@
+# Rien de ce site ne doit etre indexe : espace de collaboration prive KHOSI.
+User-agent: *
+Disallow: /
