@@ -1,0 +1,4 @@
+# Les mots de passe de la page chiffree se lisent ici, jamais dans le depot.
+# Voir knowledgebase/methodes/site-collab-client.md, section 6.
+.env
+.env.*
