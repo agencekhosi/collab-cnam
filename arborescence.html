@@ -128,21 +128,18 @@
   </section>
 
   <form class="connexion" id="connexion" hidden>
-    <h2>Connexion</h2>
-    <p>L'arborescence est réservée aux équipes de la refonte.</p>
-    <label>Adresse email<input type="email" id="email" autocomplete="username" required></label>
-    <label>Mot de passe<input type="password" id="mdp" autocomplete="current-password" required></label>
-    <div class="erreur" id="erreurConnexion"></div>
-    <button class="bouton" type="submit" id="bConnexion">Se connecter</button>
+    <h2>Qui modifie ?</h2>
+    <p>Votre nom signe vos modifications dans l'historique de chaque page. Il est retenu sur cet appareil.</p>
+    <label>Prénom et nom<input type="text" id="nom" autocomplete="name" required maxlength="60"></label>
+    <button class="bouton" type="submit" id="bConnexion">Continuer</button>
   </form>
 
   <div id="appli" hidden>
     <div class="compte-bar">
-      <span>Connecté : <b id="moi"></b> <span id="monRole"></span></span>
+      <span>Vous : <b id="moi"></b></span>
+      <button class="lien" type="button" id="bNom">Changer de nom</button>
       <span class="etat" id="etat"><i></i><span>À jour</span></span>
       <span class="presents" id="presents"></span>
-      <button class="lien" type="button" id="bMdp">Changer mon mot de passe</button>
-      <button class="lien" type="button" id="bDeconnexion">Se déconnecter</button>
     </div>
     <div class="chiffres" id="chiffres"></div>
     <div class="barres">
@@ -202,8 +199,9 @@ const sansDomaine = t => t.replace(/^https?:\/\/(www\.)?cnam-paysdelaloire\.fr/,
 const lignesDe = t => String(t || '').split('\n').map(x => x.trim()).filter(Boolean);
 const date = d => new Date(d).toLocaleString('fr-FR', {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'});
 
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_CLE);
-let moi = '', editeur = false;
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_CLE, {auth: {persistSession: false, autoRefreshToken: false}});
+let moi = '', editeur = true;
+const CLE_NOM = 'arbo-cnam-nom';
 const R = new Map();
 let P = [], parId = {};
 const replies = new Set();
@@ -349,7 +347,7 @@ async function modifier(id, champs) {
   Object.assign(r, champs);
   rendre();
   try {
-    const data = await enregistre(sb.from('arbo_cnam').update(champs).eq('id', id).select().single());
+    const data = await enregistre(sb.from('arbo_cnam').update(Object.assign({modifie_par: moi}, champs)).eq('id', id).select().single());
     if (data) R.set(id, data);
   } catch (e) { R.set(id, avant); }
   rendre();
@@ -484,7 +482,7 @@ async function action(a, p, b) {
     if (a === 'frere') { parent = p.parent; const suiv = f[i + 1]; ordre = suiv ? (p.ordre + suiv.ordre) / 2 : p.ordre + 10; }
     else { parent = p.id; const e = P.filter(q => q.parent === p.id); ordre = e.length ? Math.max(...e.map(q => q.ordre)) + 10 : 10; replies.delete(p.id); }
     const pp = parId[parent];
-    const data = await enregistre(sb.from('arbo_cnam').insert({parent, ordre, titre: 'Nouvelle page', statut: 'creation', gabarit: a === 'frere' ? p.gabarit : '', adresse: pp && pp.adresse ? pp.adresse + 'nouvelle-page/' : ''}).select().single());
+    const data = await enregistre(sb.from('arbo_cnam').insert({modifie_par: moi, parent, ordre, titre: 'Nouvelle page', statut: 'creation', gabarit: a === 'frere' ? p.gabarit : '', adresse: pp && pp.adresse ? pp.adresse + 'nouvelle-page/' : ''}).select().single());
     R.set(data.id, data); rendre(); fermer();
     const tr = parDeId.get(data.id);
     if (tr) { tr.scrollIntoView({block: 'center'}); editerCellule(tr.querySelector('td.page')); }
@@ -513,7 +511,7 @@ async function action(a, p, b) {
     if (!b.classList.contains('arme')) { b.classList.add('arme'); b.textContent = 'Confirmer la suppression'; return; }
     fermer();
     const avant = R.get(p.id); R.delete(p.id); rendre();
-    try { await enregistre(sb.from('arbo_cnam').delete().eq('id', p.id)); } catch (e) { R.set(p.id, avant); rendre(); }
+    try { await enregistre(sb.from('arbo_cnam').update({modifie_par: moi}).eq('id', p.id)); await enregistre(sb.from('arbo_cnam').delete().eq('id', p.id)); } catch (e) { R.set(p.id, avant); rendre(); }
   }
 }
 
@@ -585,48 +583,36 @@ function ecouter() {
     });
 }
 
-async function demarrer(session) {
-  moi = (session.user.email || '').toLowerCase();
-  const { data } = await sb.from('acces').select('role').eq('email', moi).maybeSingle();
-  if (!data) {
-    $('#connexion').hidden = false; $('#appli').hidden = true;
-    $('#erreurConnexion').textContent = 'Ce compte n\'a pas accès à l\'arborescence.';
-    await sb.auth.signOut(); return;
-  }
-  editeur = data.role === 'edition';
-  document.body.classList.toggle('editeur', editeur);
+function lireNom() { try { return localStorage.getItem(CLE_NOM) || ''; } catch (e) { return ''; } }
+function demanderNom() {
+  $('#appli').hidden = true; $('#connexion').hidden = false;
+  $('#nom').value = moi; $('#nom').focus();
+}
+async function demarrer() {
+  document.body.classList.add('editeur');
   $('#moi').textContent = moi;
-  $('#monRole').textContent = editeur ? '(modification)' : '(lecture seule)';
-  $('#aide').innerHTML = editeur
-    ? '<b>Modifier :</b> cliquez sur une cellule (titre, statut, gabarit, adresse, mot-clé, volume), puis <b>Entrée</b> pour valider, <b>Échap</b> pour annuler, <b>Tab</b> pour passer à la cellule suivante. Dans le mot-clé et le volume, <b>Maj+Entrée</b> ajoute une ligne. Le bouton <b>i</b> ouvre le détail : code, ville, pages reprises, métiers, ajout, déplacement ou suppression de la page, et l\'historique de ses modifications. Chaque modification est enregistrée avec son auteur et sa date.'
-    : 'Consultation seule. Le bouton <b>i</b> ouvre le détail de chaque page.';
+  $('#aide').innerHTML = '<b>Modifier :</b> cliquez sur une cellule (titre, statut, gabarit, adresse, mot-clé, volume), puis <b>Entrée</b> pour valider, <b>Échap</b> pour annuler, <b>Tab</b> pour passer à la cellule suivante. Dans le mot-clé et le volume, <b>Maj+Entrée</b> ajoute une ligne. Le bouton <b>i</b> ouvre le détail : code, ville, pages reprises, métiers, ajout, déplacement ou suppression de la page, et l\'historique de ses modifications. Chaque modification est enregistrée avec son auteur et sa date.';
   $('#connexion').hidden = true; $('#appli').hidden = false;
+  if (lignes.length) return;
   const q0 = new URLSearchParams(location.search).get('q'); if (q0) $('#q').value = q0;
   await charger();
   ecouter();
 }
 
-$('#connexion').addEventListener('submit', async e => {
+$('#connexion').addEventListener('submit', e => {
   e.preventDefault();
-  $('#bConnexion').disabled = true; $('#erreurConnexion').textContent = '';
-  const { data, error } = await sb.auth.signInWithPassword({email: $('#email').value.trim(), password: $('#mdp').value});
-  $('#bConnexion').disabled = false;
-  if (error) { $('#erreurConnexion').textContent = 'Adresse ou mot de passe incorrect.'; return; }
-  demarrer(data.session);
+  const n = $('#nom').value.trim().replace(/\s+/g, ' ');
+  if (!n) return;
+  const change = canal && n !== moi;
+  moi = n;
+  try { localStorage.setItem(CLE_NOM, n); } catch (err) {}
+  if (change) { location.reload(); return; }
+  demarrer();
 });
-$('#bDeconnexion').addEventListener('click', async () => { await sb.auth.signOut(); location.reload(); });
-$('#bMdp').addEventListener('click', async () => {
-  const mdp = prompt('Nouveau mot de passe (10 caractères minimum) :');
-  if (!mdp) return;
-  if (mdp.length < 10) { toast('Mot de passe trop court : 10 caractères minimum.'); return; }
-  const { error } = await sb.auth.updateUser({password: mdp});
-  toast(error ? 'Échec : ' + error.message : 'Mot de passe modifié.');
-});
+$('#bNom').addEventListener('click', demanderNom);
 
-(async () => {
-  const { data } = await sb.auth.getSession();
-  if (data.session) demarrer(data.session); else $('#connexion').hidden = false;
-})();
+moi = lireNom();
+if (moi) demarrer(); else demanderNom();
 </script>
 <script src="header.js" defer></script>
 </body>
