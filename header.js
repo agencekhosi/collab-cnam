@@ -6,6 +6,7 @@
     {href:"index.html",              label:"Accueil"},
     {href:"etat-des-lieux-seo.html", label:"État des lieux SEO"},
     {href:"checklist.html",          label:"Checklist"},
+    {href:"arborescence.html",       label:"Arborescence"},
     {href:"deroule-atelier.html",    label:"Déroulé"}
   ];
   var css = ""
