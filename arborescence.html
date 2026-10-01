@@ -54,7 +54,6 @@
   .url{font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
   .puce{display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; white-space:nowrap; color:#fff; font-weight:600;}
   .puce.st-existante{background:var(--st-existante);} .puce.st-creation{background:var(--st-creation);} .puce.st-nd{background:var(--st-nd); color:var(--ink);}
-  .etoile{color:var(--accent); margin-left:6px; font-size:12px;}
   .gabarit{font-size:12.5px;}
   .pli{all:unset; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; margin-left:-22px; margin-right:2px; border-radius:4px; color:var(--ink-soft); font-size:11px;}
   .pli:hover{background:var(--line);}
@@ -106,7 +105,6 @@
   <div class="legende">
     <span><i style="background:var(--st-existante)"></i>Existante : une page actuelle devient cette page</span>
     <span><i style="background:var(--st-creation)"></i>À créer : aucune page actuelle ne traite le sujet</span>
-    <span><span class="etoile" style="margin:0 6px 0 0">★</span>Mise en avant sur la page d'accueil</span>
     <span>Reprend : les pages actuelles redirigées vers cette page (un clic ouvre la liste)</span>
   </div>
 
@@ -168,7 +166,7 @@ function rendre() {
     const reprend = p.a.length ? '<button class="ouvre" type="button" data-panneau="a" title="Un clic ouvre la liste">' + nb(p.a.length) + '</button>' : '<span class="vide">0</span>';
     return '<tr data-id="' + p.i + '" data-parent="' + p.p + '" data-enfants="' + p.enf + '" data-niveau="' + p.niv
       + '" data-statut="' + p.s + '" data-rub="' + p.rub + '" data-gabarit="' + ech(p.g) + '" data-ville="' + ech(p.ville) + '" data-r="' + ech(recherche) + '">'
-      + '<td class="page" style="padding-left:' + (30 + p.niv * 20) + 'px">' + pli + ech(p.n) + (p.home ? '<span class="etoile" title="Mise en avant sur la page d\'accueil">★</span>' : '') + compte
+      + '<td class="page" style="padding-left:' + (30 + p.niv * 20) + 'px">' + pli + ech(p.n) + compte
       + '<button class="ouvre info" type="button" data-panneau="i" aria-label="Détail de la page">i</button></td>'
       + '<td><span class="puce st-' + p.s + '">' + ech(LIB[p.s]) + '</span></td>'
       + '<td><span class="gabarit">' + (p.g ? ech(p.g) : '<span class="vide">-</span>') + '</span></td>'
