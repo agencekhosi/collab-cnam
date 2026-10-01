@@ -44,10 +44,6 @@
   .etat.attente i{background:#d99a00;} .etat.erreur i{background:var(--accent);}
   .presents{color:var(--ink-faint);}
 
-  .chiffres{display:flex; flex-wrap:wrap; gap:10px; margin:6px 0 20px;}
-  .chiffre{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 18px; min-width:150px;}
-  .chiffre b{display:block; font-size:24px; font-weight:800; letter-spacing:-.02em;}
-  .chiffre span{font-size:13px; color:var(--ink-soft);}
   .barres{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:0 0 10px;}
   input[type=search], select{padding:9px 12px; border:1px solid var(--line-strong); border-radius:10px; font:inherit; font-size:14px; background:var(--card); color:var(--ink);}
   input[type=search]{flex:1 1 320px; min-width:240px;}
@@ -115,7 +111,6 @@
   .aide b{color:var(--ink-soft);}
   code{font-family:var(--mono); font-size:.92em;}
   .toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font-size:14px; z-index:50; max-width:calc(100vw - 32px);}
-  @media (max-width:720px){ .chiffre{min-width:0; flex:1 1 40%;} }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
@@ -141,7 +136,6 @@
       <span class="etat" id="etat"><i></i><span>À jour</span></span>
       <span class="presents" id="presents"></span>
     </div>
-    <div class="chiffres" id="chiffres"></div>
     <div class="barres">
       <input type="search" id="q" placeholder="Chercher un titre, une adresse actuelle ou future, un mot-clé, un code formation…" aria-label="Chercher">
       <select id="fRub" aria-label="Filtrer par rubrique"></select>
@@ -254,12 +248,6 @@ function construire() {
   if (premierRendu) { P.filter(p => p.enf && p.niv >= 2).forEach(p => replies.add(p.id)); premierRendu = false; }
 }
 
-function chiffres() {
-  const n = P.length, ex = P.filter(p => p.statut === 'existante').length, cr = P.filter(p => p.statut === 'creation').length;
-  const rep = P.reduce((s, p) => s + lignesDe(p.reprend).length, 0);
-  $('#chiffres').innerHTML = [[n, 'pages prévues'], [ex, 'pages existantes reprises'], [cr, 'pages à créer'], [rep, 'adresses actuelles reprises']]
-    .map(([v, l]) => '<div class="chiffre"><b>' + nb(v) + '</b><span>' + l + '</span></div>').join('');
-}
 
 function filtresOptions() {
   const garde = (sel, lib, liste) => { const v = $(sel).value; $(sel).innerHTML = '<option value="">' + lib + '</option>' + liste.map(([k, l]) => '<option value="' + ech(k) + '">' + ech(l) + '</option>').join(''); $(sel).value = v; };
@@ -300,7 +288,7 @@ function ligneHtml(p) {
 function rendre() {
   if (edition) { rendreEnAttente = true; return; }
   rendreEnAttente = false;
-  construire(); chiffres(); filtresOptions();
+  construire(); filtresOptions();
   $('#corps').innerHTML = P.map(ligneHtml).join('');
   lignes = Array.from($('#corps').rows);
   parDeId = new Map(lignes.map(l => [l.dataset.id, l]));
