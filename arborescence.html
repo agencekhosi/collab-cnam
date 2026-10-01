@@ -111,6 +111,9 @@
   .aide{font-size:13px; color:var(--ink-faint); margin-top:20px; max-width:110ch;}
   .aide b{color:var(--ink-soft);}
   code{font-family:var(--mono); font-size:.92em;}
+  .indispo{background:var(--accent-soft); border:1px solid var(--accent); color:var(--accent-deep); border-radius:14px; padding:16px 20px; margin:0 0 18px; font-size:15px;}
+  .indispo b{display:block; font-size:16px; margin-bottom:2px;}
+  body.hs .barres, body.hs .legende, body.hs .cadre, body.hs .aide{display:none;}
   .toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font-size:14px; z-index:50; max-width:calc(100vw - 32px);}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -137,6 +140,7 @@
       <span class="etat" id="etat"><i></i><span>À jour</span></span>
       <span class="presents" id="presents"></span>
     </div>
+    <div class="indispo" id="indispo" hidden><b>L'arborescence est momentanément indisponible.</b>KHOSI est prévenu et la rétablit au plus vite. Les modifications déjà enregistrées ne sont pas perdues. Merci de réessayer un peu plus tard.</div>
     <div class="barres">
       <input type="search" id="q" placeholder="Chercher un titre, une adresse actuelle ou future, un mot-clé, un code formation…" aria-label="Chercher">
       <select id="fRub" aria-label="Filtrer par rubrique"></select>
@@ -220,7 +224,9 @@ async function enregistre(promesse) {
     if (error) throw error;
     return data;
   } catch (e) {
-    etat('erreur', 'Erreur'); toast('La modification n\'a pas été enregistrée : ' + (e.message || e));
+    etat('erreur', 'Erreur');
+    if (!(await joignable())) { indisponible(); throw e; }
+    toast('La modification n\'a pas été enregistrée : ' + (e.message || e));
     await charger(); throw e;
   } finally {
     enCours--; if (!enCours && $('#etat').className.indexOf('erreur') < 0) etat('', 'Enregistré');
@@ -540,16 +546,30 @@ $('#bCsv').addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
 
+function indisponible() {
+  $('#indispo').hidden = false;
+  document.body.classList.add('hs');
+  etat('erreur', 'Indisponible');
+  document.body.classList.remove('editeur');
+}
+async function joignable() {
+  try { const { error } = await sb.from('arbo_cnam').select('id').limit(1); return !error; } catch (e) { return false; }
+}
 async function charger() {
   const tout = [];
   for (let de = 0; ; de += 1000) {
-    const { data, error } = await sb.from('arbo_cnam').select('*').order('ordre').range(de, de + 999);
-    if (error) { toast('Chargement impossible : ' + error.message); return; }
+    let rep;
+    try { rep = await sb.from('arbo_cnam').select('*').order('ordre').range(de, de + 999); } catch (e) { rep = {error: e}; }
+    const { data, error } = rep;
+    if (error) { indisponible(); return false; }
     tout.push(...data);
     if (data.length < 1000) break;
   }
   R.clear(); tout.forEach(r => R.set(r.id, r));
+  $('#indispo').hidden = true;
+  document.body.classList.remove('hs');
   rendre();
+  return true;
 }
 
 function ecouter() {
@@ -584,8 +604,7 @@ async function demarrer() {
   $('#connexion').hidden = true; $('#appli').hidden = false;
   if (lignes.length) return;
   const q0 = new URLSearchParams(location.search).get('q'); if (q0) $('#q').value = q0;
-  await charger();
-  ecouter();
+  if (await charger()) ecouter();
 }
 
 $('#connexion').addEventListener('submit', e => {
