@@ -12,7 +12,7 @@
     --paper:#f4f7f9; --card:#fff; --ink:#18232a; --ink-soft:#375363; --ink-faint:#6f8695;
     --line:#deeaef; --line-strong:#97bcc9; --accent:#c5243e; --accent-deep:#981935; --accent-soft:#fee5e6; --tint:#deeaef;
     --rub:#e9f1f4; --sousrub:#f3f8fa; --hover:#fff6f6; --edit:#fffbe6;
-    --st-existante:#6f8695; --st-creation:#c5243e; --st-nd:#b9c8d0; --good:#147a55;
+    --st-existante:#6f8695; --st-creation:#c5243e; --st-nd:#b9c8d0; --good:#147a55; --rc-encours:#a9700a;
     --shadow:0 1px 2px rgba(24,35,42,.06), 0 12px 30px -16px rgba(24,35,42,.22);
     --sans:'Raleway', ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -78,6 +78,7 @@
   .url{font-family:var(--mono); font-size:12px; color:var(--ink-soft); white-space:pre-line;}
   .multi{white-space:pre-line;}
   .puce{display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; white-space:nowrap; color:#fff; font-weight:600;}
+  .puce.rc-a_faire{background:transparent; color:#6f8695; border:1px solid #b9c8d0;} .puce.rc-en_cours{background:var(--rc-encours);} .puce.rc-fait{background:var(--good);}
   .puce.st-existante{background:var(--st-existante);} .puce.st-creation{background:var(--st-creation);} .puce.st-nd{background:var(--st-nd); color:var(--ink);}
   .gabarit{font-size:12.5px;}
   .pli{all:unset; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; margin-left:-22px; margin-right:2px; border-radius:4px; color:var(--ink-soft); font-size:11px;}
@@ -145,6 +146,7 @@
       <input type="search" id="q" placeholder="Chercher un titre, une adresse actuelle ou future, un mot-clé, un code formation…" aria-label="Chercher">
       <select id="fRub" aria-label="Filtrer par rubrique"></select>
       <select id="fStatut" aria-label="Filtrer par statut"></select>
+      <select id="fRecette" aria-label="Filtrer par état de recette"></select>
       <select id="fGabarit" aria-label="Filtrer par gabarit"></select>
       <select id="fVille" aria-label="Filtrer par ville"></select>
       <button class="outil" id="bOuvre" type="button">Tout déplier</button>
@@ -156,16 +158,18 @@
       <span><i style="background:var(--st-existante)"></i>Existante : une page actuelle devient cette page</span>
       <span><i style="background:var(--st-creation)"></i>À créer : aucune page actuelle ne traite le sujet</span>
       <span>Reprend : les pages actuelles redirigées vers cette page</span>
+      <span>Recette : à faire, en cours ou faite, pour suivre la vérification de chaque page</span>
     </div>
 
     <div class="cadre">
       <table>
         <colgroup>
-          <col style="width:30%"><col style="width:110px"><col style="width:170px"><col><col style="width:84px"><col style="width:15%"><col style="width:84px">
+          <col style="width:28%"><col style="width:110px"><col style="width:100px"><col style="width:170px"><col><col style="width:84px"><col style="width:15%"><col style="width:84px">
         </colgroup>
         <thead><tr>
           <th>Page <span class="vide">(sous-pages)</span></th>
           <th>Statut</th>
+          <th>Recette</th>
           <th>Gabarit</th>
           <th>Nouvelle adresse</th>
           <th class="n" title="Pages actuelles reprises par cette page, donc à rediriger vers elle">Reprend</th>
@@ -186,9 +190,11 @@ const SUPABASE_URL = 'https://ldhbmemgjeuzjfftwudy.supabase.co';
 const SUPABASE_CLE = 'sb_publishable_cjO8wx1qTwgID3yYy28tog_J4nKpnvA';
 const SITE = 'https://www.cnam-paysdelaloire.fr';
 const STATUTS = [['existante', 'Existante'], ['creation', 'À créer'], ['nd', 'Non renseigné']];
+const RECETTES = [['a_faire', 'À faire'], ['en_cours', 'En cours'], ['fait', 'Fait']];
+const LIB_R = Object.fromEntries(RECETTES);
 const LIB = Object.fromEntries(STATUTS);
-const CHAMPS_TABLE = ['titre', 'statut', 'gabarit', 'adresse', 'reprend', 'mot_cle', 'volume'];
-const NOMS = {titre: 'Titre', statut: 'Statut', gabarit: 'Gabarit', adresse: 'Nouvelle adresse', reprend: 'Pages reprises', mot_cle: 'Mot-clé', volume: 'Volume', code: 'Code', ville: 'Ville', metiers: 'Métiers liés', parent: 'Emplacement', ordre: 'Ordre', accueil: 'Accueil'};
+const CHAMPS_TABLE = ['titre', 'statut', 'recette', 'gabarit', 'adresse', 'reprend', 'mot_cle', 'volume'];
+const NOMS = {titre: 'Titre', statut: 'Statut', recette: 'Recette', gabarit: 'Gabarit', adresse: 'Nouvelle adresse', reprend: 'Pages reprises', mot_cle: 'Mot-clé', volume: 'Volume', code: 'Code', ville: 'Ville', metiers: 'Métiers liés', parent: 'Emplacement', ordre: 'Ordre', accueil: 'Accueil'};
 
 const $ = s => document.querySelector(s);
 const ech = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -261,6 +267,7 @@ function filtresOptions() {
   const rubs = P.filter(p => p.niv === 1 && p.enf).map(p => [p.id, p.titre]); rubs.push(['service', 'Autres pages (racine)']);
   garde('#fRub', 'Rubrique', rubs);
   garde('#fStatut', 'Statut', STATUTS.filter(([k]) => P.some(p => p.statut === k)));
+  garde('#fRecette', 'Recette', RECETTES);
   garde('#fGabarit', 'Gabarit', gabarits().map(g => [g, g]));
   garde('#fVille', 'Ville', Array.from(new Set(P.map(p => p.ville).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr')).map(v => [v, v]));
 }
@@ -268,6 +275,7 @@ const gabarits = () => Array.from(new Set(P.map(p => p.gabarit).filter(Boolean))
 
 function cellule(p, champ) {
   if (champ === 'statut') return '<span class="puce st-' + ech(p.statut) + '">' + ech(LIB[p.statut] || p.statut) + '</span>';
+  if (champ === 'recette') { const k = p.recette || 'a_faire'; return '<span class="puce rc-' + ech(k) + '">' + ech(LIB_R[k] || k) + '</span>'; }
   if (champ === 'gabarit') return p.gabarit ? '<span class="gabarit">' + ech(p.gabarit) + '</span>' : '<span class="vide">-</span>';
   if (champ === 'adresse') return p.adresse ? '<span class="url">' + ech(p.adresse) + '</span>' : '<span class="vide">-</span>';
   if (champ === 'reprend') { const n = lignesDe(p.reprend).length; return n ? '<button class="ouvre" type="button" data-panneau="a" title="Un clic ouvre la liste">' + nb(n) + '</button>' : '<span class="vide">0</span>'; }
@@ -281,10 +289,11 @@ function ligneHtml(p) {
   const pli = p.enf ? '<button class="pli" type="button" aria-label="Plier ou déplier"></button>' : '';
   const compte = p.enf ? '<span class="compte-enfants" title="' + p.tot + ' sous-page(s), tous niveaux confondus">' + nb(p.tot) + '</span>' : '';
   return '<tr data-id="' + ech(p.id) + '" data-parent="' + ech(p.parent || '') + '" data-enfants="' + p.enf + '" data-niveau="' + p.niv
-    + '" data-statut="' + ech(p.statut) + '" data-rub="' + ech(p.rub) + '" data-gabarit="' + ech(p.gabarit) + '" data-ville="' + ech(p.ville) + '" data-r="' + ech(recherche) + '">'
+    + '" data-statut="' + ech(p.statut) + '" data-recette="' + ech(p.recette || 'a_faire') + '" data-rub="' + ech(p.rub) + '" data-gabarit="' + ech(p.gabarit) + '" data-ville="' + ech(p.ville) + '" data-r="' + ech(recherche) + '">'
     + '<td class="page" style="padding-left:' + (30 + p.niv * 20) + 'px">' + pli + '<span data-champ-titre>' + ech(p.titre || 'Sans titre') + '</span>' + compte
     + '<button class="ouvre info" type="button" data-panneau="i" aria-label="Détail de la page">i</button></td>'
     + '<td data-champ="statut">' + cellule(p, 'statut') + '</td>'
+    + '<td data-champ="recette">' + cellule(p, 'recette') + '</td>'
     + '<td data-champ="gabarit">' + cellule(p, 'gabarit') + '</td>'
     + '<td data-champ="adresse">' + cellule(p, 'adresse') + '</td>'
     + '<td class="n">' + cellule(p, 'reprend') + '</td>'
@@ -318,13 +327,14 @@ function filtrer() {
   let brut = $('#q').value.trim();
   if (/cnam-paysdelaloire\.fr/.test(brut)) brut = sansDomaine(brut);
   const t = norm(brut);
-  const r = $('#fRub').value, s = $('#fStatut').value, g = $('#fGabarit').value, v = $('#fVille').value;
-  const cherche = t !== '' || s !== '' || g !== '' || v !== '';
+  const r = $('#fRub').value, s = $('#fStatut').value, g = $('#fGabarit').value, v = $('#fVille').value, rc = $('#fRecette').value;
+  const cherche = t !== '' || s !== '' || g !== '' || v !== '' || rc !== '';
   let n = 0;
   for (const l of lignes) {
     const ok = (!t || l.dataset.r.includes(t))
       && (!r || l.dataset.rub === r)
       && (!s || l.dataset.statut === s)
+      && (!rc || l.dataset.recette === rc)
       && (!g || l.dataset.gabarit === g)
       && (!v || l.dataset.ville === v)
       && (cherche || !ancetreReplie(l));
@@ -355,7 +365,8 @@ function editerCellule(td) {
   const champ = estTitre ? 'titre' : td.dataset.champ;
   const valeur = p[champ] || '';
   let champHtml;
-  if (champ === 'statut') champHtml = '<select>' + STATUTS.map(([k, l]) => '<option value="' + k + '"' + (k === valeur ? ' selected' : '') + '>' + l + '</option>').join('') + '</select>';
+  if (champ === 'recette') champHtml = '<select>' + RECETTES.map(([k, l]) => '<option value="' + k + '"' + (k === (valeur || 'a_faire') ? ' selected' : '') + '>' + l + '</option>').join('') + '</select>';
+  else if (champ === 'statut') champHtml = '<select>' + STATUTS.map(([k, l]) => '<option value="' + k + '"' + (k === valeur ? ' selected' : '') + '>' + l + '</option>').join('') + '</select>';
   else if (champ === 'gabarit') champHtml = '<input list="listeGabarits" value="' + ech(valeur) + '"><datalist id="listeGabarits">' + gabarits().map(g => '<option value="' + ech(g) + '">').join('') + '</datalist>';
   else if (champ === 'mot_cle' || champ === 'volume') champHtml = '<textarea rows="' + Math.max(1, lignesDe(valeur).length) + '">' + ech(valeur) + '</textarea>';
   else champHtml = '<input value="' + ech(valeur) + '">';
@@ -398,7 +409,7 @@ corps.addEventListener('click', e => {
   const td = e.target.closest('td.page, td[data-champ]');
   if (td) editerCellule(td);
 });
-['#q', '#fRub', '#fStatut', '#fGabarit', '#fVille'].forEach(s => $(s).addEventListener(s === '#q' ? 'input' : 'change', filtrer));
+['#q', '#fRub', '#fStatut', '#fRecette', '#fGabarit', '#fVille'].forEach(s => $(s).addEventListener(s === '#q' ? 'input' : 'change', filtrer));
 $('#bOuvre').addEventListener('click', () => { replies.clear(); filtrer(); });
 $('#bFerme').addEventListener('click', () => { P.filter(p => p.enf && p.niv >= 1).forEach(p => replies.add(p.id)); filtrer(); });
 
@@ -527,12 +538,12 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !edition) 
 
 function csv() {
   const cell = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
-  const tete = ['Niveau 0', 'Niveau 1', 'Niveau 2', 'Niveau 3', 'Niveau 4', 'Niveau 5', 'Niveau 6', 'Fil d\'Ariane', 'Nouvelle adresse', 'Statut', 'Gabarit',
+  const tete = ['Niveau 0', 'Niveau 1', 'Niveau 2', 'Niveau 3', 'Niveau 4', 'Niveau 5', 'Niveau 6', 'Fil d\'Ariane', 'Nouvelle adresse', 'Statut', 'Recette', 'Gabarit',
                 'Code', 'Ville', 'Mot-clé', 'Volume', 'Adresses actuelles reprises', 'Métiers liés', 'Modifiée par', 'Modifiée le'];
   const out = [tete.map(cell).join(';')];
   for (const p of P) {
     const niv = ['', '', '', '', '', '', '']; niv[Math.min(p.niv, 6)] = p.titre;
-    out.push([...niv, p.fil, p.adresse ? SITE + p.adresse : '', LIB[p.statut] || p.statut, p.gabarit, p.code, p.ville, p.mot_cle, p.volume,
+    out.push([...niv, p.fil, p.adresse ? SITE + p.adresse : '', LIB[p.statut] || p.statut, LIB_R[p.recette || 'a_faire'], p.gabarit, p.code, p.ville, p.mot_cle, p.volume,
       lignesDe(p.reprend).map(u => SITE + u).join('\n'), p.metiers, p.modifie_par, p.modifie_le].map(cell).join(';'));
   }
   return '﻿' + out.join('\r\n') + '\r\n';
@@ -600,7 +611,7 @@ function demanderNom() {
 async function demarrer() {
   document.body.classList.add('editeur');
   $('#moi').textContent = moi;
-  $('#aide').innerHTML = '<b>Modifier :</b> cliquez sur une cellule (titre, statut, gabarit, adresse, mot-clé, volume), puis <b>Entrée</b> pour valider, <b>Échap</b> pour annuler, <b>Tab</b> pour passer à la cellule suivante. Dans le mot-clé et le volume, <b>Maj+Entrée</b> ajoute une ligne. Le bouton <b>i</b> ouvre le détail : code, ville, pages reprises, métiers, ajout, déplacement ou suppression de la page, et l\'historique de ses modifications. Chaque modification est enregistrée avec son auteur et sa date.';
+  $('#aide').innerHTML = '<b>Modifier :</b> cliquez sur une cellule (titre, statut, recette, gabarit, adresse, mot-clé, volume), puis <b>Entrée</b> pour valider, <b>Échap</b> pour annuler, <b>Tab</b> pour passer à la cellule suivante. Dans le mot-clé et le volume, <b>Maj+Entrée</b> ajoute une ligne. Le bouton <b>i</b> ouvre le détail : code, ville, pages reprises, métiers, ajout, déplacement ou suppression de la page, et l\'historique de ses modifications. Chaque modification est enregistrée avec son auteur et sa date.';
   $('#connexion').hidden = true; $('#appli').hidden = false;
   if (lignes.length) return;
   const q0 = new URLSearchParams(location.search).get('q'); if (q0) $('#q').value = q0;
