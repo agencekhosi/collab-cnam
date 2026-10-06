@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico">
+<meta name="robots" content="noindex, nofollow">
+<title>Remplir les pages avec Claude · CNAM Pays de la Loire</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --paper:#fcfdfd; --card:#fff; --ink:#18232a; --ink-soft:#375363; --ink-faint:#6f8695;
+    --line:#deeaef; --line-strong:#97bcc9; --accent:#c5243e; --accent-deep:#981935; --tint:#deeaef;
+    --good:#147a55; --good-soft:#e3f0ea;
+    --shadow:0 1px 2px rgba(24,35,42,.06), 0 10px 26px -14px rgba(24,35,42,.20);
+    --sans:'Raleway', ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased;}
+  .inner{max-width:1080px; margin:0 auto; padding:0 clamp(18px,4vw,44px);}
+
+  .hero{padding:clamp(18px,3vw,36px) 0 clamp(12px,2vw,18px);}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#fff; margin:0 0 16px; background:var(--accent); padding:6px 14px 6px 12px; border-radius:999px;}
+  .eyebrow::before{content:""; width:6px; height:6px; border-radius:50%; background:#fff;}
+  h1{font-size:clamp(28px,5vw,44px); font-weight:800; line-height:1.07; letter-spacing:-.02em; margin:0 0 14px; text-wrap:balance; color:var(--ink); max-width:20ch;}
+  h1 mark{background:var(--accent); color:#fff; padding:.02em .26em; border-radius:0; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .sub{font-size:clamp(15px,2vw,17px); color:var(--ink-soft); margin:0; max-width:62ch;}
+
+  .essentiel{background:var(--good-soft); border:1px solid color-mix(in srgb,var(--good) 28%,transparent); border-radius:16px; padding:22px 24px; margin-top:24px;}
+  .essentiel h3{margin:0 0 13px; font-size:16px; font-weight:800; color:var(--ink);}
+  .essentiel ul{margin:0; padding:0; list-style:none; display:grid; gap:9px;}
+  .essentiel li{position:relative; padding-left:26px; font-size:14.5px; color:var(--ink-soft); line-height:1.45;}
+  .essentiel li::before{content:""; position:absolute; left:2px; top:6px; width:11px; height:11px; border-radius:50%; background:var(--good);}
+  .essentiel li b{color:var(--ink);}
+
+  .sec-title{font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; color:var(--ink-faint); margin:38px 0 4px;}
+
+  .phase{margin-top:20px;}
+  .ph-head{display:flex; align-items:center; gap:13px; margin-bottom:6px; flex-wrap:wrap;}
+  .ph-n{font-size:14px; color:#fff; font-weight:800; background:var(--accent); border-radius:10px; width:31px; height:31px; display:grid; place-items:center; flex:none;}
+  .ph-head h2{font-size:clamp(19px,3vw,23px); font-weight:800; letter-spacing:-.015em; margin:0; text-wrap:balance;}
+  .ph-head h2 mark{background:var(--accent); color:#fff; padding:.02em .22em; border-radius:0; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .fmt{margin-left:auto; font-size:11px; letter-spacing:.06em; text-transform:uppercase; font-weight:800; color:#005e94; background:#e6f2f9; border:1px solid #bfe0f0; padding:5px 11px; border-radius:999px; white-space:nowrap;}
+  .ph-sub{font-size:13.5px; color:var(--ink-faint); margin:0 0 12px 44px;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:18px 22px; transition:border-color .15s;}
+  .card:hover{border-color:var(--line-strong);}
+  .do{margin:0; padding:0; list-style:none; display:grid; gap:10px;}
+  .do li{position:relative; padding-left:22px; font-size:15px; color:var(--ink-soft); line-height:1.5;}
+  .do li::before{content:""; position:absolute; left:2px; top:8px; width:7px; height:7px; border-radius:50%; background:var(--line-strong);}
+  .do li b{color:var(--ink);}
+  .outcome{margin:15px 0 2px; background:var(--good-soft); border:1px solid color-mix(in srgb,var(--good) 28%,transparent); border-radius:11px; padding:12px 16px; font-size:14px; color:var(--ink); line-height:1.5;}
+  .outcome .olab{display:block; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:800; color:var(--good); margin-bottom:3px;}
+
+  .pause{margin:22px 0; padding:16px 22px; text-align:center; border:2px dashed var(--line-strong); border-radius:16px; background:#fff;}
+  .pause b{color:var(--accent-deep); font-size:16px; font-weight:800;}
+  .pause span{display:block; font-size:14px; color:var(--ink-soft); margin-top:5px;}
+
+  .note{margin-top:34px; background:var(--tint); border:1px solid var(--line-strong); border-radius:18px; padding:clamp(20px,3vw,28px);}
+  .note h2{font-size:20px; font-weight:800; margin:0 0 8px; letter-spacing:-.01em;}
+  .note h2 .k{color:var(--accent);}
+  .note p{margin:0; font-size:15px; color:var(--ink-soft); line-height:1.55;}
+  .note p b{color:var(--ink);}
+
+  footer{margin:44px 0 60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+  footer a{color:var(--accent-deep); font-weight:600; text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+
+  @media (max-width:640px){ .ph-sub{margin-left:0;} .fmt{margin-left:0;} }
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important;} }
+
+  .label{margin:0 0 8px; font-size:13px; font-weight:700; color:var(--ink-faint);}
+  pre.prompt{margin:0; white-space:pre-wrap; word-break:break-word; background:#f4f8fa; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; font:13.5px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; color:var(--ink);}
+  code{font:12.5px ui-monospace, Consolas, monospace; background:#f4f8fa; padding:1px 5px; border-radius:5px;}
+  .note .do{margin-top:6px;}
+</style>
+<script src="header.js" defer></script>
+</head>
+<body>
+
+<div class="inner">
+  <header class="hero">
+    <p class="eyebrow">Tutoriel · Préprod 2026</p>
+    <h1>Remplir les pages de la préprod <mark>avec Claude</mark></h1>
+    <p class="sub">Vous remplissez une page à la perfection, puis Claude s'en sert de modèle pour les pages du même type : il repère ce qui manque, va chercher l'information sur le site actuel et remplit lui-même les champs dans votre navigateur. Vous gardez la main à chaque étape.</p>
+  </header>
+
+  <div class="essentiel">
+    <h3>Le principe en 4 points</h3>
+    <ul>
+      <li><b>Une page modèle</b>, remplie et relue par vous, sert de référence pour toutes les pages du même gabarit (campus, fiches formation, pages domaine…).</li>
+      <li>Claude <b>compare</b> chaque autre page au modèle et liste ce qui manque.</li>
+      <li>Il <b>cherche les informations sur le site actuel</b> du Cnam et vous propose les textes, avec leur source.</li>
+      <li>Après votre accord, il <b>remplit les champs</b> dans l'écran d'édition WordPress et enregistre. La publication reste votre décision.</li>
+    </ul>
+  </div>
+
+  <p class="sec-title">Avant de commencer</p>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">0</span><h2>Préparer <mark>l'outil</mark></h2><span class="fmt">Une fois</span></div>
+    <p class="ph-sub">À faire une seule fois sur votre ordinateur.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Installez l'application <b>Claude</b> (ou utilisez claude.ai) et l'extension <b>Claude in Chrome</b> dans votre Chrome habituel, connectée à votre compte Claude.</li>
+        <li>Dans ce même Chrome, <b>ouvrez la préprod</b> et saisissez vous-même l'identifiant et le mot de passe de la préprod, puis connectez-vous à WordPress. Claude ne saisit jamais de mot de passe à votre place.</li>
+        <li>Si Claude dit ne pas voir vos onglets, ouvrez l'extension et vérifiez qu'elle est connectée au <b>bon navigateur</b>, celui où vous êtes connecté à la préprod.</li>
+      </ul>
+      <div class="outcome"><span class="olab">Pour vérifier</span>Demandez à Claude : « Ouvre la page d'accueil de la préprod dans Chrome et dis-moi son titre. »</div>
+    </div>
+  </section>
+
+  <p class="sec-title">La méthode, étape par étape</p>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">1</span><h2>Remplir <mark>une page modèle</mark></h2><span class="fmt">Vous</span></div>
+    <p class="ph-sub">Exemple : le campus de Nantes.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Remplissez <b>tous les blocs et tous les champs</b> de la page, y compris les boîtes de réglages sous le contenu (ex. « CPT - Campus » : horaires, coordonnées).</li>
+        <li>Soignez la forme autant que le fond : <b>longueur des textes, gras, listes, liens</b>. Claude reproduira exactement ce que vous faites.</li>
+        <li>Relisez la page en aperçu. Elle doit être <b>la page parfaite</b> : chaque défaut serait copié sur les autres.</li>
+      </ul>
+      <div class="outcome"><span class="olab">À l'issue</span>Une page de référence, dont vous gardez l'adresse d'édition (ex. <code>…/wp-admin/post.php?post=1234&amp;action=edit</code>).</div>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">2</span><h2>Faire lire <mark>le modèle</mark> à Claude</h2><span class="fmt">Claude</span></div>
+    <p class="ph-sub">Claude apprend la structure de la page et votre façon de la remplir.</p>
+    <div class="card">
+      <p class="label">À copier dans Claude, en remplaçant l'adresse :</p>
+      <pre class="prompt">Dans Chrome, ouvre la page d'édition WordPress suivante : [adresse d'édition de la page modèle]
+C'est une page modèle, parfaitement remplie. Ne la modifie pas et ne l'enregistre pas.
+Relève sa structure : chaque section, chaque bloc, chaque champ des boîtes de réglages (sous le contenu), avec ce qu'il contient.
+Relève aussi ma façon de remplir : longueur des textes, mise en gras, listes, liens.
+Fais-m'en un résumé court, section par section.</pre>
+      <div class="outcome"><span class="olab">À l'issue</span>Vous vérifiez que Claude a bien compris la page, et vous le corrigez s'il s'est trompé.</div>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">3</span><h2>Comparer une autre page <mark>au modèle</mark></h2><span class="fmt">Claude</span></div>
+    <p class="ph-sub">Une page à la fois.</p>
+    <div class="card">
+      <p class="label">À copier dans Claude :</p>
+      <pre class="prompt">Ouvre maintenant la page d'édition : [adresse d'édition de la page à remplir]
+Sa page équivalente sur le site actuel est : [adresse de la page sur cnam-paysdelaloire.fr]
+Compare-la au modèle, bloc par bloc et champ par champ.
+Donne-moi un tableau : ce qui est déjà rempli, ce qui est vide, ce qui contient encore du texte provisoire (lorem ipsum, « à compléter »), ce qui est rempli mais différent du modèle.
+Ne modifie rien pour l'instant.</pre>
+      <div class="outcome"><span class="olab">À l'issue</span>La liste de ce qui manque sur la page.</div>
+    </div>
+  </section>
+
+  <div class="pause"><b>Vous validez la liste</b><span>Retirez ce qui ne doit pas être rempli : une information propre au modèle, un bloc qui n'a pas de sens pour cette page.</span></div>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">4</span><h2>Chercher l'information <mark>et rédiger</mark></h2><span class="fmt">Claude</span></div>
+    <p class="ph-sub">Claude ne doit rien inventer.</p>
+    <div class="card">
+      <p class="label">À copier dans Claude :</p>
+      <pre class="prompt">Pour chaque élément manquant de la liste validée, va chercher l'information sur le site actuel du Cnam Pays de la Loire : la page équivalente, puis les autres pages du site si besoin.
+Rédige les textes en reprenant la longueur, le ton et la mise en forme du modèle.
+Règle absolue : chaque information doit venir d'une page du site actuel. N'invente rien, n'extrapole pas. Si tu ne trouves pas une information, dis-le au lieu de la deviner.
+Présente-moi, pour chaque champ : le texte proposé et l'adresse de la page source.</pre>
+      <div class="outcome"><span class="olab">À l'issue</span>Les textes proposés, chacun avec sa source, et la liste des informations introuvables.</div>
+    </div>
+  </section>
+
+  <div class="pause"><b>Vous relisez les textes</b><span>Corrigez directement dans la conversation (« raccourcis ce paragraphe », « cette information est fausse, remplace-la par… »). Les informations introuvables sont à demander aux équipes concernées.</span></div>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">5</span><h2>Remplir <mark>les champs</mark></h2><span class="fmt">Claude</span></div>
+    <p class="ph-sub">Claude écrit dans l'écran d'édition ouvert dans votre Chrome.</p>
+    <div class="card">
+      <p class="label">À copier dans Claude :</p>
+      <pre class="prompt">Remplis maintenant la page [adresse d'édition] avec les textes validés, dans les bons blocs et les bons champs, avec la même mise en forme que le modèle.
+Ne touche à rien d'autre. Ne publie pas : enregistre en brouillon, ou clique sur « Mettre à jour » si la page est déjà publiée sur la préprod.
+Ensuite, recharge la page et vérifie que chaque champ contient bien le texte attendu.</pre>
+      <div class="outcome"><span class="olab">À l'issue</span>La page est remplie et enregistrée. Claude vous dit ce qu'il a vérifié.</div>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">6</span><h2>Vérifier <mark>et publier</mark></h2><span class="fmt">Vous</span></div>
+    <p class="ph-sub">La dernière étape vous revient toujours.</p>
+    <div class="card">
+      <ul class="do">
+        <li>Ouvrez l'<b>aperçu</b> de la page et comparez-le visuellement au modèle.</li>
+        <li>Publiez vous-même quand la page vous convient.</li>
+        <li>Passez à la page suivante en reprenant à l'<b>étape 3</b> : Claude garde le modèle en mémoire dans la même conversation.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="note">
+    <h2>Les <span class="k">bons réflexes</span></h2>
+    <ul class="do">
+      <li><b>Une page à la fois</b>, et une conversation par type de page (campus, fiches formation…).</li>
+      <li><b>Ne laissez jamais Claude enregistrer la page modèle.</b> Si elle doit changer, modifiez-la vous-même.</li>
+      <li><b>Rechargez l'écran d'édition</b> si vous l'aviez ouvert pendant que Claude modifiait la page : sinon, en enregistrant, vous écraseriez son travail.</li>
+      <li>La préprod est parfois <b>lente</b> : un enregistrement peut prendre une minute. Laissez Claude vérifier plutôt que de recommencer.</li>
+      <li>Si une information saisie <b>ne s'affiche pas sur la page</b> (un champ des réglages, par exemple), ce n'est pas un problème de contenu : signalez-le à Le Petit Garage.</li>
+      <li>Demandez toujours <b>la source</b> d'une information. Un chiffre, un nom ou un horaire sans source ne doit pas être publié.</li>
+    </ul>
+  </div>
+
+  <footer><span>Cnam Pays de la Loire × KHOSI · Refonte 2026</span><a href="index.html">Retour à l'accueil</a></footer>
+</div>
+
+</body>
+</html>

@@ -7,7 +7,8 @@
     {href:"etat-des-lieux-seo.html", label:"État des lieux SEO"},
     {href:"checklist.html",          label:"Checklist"},
     {href:"arborescence.html",       label:"Arborescence"},
-    {href:"deroule-atelier.html",    label:"Déroulé"}
+    {href:"deroule-atelier.html",    label:"Déroulé"},
+    {href:"tuto-claude.html",        label:"Tuto Claude"}
   ];
   var css = ""
     + ".site-header{border-bottom:1px solid #deeaef; background:#fff; font-family:inherit;}"
