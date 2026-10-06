@@ -121,14 +121,13 @@
   <div class="cadre">
     <table>
       <colgroup>
-        <col style="width:26%"><col style="width:96px"><col style="width:150px"><col><col style="width:120px"><col style="width:112px"><col style="width:84px"><col style="width:13%"><col style="width:74px"><col style="width:84px">
+        <col style="width:26%"><col style="width:96px"><col style="width:150px"><col><col style="width:112px"><col style="width:84px"><col style="width:13%"><col style="width:74px"><col style="width:84px">
       </colgroup>
       <thead><tr>
         <th>Page <span class="vide">(sous-pages)</span></th>
         <th>Statut</th>
         <th>Gabarit</th>
         <th>Nouvelle adresse</th>
-        <th>Rédaction</th>
         <th title="Avancement de la page sur la préprod du futur site, relevé chaque nuit">Préprod</th>
         <th class="n" title="Pages actuelles reprises par cette page, donc à rediriger vers elle">Reprend</th>
         <th>Mot-clé principal</th>
@@ -198,7 +197,6 @@ function rendre() {
       + '<td><span class="puce st-' + p.s + '">' + ech(LIB[p.s]) + '</span></td>'
       + '<td><span class="gabarit">' + (p.g ? ech(p.g) : '<span class="vide">-</span>') + '</span></td>'
       + '<td><span class="url">' + (p.u ? ech(p.u) : '<span class="vide">-</span>') + '</span></td>'
-      + '<td><span class="redac">' + (p.qr ? ech(p.qr) : '<span class="vide">non attribué</span>') + (p.sr ? '<br><small>' + ech(p.sr) + '</small>' : '') + '</span></td>'
       + '<td>' + puceAv(p) + '</td>'
       + '<td class="n">' + reprend + '</td>'
       + '<td>' + (p.k ? ech(p.k) : '<span class="vide">aucun</span>') + '</td>'
