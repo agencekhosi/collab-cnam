@@ -103,8 +103,6 @@
     <select id="fStatut" aria-label="Filtrer par statut"></select>
     <select id="fGabarit" aria-label="Filtrer par gabarit"></select>
     <select id="fVille" aria-label="Filtrer par ville"></select>
-    <select id="fQui" aria-label="Filtrer par rédacteur"></select>
-    <select id="fRed" aria-label="Filtrer par statut de rédaction"></select>
     <select id="fAv" aria-label="Filtrer par avancement sur la préprod"></select>
     <button class="outil" id="bOuvre" type="button">Tout déplier</button>
     <button class="outil" id="bFerme" type="button">Tout plier</button>
@@ -164,10 +162,6 @@ const gabs = Array.from(new Set(P.map(p => p.g).filter(Boolean))).sort((a, b) =>
 $('#fGabarit').innerHTML = opts('Gabarit', gabs.map(g => [g, g]));
 const villes = Array.from(new Set(P.map(p => p.ville).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr'));
 $('#fVille').innerHTML = opts('Ville', villes.map(v => [v, v]));
-const quis = Array.from(new Set(P.map(p => p.qr).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr'));
-$('#fQui').innerHTML = opts('Qui rédige', quis.map(v => [v, v]).concat([['__vide', 'Non attribué']]));
-const reds = Array.from(new Set(P.map(p => p.sr).filter(Boolean))).sort((a, b) => a.localeCompare(b, 'fr'));
-$('#fRed').innerHTML = opts('Statut rédaction', reds.map(v => [v, v]));
 $('#fAv').innerHTML = opts('Préprod', [['__cree', 'Créée (toutes adresses)']].concat(D.avancements.filter(([k]) => P.some(p => p.av === k)).map(([k, l]) => [k, l])).concat(P.some(p => p.avd.length) ? [['__doublon', 'Doublon']] : []));
 
 const corps = $('#corps');
@@ -191,7 +185,7 @@ function rendre() {
     const compte = p.enf ? '<span class="compte-enfants" title="' + p.tot + ' sous-page(s), tous niveaux confondus">' + nb(p.tot) + '</span>' : '';
     const reprend = p.a.length ? '<button class="ouvre" type="button" data-panneau="a" title="Un clic ouvre la liste">' + nb(p.a.length) + '</button>' : '<span class="vide">0</span>';
     return '<tr data-id="' + p.i + '" data-parent="' + p.p + '" data-enfants="' + p.enf + '" data-niveau="' + p.niv
-      + '" data-statut="' + p.s + '" data-rub="' + p.rub + '" data-gabarit="' + ech(p.g) + '" data-ville="' + ech(p.ville) + '" data-qui="' + ech(p.qr || '__vide') + '" data-red="' + ech(p.sr) + '" data-av="' + p.av + '" data-dbl="' + (p.avd.length ? 1 : 0) + '" data-r="' + ech(recherche) + '">'
+      + '" data-statut="' + p.s + '" data-rub="' + p.rub + '" data-gabarit="' + ech(p.g) + '" data-ville="' + ech(p.ville) + '" data-av="' + p.av + '" data-dbl="' + (p.avd.length ? 1 : 0) + '" data-r="' + ech(recherche) + '">'
       + '<td class="page" style="padding-left:' + (30 + p.niv * 20) + 'px">' + pli + ech(p.n) + compte
       + '<button class="ouvre info" type="button" data-panneau="i" aria-label="Détail de la page">i</button></td>'
       + '<td><span class="puce st-' + p.s + '">' + ech(LIB[p.s]) + '</span></td>'
@@ -223,8 +217,8 @@ function filtrer() {
   let brut = $('#q').value.trim();
   if (/cnam-paysdelaloire\.fr/.test(brut)) brut = sansDomaine(brut);
   const t = norm(brut);
-  const r = $('#fRub').value, s = $('#fStatut').value, g = $('#fGabarit').value, v = $('#fVille').value, q = $('#fQui').value, d = $('#fRed').value, a = $('#fAv').value;
-  const cherche = t !== '' || s !== '' || g !== '' || v !== '' || q !== '' || d !== '' || a !== '';
+  const r = $('#fRub').value, s = $('#fStatut').value, g = $('#fGabarit').value, v = $('#fVille').value, a = $('#fAv').value;
+  const cherche = t !== '' || s !== '' || g !== '' || v !== '' || a !== '';
   let n = 0;
   for (const l of lignes) {
     const ok = (!t || l.dataset.r.includes(t))
@@ -232,8 +226,6 @@ function filtrer() {
       && (!s || l.dataset.statut === s)
       && (!g || l.dataset.gabarit === g)
       && (!v || l.dataset.ville === v)
-      && (!q || l.dataset.qui === q)
-      && (!d || l.dataset.red === d)
       && (!a || (a === '__cree' ? ['en-ligne', 'adresse', 'rubrique'].includes(l.dataset.av) : (a === '__doublon' ? l.dataset.dbl === '1' : l.dataset.av === a)))
       && (cherche || !ancetreReplie(l));
     l.hidden = !ok;
@@ -251,7 +243,7 @@ corps.addEventListener('click', e => {
   if (replies.has(id)) replies.delete(id); else replies.add(id);
   filtrer();
 });
-['#q', '#fRub', '#fStatut', '#fGabarit', '#fVille', '#fQui', '#fRed', '#fAv'].forEach(s => $(s).addEventListener(s === '#q' ? 'input' : 'change', filtrer));
+['#q', '#fRub', '#fStatut', '#fGabarit', '#fVille', '#fAv'].forEach(s => $(s).addEventListener(s === '#q' ? 'input' : 'change', filtrer));
 $('#bOuvre').addEventListener('click', () => { replies.clear(); filtrer(); });
 $('#bFerme').addEventListener('click', () => { P.filter(p => p.enf && p.niv >= 1).forEach(p => replies.add(p.i)); filtrer(); });
 
