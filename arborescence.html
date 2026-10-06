@@ -90,8 +90,6 @@
     <p class="meta">Arborescence V3, dernière mise à jour juin 2026 · page générée le 6 octobre 2026 · consultation seule, les modifications se font dans le tableur de l'arborescence</p>
   </section>
 
-  <div class="chiffres" id="chiffres"></div>
-
   <div class="barres">
     <input type="search" id="q" placeholder="Chercher un titre, une adresse actuelle ou future, un mot-clé, un code formation…" aria-label="Chercher">
     <select id="fRub" aria-label="Filtrer par rubrique"></select>
@@ -148,8 +146,6 @@ const sansDomaine = t => t.replace(/^https?:\/\/(www\.)?cnam-paysdelaloire\.fr/,
 
 const nPages = P.length, nExist = P.filter(p => p.s === 'existante').length, nCrea = P.filter(p => p.s === 'creation').length;
 const nRepr = P.reduce((s, p) => s + p.a.length, 0);
-$('#chiffres').innerHTML = [[nPages, 'pages prévues'], [nExist, 'pages existantes reprises'], [nCrea, 'pages à créer'], [nRepr, 'adresses actuelles reprises']]
-  .map(([v, l]) => '<div class="chiffre"><b>' + nb(v) + '</b><span>' + l + '</span></div>').join('');
 
 const opts = (lib, liste) => '<option value="">' + lib + '</option>' + liste.map(([v, l]) => '<option value="' + ech(v) + '">' + ech(l) + '</option>').join('');
 $('#fRub').innerHTML = opts('Rubrique', D.rubriques);
