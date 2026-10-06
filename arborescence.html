@@ -180,7 +180,8 @@ function puceAv(p) {
     || ((p.av === 'adresse' || p.av === 'rubrique') ? 'Créée à : ' + p.avu : (p.av === 'en-ligne' ? 'Créée à l\'adresse prévue' : ''));
   const lib = p.av === 'adresse' ? 'Autre adresse' : (p.av === 'rubrique' ? 'Autre rubrique' : LAV[p.av]);
   const s = '<span class="av av-' + p.av + '"' + (t ? ' title="' + ech(t) + '"' : '') + '>' + ech(lib) + '</span>';
-  const d = p.avd.length ? '<br><span class="av av-doublon" title="' + ech('Même sujet sur ' + p.avd.length + ' pages : ' + p.avd.join(' et ')) + '">Doublon</span>' : '';
+  const autre = p.avd.find(u => u !== p.avu) || p.avd[0];
+  const d = p.avd.length ? '<br><a class="lien-av" href="' + ech(PRE + autre) + '" target="_blank" rel="noopener"><span class="av av-doublon" title="' + ech('Doublon : ' + autre) + '">Doublon</span></a>' : '';
   return (p.avu ? '<a class="lien-av" href="' + ech(PRE + p.avu) + '" target="_blank" rel="noopener">' + s + '</a>' : s) + d;
 }
 function rendre() {
