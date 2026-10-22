@@ -5,10 +5,13 @@
   var NAV = [
     {href:"index.html",              label:"Accueil"},
     {href:"etat-des-lieux-seo.html", label:"État des lieux SEO"},
-    {href:"checklist.html",          label:"Checklist"},
     {href:"arborescence.html",       label:"Arborescence"},
-    {href:"deroule-atelier.html",    label:"Déroulé"},
-    {href:"tuto-claude.html",        label:"Tuto Claude"}
+    {label:"Ressources", items:[
+      {href:"checklist.html",        label:"Checklist de création de contenu"},
+      {href:"deroule-atelier.html",  label:"Déroulé de l'atelier"},
+      {href:"tuto-claude.html",      label:"Remplir les pages avec Claude"},
+      {href:"archive-intra.html",    label:"Sauvegarde des fiches intra"}
+    ]}
   ];
   var css = ""
     + ".site-header{border-bottom:1px solid #deeaef; background:#fff; font-family:inherit;}"
@@ -20,18 +23,46 @@
     + ".site-header .site-nav a{font-family:inherit; font-size:13.5px; font-weight:600; text-decoration:none; color:#375363; padding:7px 12px; border-radius:999px;}"
     + ".site-header .site-nav a:hover{color:#981935; background:#deeaef;}"
     + ".site-header .site-nav a.active{color:#c5243e; background:#fee5e6;}"
-    + "@media (max-width:600px){ .site-header .brand-x{display:none;} }";
+    + ".site-header .sh-menu{position:relative;}"
+    + ".site-header .sh-menu > button{font-family:inherit; font-size:13.5px; font-weight:600; color:#375363; background:none; border:0; cursor:pointer; padding:7px 12px; border-radius:999px; display:inline-flex; align-items:center; gap:6px;}"
+    + ".site-header .sh-menu > button::after{content:''; width:6px; height:6px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:translateY(-2px) rotate(45deg);}"
+    + ".site-header .sh-menu > button:hover, .site-header .sh-menu.open > button{color:#981935; background:#deeaef;}"
+    + ".site-header .sh-menu > button.active{color:#c5243e; background:#fee5e6;}"
+    + ".site-header .sh-drop{display:none; position:absolute; right:0; top:calc(100% + 6px); z-index:50; min-width:250px; background:#fff; border:1px solid #deeaef; border-radius:12px; box-shadow:0 8px 24px rgba(30,60,80,.12); padding:6px;}"
+    + ".site-header .sh-menu.open .sh-drop{display:block;}"
+    + ".site-header .sh-drop a{display:block; border-radius:8px;}"
+    + "@media (max-width:600px){ .site-header .brand-x{display:none;} .site-header .sh-inner{position:relative;} .site-header .sh-menu{position:static;} .site-header .sh-drop{left:16px; right:16px; min-width:0;} }";
   var here = location.pathname.split("/").pop();
   if(!here){ here = "index.html"; }
-  var links = NAV.map(function(n){
+  function link(n){
     var on = (n.href === here) ? " class=\"active\"" : "";
     return "<a href=\""+n.href+"\""+on+">"+n.label+"</a>";
+  }
+  var links = NAV.map(function(n){
+    if(!n.items){ return link(n); }
+    var on = n.items.some(function(i){ return i.href === here; }) ? " class=\"active\"" : "";
+    return "<div class=\"sh-menu\"><button type=\"button\" aria-expanded=\"false\""+on+">"+n.label+"</button>"
+      + "<div class=\"sh-drop\">"+n.items.map(link).join("")+"</div></div>";
   }).join("");
   var html = "<header class=\"site-header\"><div class=\"sh-inner\">"
     + "<a class=\"brand\" href=\"index.html\" aria-label=\"Retour a l'accueil\">"
     + "<img src=\""+LOGO+"\" alt=\"Cnam Pays de la Loire\"><span class=\"brand-x\">&#215; KHOSI</span></a>"
     + "<nav class=\"site-nav\">"+links+"</nav></div></header>";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
-  function inject(){ document.body.insertAdjacentHTML("afterbegin", html); }
+  function inject(){
+    document.body.insertAdjacentHTML("afterbegin", html);
+    var menus = document.querySelectorAll(".site-header .sh-menu");
+    function fermer(){ menus.forEach(function(m){ m.classList.remove("open"); m.firstChild.setAttribute("aria-expanded","false"); }); }
+    menus.forEach(function(m){
+      m.firstChild.addEventListener("click", function(e){
+        e.stopPropagation();
+        var ouvrir = !m.classList.contains("open");
+        fermer();
+        if(ouvrir){ m.classList.add("open"); m.firstChild.setAttribute("aria-expanded","true"); }
+      });
+    });
+    document.addEventListener("click", fermer);
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape"){ fermer(); } });
+  }
   if(document.body){ inject(); } else { document.addEventListener("DOMContentLoaded", inject); }
 })();
