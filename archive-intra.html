@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.ico">
+<meta name="robots" content="noindex, nofollow">
+<title>Anciennes fiches intra · CNAM Pays de la Loire</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --paper:#fcfdfd; --card:#fff; --ink:#18232a; --ink-soft:#375363; --ink-faint:#6f8695;
+    --line:#deeaef; --line-strong:#97bcc9; --accent:#c5243e; --accent-deep:#981935; --tint:#deeaef;
+    --good:#147a55; --good-soft:#e3f0ea; --warn:#8a5a00; --warn-soft:#fbf0dc;
+    --shadow:0 1px 2px rgba(24,35,42,.06), 0 10px 26px -14px rgba(24,35,42,.20);
+    --sans:'Raleway', ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased;}
+  .inner{max-width:1280px; margin:0 auto; padding:0 clamp(16px,4vw,44px);}
+  .hero{padding:clamp(18px,3vw,36px) 0 clamp(10px,2vw,20px);}
+  .crumbs{display:flex; gap:10px; font-size:13px; margin:0 0 18px; color:var(--ink-faint);}
+  .crumbs a{color:var(--accent-deep); font-weight:600; text-decoration:none;}
+  .crumbs .sep{color:var(--line-strong);}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#fff; margin:0 0 16px; background:var(--accent); padding:6px 14px 6px 12px; border-radius:999px;}
+  .eyebrow::before{content:""; width:6px; height:6px; border-radius:50%; background:#fff;}
+  h1{font-size:clamp(28px,5vw,42px); font-weight:800; line-height:1.07; letter-spacing:-.02em; margin:0 0 14px; color:var(--ink);}
+  .sub{font-size:clamp(15px,2vw,17px); color:var(--ink-soft); margin:0; max-width:72ch;}
+
+  .tools{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:22px 0 16px;}
+  .tools input{flex:1 1 260px; font:inherit; font-size:14.5px; padding:10px 14px; border:1px solid var(--line-strong); border-radius:12px; background:var(--card); color:var(--ink);}
+  .tools input:focus{outline:2px solid var(--accent); outline-offset:1px;}
+  .chip{font:inherit; font-size:13px; font-weight:700; padding:8px 13px; border-radius:999px; border:1px solid var(--line-strong); background:var(--card); color:var(--ink-soft); cursor:pointer;}
+  .chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff;}
+
+  .layout{display:grid; grid-template-columns:minmax(280px,380px) 1fr; gap:22px; align-items:start; margin-bottom:60px;}
+  @media (max-width:900px){ .layout{grid-template-columns:1fr;} }
+  .liste{list-style:none; margin:0; padding:0; background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); max-height:calc(100vh - 120px); overflow:auto; position:sticky; top:16px;}
+  @media (max-width:900px){ .liste{position:static; max-height:340px;} }
+  .liste li{border-bottom:1px solid var(--line);}
+  .liste li:last-child{border-bottom:0;}
+  .liste button{all:unset; box-sizing:border-box; display:block; width:100%; padding:12px 16px; cursor:pointer;}
+  .liste button:hover{background:var(--paper);}
+  .liste button:focus-visible{outline:2px solid var(--accent); outline-offset:-2px;}
+  .liste button[aria-current="true"]{background:var(--tint);}
+  .liste .t{display:block; font-size:14px; font-weight:700; color:var(--ink); line-height:1.35;}
+  .badge{display:inline-block; margin-top:5px; font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:999px;}
+  .b-reprise{background:var(--good-soft); color:var(--good);}
+  .b-autre{background:var(--warn-soft); color:var(--warn);}
+  .b-non{background:var(--line); color:var(--ink-faint);}
+  .vide{padding:16px; font-size:14px; color:var(--ink-faint);}
+
+  .vue{background:var(--card); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); padding:clamp(18px,3vw,32px); min-width:0;}
+  .vue .accueil{color:var(--ink-soft); font-size:15px;}
+  .meta{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin:0 0 20px; font-size:13.5px;}
+  .meta dl{display:grid; grid-template-columns:max-content 1fr; gap:6px 14px; margin:0;}
+  .meta dt{font-weight:700; color:var(--ink-faint);}
+  .meta dd{margin:0; color:var(--ink-soft); overflow-wrap:anywhere;}
+  .actions{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px;}
+  .actions a{font-size:13.5px; font-weight:700; text-decoration:none; padding:8px 14px; border-radius:10px; border:1px solid var(--line-strong); color:var(--ink-soft);}
+  .actions a.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .actions a:hover{border-color:var(--accent-deep);}
+  .note{font-size:14px; color:var(--warn); background:var(--warn-soft); border-radius:10px; padding:10px 14px; margin:0 0 16px;}
+  .contenu{font-size:15px; color:var(--ink); overflow-wrap:anywhere;}
+  .contenu h1{font-size:26px; margin:18px 0 10px;}
+  .contenu h2{font-size:19px; margin:26px 0 8px; padding-top:14px; border-top:1px solid var(--line); color:var(--accent-deep);}
+  .contenu h3{font-size:16px; margin:18px 0 6px;}
+  .contenu h4{font-size:14.5px; margin:14px 0 4px; color:var(--ink-soft);}
+  .contenu ul{padding-left:22px;}
+  .contenu li > p{margin:0;}
+  .contenu li{margin:2px 0;}
+  .contenu a{color:#005e94;}
+  .contenu table{border-collapse:collapse; width:100%; font-size:14px; display:block; overflow-x:auto;}
+  .contenu td,.contenu th{border:1px solid var(--line); padding:6px 9px; text-align:left;}
+  .pdf{margin-top:28px;}
+  .pdf iframe{width:100%; height:80vh; border:1px solid var(--line); border-radius:12px;}
+  @media (max-width:700px){ .pdf iframe{display:none;} }
+</style>
+<script src="header.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+</head>
+<body>
+<div class="inner">
+  <header class="hero">
+    <nav class="crumbs"><a href="index.html">Accueil</a><span class="sep">/</span><span>Anciennes fiches intra</span></nav>
+    <p class="eyebrow">Archive · 22 octobre 2026</p>
+    <h1>Anciennes fiches intra</h1>
+    <p class="sub">Les fiches formation intra du site actuel, telles qu'elles étaient en ligne le 22 octobre 2026 : texte de la page, informations SEO et plaquette PDF. Pour chaque fiche reprise, un lien ouvre la nouvelle version dans la préprod.</p>
+  </header>
+
+  <div class="tools">
+    <input id="q" type="search" placeholder="Rechercher une formation" aria-label="Rechercher une formation">
+    <button class="chip" data-f="" aria-pressed="true">Toutes</button>
+    <button class="chip" data-f="Reprise" aria-pressed="false">Reprises</button>
+    <button class="chip" data-f="autre" aria-pressed="false">Remplacées ou regroupées</button>
+    <button class="chip" data-f="Non reprise" aria-pressed="false">Non reprises</button>
+  </div>
+
+  <div class="layout">
+    <ul class="liste" id="liste" aria-label="Fiches archivées"></ul>
+    <article class="vue" id="vue"><p class="accueil">Choisissez une fiche dans la liste.</p></article>
+  </div>
+</div>
+<script>
+(function(){
+  var fiches = [], filtre = "", liste = document.getElementById("liste"), vue = document.getElementById("vue");
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+  function classe(f){ return f.statut === "Reprise" ? "b-reprise" : (f.statut === "Non reprise" ? "b-non" : "b-autre"); }
+  function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+
+  function dessinerListe(){
+    var q = norm(document.getElementById("q").value), actif = location.hash.slice(1);
+    var vis = fiches.filter(function(f){
+      var okF = !filtre || (filtre === "autre" ? (f.statut !== "Reprise" && f.statut !== "Non reprise") : f.statut === filtre);
+      return okF && (!q || norm(f.titre + " " + f.slug).indexOf(q) >= 0);
+    });
+    liste.innerHTML = vis.length ? vis.map(function(f){
+      return "<li><button data-s=\"" + f.slug + "\"" + (f.slug === actif ? " aria-current=\"true\"" : "") + ">"
+        + "<span class=\"t\">" + esc(f.titre) + "</span><span class=\"badge " + classe(f) + "\">" + esc(f.statut) + "</span></button></li>";
+    }).join("") : "<li class=\"vide\">Aucune fiche.</li>";
+  }
+
+  function ouvrir(slug){
+    var f = fiches.find(function(x){ return x.slug === slug; });
+    if(!f){ return; }
+    dessinerListe();
+    fetch("archive-intra/" + slug + ".md").then(function(r){ return r.text(); }).then(function(md){
+      var corps = md.replace(/^---[\s\S]*?\n---\n?/, "");
+      var h = "<div class=\"actions\">";
+      if(f.nouvelle){ h += "<a class=\"primary\" href=\"" + f.nouvelle + "\" target=\"_blank\" rel=\"noopener\">Nouvelle fiche (préprod)</a>"; }
+      if(f.pdf){ h += "<a href=\"archive-intra/" + f.pdf + "\" target=\"_blank\" rel=\"noopener\">Plaquette PDF</a>"; }
+      h += "<a href=\"archive-intra/" + slug + ".md\" download>Texte (.md)</a></div>";
+      if(f.detail){ h += "<p class=\"note\">" + esc(f.detail) + "</p>"; }
+      h += "<div class=\"meta\"><dl>"
+        + "<dt>Adresse</dt><dd>" + esc(f.url) + "</dd>"
+        + (f.title ? "<dt>Title</dt><dd>" + esc(f.title) + "</dd>" : "")
+        + (f.description ? "<dt>Meta description</dt><dd>" + esc(f.description) + "</dd>" : "")
+        + "</dl></div>";
+      h += "<div class=\"contenu\">" + marked.parse(corps) + "</div>";
+      if(f.pdf){ h += "<section class=\"pdf\"><h2>Plaquette</h2><iframe src=\"archive-intra/" + f.pdf + "\" title=\"Plaquette PDF\"></iframe></section>"; }
+      vue.innerHTML = h;
+      vue.querySelectorAll(".contenu a").forEach(function(a){ a.target = "_blank"; a.rel = "noopener"; });
+      if(window.innerWidth <= 900){ vue.scrollIntoView({behavior:"smooth"}); }
+    });
+  }
+
+  liste.addEventListener("click", function(e){
+    var b = e.target.closest("button[data-s]");
+    if(b){ location.hash = b.dataset.s; }
+  });
+  window.addEventListener("hashchange", function(){ ouvrir(location.hash.slice(1)); });
+  document.getElementById("q").addEventListener("input", dessinerListe);
+  document.querySelectorAll(".chip").forEach(function(c){
+    c.addEventListener("click", function(){
+      filtre = c.dataset.f;
+      document.querySelectorAll(".chip").forEach(function(x){ x.setAttribute("aria-pressed", x === c ? "true" : "false"); });
+      dessinerListe();
+    });
+  });
+
+  fetch("archive-intra/index.json").then(function(r){ return r.json(); }).then(function(d){
+    fiches = d.fiches.sort(function(a, b){ return a.titre.localeCompare(b.titre, "fr"); });
+    dessinerListe();
+    if(location.hash){ ouvrir(location.hash.slice(1)); }
+  });
+})();
+</script>
+</body>
+</html>
