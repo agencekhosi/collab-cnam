@@ -9,7 +9,7 @@
     {label:"Ressources", items:[
       {href:"checklist.html",        label:"Checklist de création de contenu"},
       {href:"deroule-atelier.html",  label:"Déroulé de l'atelier"},
-      {href:"tuto-claude.html",      label:"Remplir les pages avec Claude"},
+      {href:"tuto-claude.html",      label:"Créer les fiches intra avec Claude"},
       {href:"mise-en-page.html",     label:"Mettre en page une page"},
       {href:"archive-intra.html",    label:"Sauvegarde des fiches intra"}
     ]}

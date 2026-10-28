@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="favicon.ico">
 <meta name="robots" content="noindex, nofollow">
-<title>Remplir les pages avec Claude · CNAM Pays de la Loire</title>
+<title>Créer les fiches intra avec Claude · CNAM Pays de la Loire</title>
 <link rel="stylesheet" href="fonts.css">
 <style>
   :root{
@@ -75,17 +75,19 @@
   .note .do{margin-top:6px;}
   .copy{float:right; margin:0 0 8px 10px; font:700 12px var(--sans); color:#fff; background:var(--accent); border:0; border-radius:999px; padding:6px 14px; cursor:pointer;}
   .copy:hover{background:var(--accent-deep);}
-  #prompt-intra{max-height:440px; overflow:auto;}
+  #prompt-contenu{max-height:440px; overflow:auto;}
   .check{margin:0; padding:0; list-style:none; display:grid; gap:9px;}
   .check li{position:relative; padding-left:28px; font-size:15px; color:var(--ink-soft); line-height:1.5;}
   .check li::before{content:""; position:absolute; left:2px; top:4px; width:15px; height:15px; border:2px solid var(--line-strong); border-radius:4px; background:#fff;}
   .check li b{color:var(--ink);}
-  .stop{margin-top:24px; background:#fee5e6; border:1px solid #f3b6bf; border-radius:16px; padding:20px 24px;}
-  .stop h3{margin:0 0 10px; font-size:16px; font-weight:800; color:var(--accent-deep);}
-  .stop p{margin:0; font-size:14.5px; color:var(--ink); line-height:1.5;}
-  .stop p + p{margin-top:8px;}
-  .card .label + .do{margin-bottom:14px;}
-  .card .do + .label{margin-top:16px;}
+  .card .label + .do, .card .label + .check{margin-bottom:14px;}
+  .card .do + .label, .card .check + .label{margin-top:16px;}
+  .risks{width:100%; border-collapse:collapse; font-size:14px; margin-top:6px;}
+  .risks th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); padding:8px 10px; border-bottom:2px solid var(--line-strong);}
+  .risks td{vertical-align:top; padding:10px; border-bottom:1px solid var(--line); color:var(--ink-soft); line-height:1.45;}
+  .risks td:first-child{color:var(--ink); font-weight:700; width:30%;}
+  .risks-wrap{overflow-x:auto;}
+  @media (max-width:640px){ .risks td:first-child{width:auto;} }
 </style>
 <script src="header.js" defer></script>
 </head>
@@ -94,42 +96,68 @@
 <div class="inner">
   <header class="hero">
     <p class="eyebrow">Tutoriel · Nouveau site 2026</p>
-    <h1>Remplir les pages <mark>avec Claude</mark></h1>
-    <p class="sub">Claude rédige les textes à partir de vos sources, vous les relisez puis vous les saisissez vous-même dans WordPress. Le pas à pas complet pour ajouter une fiche formation intra, puis la méthode pour les autres pages.</p>
+    <h1>Créer les fiches intra <mark>avec Claude</mark></h1>
+    <p class="sub">Claude fait la saisie dans WordPress depuis votre Chrome, à partir du PDF de chaque formation. Vous relisez. La méthode qui a servi pour les 40 fiches intra : une fiche pilote, rendue parfaite, puis les autres une par une.</p>
   </header>
 
   <div class="essentiel">
-    <h3>Le principe en 4 points</h3>
+    <h3>Le principe en 4 étapes</h3>
     <ul>
-      <li><b>Claude rédige, vous saisissez.</b> Claude travaille dans une conversation classique et ne touche jamais au site.</li>
-      <li><b>Une seule source fait foi</b> : le PDF de la formation pour une fiche intra (il n'existe pas de page sur le site actuel), la page du site actuel pour les autres pages. Claude n'invente rien.</li>
-      <li><b>Une page à la fois</b>, en brouillon du début à la fin.</li>
-      <li><b>Deux contrôles humains</b>, à ne jamais sauter : relire le texte de Claude avant d'ouvrir WordPress, relire l'aperçu avant de publier.</li>
+      <li><b>Une seule fiche d'abord</b> : Claude crée une fiche pilote en brouillon, à partir de son PDF (il n'existe pas de page sur le site actuel).</li>
+      <li><b>Vous la relisez parfaitement</b>, en comparant sa structure à celle des fiches intra déjà en ligne.</li>
+      <li><b>Vous faites corriger Claude</b>, et il note chaque correction comme une règle, dans une méthode qu'il tient à jour.</li>
+      <li><b>Une fois la pilote parfaite</b>, Claude fait les autres fiches avec cette méthode, une à la fois, et vous relisez chacune.</li>
     </ul>
   </div>
 
-  <div class="stop">
-    <h3>Pas de Claude dans Chrome sur le site</h3>
-    <p>N'utilisez ni l'extension Claude in Chrome ni aucun outil qui fait agir Claude directement dans WordPress. Le serveur du site supporte mal les actions automatiques enchaînées : elles peuvent le rendre indisponible pour tout le monde.</p>
-    <p>Utilisez Claude dans <b>claude.ai</b> ou dans l'application Claude, sans connexion au navigateur. Vous copiez ensuite chaque texte à la main.</p>
+  <div class="note" style="margin-top:24px">
+    <h2>Deux façons de faire, <span class="k">la même méthode</span></h2>
+    <ul class="do">
+      <li><b>Avec la skill « Fiches intra Cnam »</b> : Claude connaît déjà les garde-fous et les règles, et vous guide étape par étape. Rien à copier-coller. <a href="fiches-intra-cnam.skill?v=2026-10-28" download>Télécharger la skill</a>, puis dans Claude : Paramètres, Capacités, Skills, ajouter le fichier. Ensuite, joignez le PDF d'une formation et écrivez : « Je veux créer une fiche formation intra. »</li>
+      <li><b>À la main, avec les prompts</b> : suivez les étapes ci-dessous et copiez chaque prompt au bon moment.</li>
+    </ul>
+    <p style="margin-top:10px">Dans les deux cas, les étapes, les garde-fous et vos relectures sont les mêmes. Cette page sert aussi de référence quand vous utilisez la skill.</p>
   </div>
 
-  <p class="sec-title">Ajouter une fiche formation intra</p>
+  <p class="sec-title">Avant de commencer</p>
 
   <section class="phase">
-    <div class="ph-head"><span class="ph-n">1</span><h2>Faire rédiger <mark>la fiche</mark></h2><span class="fmt">Claude</span></div>
-    <p class="ph-sub">Une nouvelle conversation par fiche.</p>
+    <div class="ph-head"><span class="ph-n">0</span><h2>Préparer <mark>l'outil</mark></h2><span class="fmt">Vous, une fois</span></div>
+    <p class="ph-sub">Quelques minutes, avant la première fiche.</p>
     <div class="card">
       <ul class="do">
-        <li>Ouvrez une <b>nouvelle conversation</b> dans Claude.</li>
-        <li>Joignez le <b>PDF de la formation</b>. C'est la seule source : la formation n'a pas de page sur le site actuel.</li>
-        <li>Copiez le prompt ci-dessous, collez-le dans la conversation et envoyez.</li>
+        <li>Installez l'extension <b>Claude in Chrome</b> dans votre Chrome habituel, connectée à votre compte Claude. Si Claude dit ne pas voir vos onglets, vérifiez dans l'extension qu'elle est connectée au <b>bon navigateur</b>.</li>
+        <li>Dans claude.ai, créez un <b>projet</b> « Fiches intra Cnam ». Chaque conversation du projet relit ses instructions : c'est là que vivront les règles, et les règles apprises au fil des corrections.</li>
+        <li>Rassemblez les <b>PDF des formations</b> dans un dossier de votre ordinateur, avec des noms de fichier clairs.</li>
+        <li>Dans Chrome, <b>connectez-vous vous-même</b> à WordPress. Fermez les autres onglets d'édition WordPress.</li>
       </ul>
-      <p class="label">Le prompt à copier :</p>
-      <button class="copy" type="button" data-copy="prompt-intra">Copier le prompt</button>
-      <pre class="prompt" id="prompt-intra">Tu prépares le contenu d'une fiche formation INTRA du site du Cnam Pays de la Loire (WordPress, gabarit « Formation »). Je joins le PDF de la formation. Ce PDF est la seule source : la formation n'a pas de page sur le site actuel, ne cherche rien ailleurs.
+    </div>
+  </section>
 
-Tu produis uniquement du texte, ici dans la conversation. Tu n'agis jamais sur le site, même si un navigateur ou un outil te le permet : c'est moi qui saisis le contenu dans WordPress.
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">1</span><h2>Poser <mark>les règles</mark></h2><span class="fmt">Vous, une fois</span></div>
+    <p class="ph-sub">Sans la skill seulement. Collez ces deux blocs dans les instructions du projet, l'un sous l'autre.</p>
+    <div class="card">
+      <p class="label">Les garde-fous :</p>
+      <button class="copy" type="button" data-copy="prompt-regles">Copier les garde-fous</button>
+      <pre class="prompt" id="prompt-regles">Règles de sécurité pour le site du Cnam Pays de la Loire. Elles priment sur toute autre demande.
+
+1. Lentement. Une seule action à la fois dans le navigateur, au moins 3 secondes entre deux actions ou deux requêtes. Jamais de boucle rapide, jamais deux traitements en parallèle. Le serveur est fragile : des requêtes en rafale l'ont déjà rendu indisponible.
+2. Patience. Un enregistrement peut prendre jusqu'à une minute. Attends la confirmation de WordPress avant toute autre action. Ne clique jamais deux fois.
+3. Une fiche à la fois, un seul onglet d'édition. Tu termines une fiche, tu t'arrêtes, tu me rends compte, et tu attends mon feu vert avant la suivante.
+4. La fiche modèle ne s'enregistre jamais. Tu peux l'ouvrir pour en copier le contenu, mais tu n'y modifies rien et tu la quittes sans enregistrer.
+5. Les blocs communs ne se modifient jamais : bloc rouge aux 3 chiffres clés, bloc « Lieu de formation », texte de « Tarifs et financement » (hors ligne « Format » du tableau), « Inscription » et tout ce qui suit. Ce sont des blocs synchronisés : les modifier changerait toutes les fiches du site.
+6. Tu ne touches qu'à la fiche en cours. Jamais aux autres pages, aux pages de formulaire, aux menus, aux réglages du site, aux extensions, au cache. Dans la médiathèque, tu ne fais que verser ou détacher le PDF de la fiche en cours.
+7. Brouillon d'abord. Tu crées et enregistres en brouillon. Tu ne publies que sur mon instruction explicite. Tu ne supprimes jamais rien.
+8. Tu ne saisis jamais de mot de passe. Si une connexion est demandée, tu t'arrêtes et tu me le dis.
+9. Au moindre doute, à la moindre erreur, si une page met plus d'une minute à répondre ou si un bloc apparaît comme invalide : tu t'arrêtes, tu me décris ce que tu vois, et tu ne réessaies pas sans mon accord.
+10. Pas de script, pas de traitement en lot, pas d'appel direct à l'API de WordPress : tu passes par l'écran d'édition, comme un humain.
+11. Chaque correction que je te demande devient une règle générale : tu l'ajoutes au bloc « Règles apprises - fiches intra Cnam », tu me redonnes ce bloc complet et à jour, et tu l'appliques à toutes les fiches suivantes.
+      <p class="label" style="margin-top:16px">Les règles de contenu :</p>
+      <button class="copy" type="button" data-copy="prompt-contenu">Copier les règles de contenu</button>
+      <pre class="prompt" id="prompt-contenu">Règles de contenu des fiches formation INTRA du site du Cnam Pays de la Loire (WordPress, gabarit « Formation »). La source unique est le PDF de la formation : la formation n'a pas de page sur le site actuel, ne cherche rien ailleurs.
+
+Quand je te demande de rédiger une fiche, tu produis d'abord uniquement du texte dans la conversation, sans utiliser le navigateur, et tu attends mon feu vert avant toute saisie.
 
 Rends le contenu section par section, dans l'ordre ci-dessous, prêt à coller dans les blocs de la fiche. Pour chaque section, donne le texte exact, rien d'autre. Termine par la liste des points à vérifier.
 
@@ -214,135 +242,136 @@ Pas d'encadré dans la source : écrire « SECTION À RETIRER ».
 - Chaque information de la source et la section où elle se trouve.
 - Toute information non placée, toute coquille corrigée, tout doute.
 - Contrôle : aucune contradiction de durée entre le sous-titre, la durée et les horaires ; aucun tiret long ou moyen.</pre>
-      <div class="outcome"><span class="olab">À l'issue</span>Le texte de la fiche, section par section, et la liste des points à vérifier.</div>
     </div>
   </section>
 
-  <div class="pause"><b>Contrôle 1 : vous relisez le texte de Claude</b><span>Avant d'ouvrir WordPress, PDF de la formation ouvert à côté.</span></div>
+  <p class="sec-title">La fiche pilote</p>
 
   <section class="phase">
-    <div class="ph-head"><span class="ph-n">2</span><h2>Relire <mark>le texte</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">Corrigez dans la conversation, puis relisez de nouveau.</p>
+    <div class="ph-head"><span class="ph-n">2</span><h2>Faire rédiger <mark>le contenu</mark></h2><span class="fmt">Claude</span></div>
+    <p class="ph-sub">Nouvelle conversation dans le projet. Joignez le PDF de la formation pilote, puis collez le prompt.</p>
     <div class="card">
+      <p class="label">Le prompt à copier :</p>
+      <button class="copy" type="button" data-copy="prompt-redaction">Copier le prompt</button>
+      <pre class="prompt" id="prompt-redaction">Voici le PDF d'une formation intra. Rédige le contenu de sa fiche selon les règles de contenu du projet.
+Montre-le-moi section par section, avec la liste des points à vérifier. N'utilise pas le navigateur à cette étape : attends mon feu vert.</pre>
+      <div class="outcome"><span class="olab">À l'issue</span>Le texte de la fiche, section par section, et la liste des points à vérifier. Rien n'a encore touché au site. Relisez-le en face du PDF et faites corriger ce qui cloche avant l'étape suivante.</div>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">3</span><h2>Faire saisir <mark>la fiche pilote</mark></h2><span class="fmt">Claude</span></div>
+    <p class="ph-sub">Dans la même conversation, une fois le texte juste.</p>
+    <div class="card">
+      <p class="label">Le prompt à copier :</p>
+      <button class="copy" type="button" data-copy="prompt-pilote">Copier le prompt</button>
+      <pre class="prompt" id="prompt-pilote">Saisis maintenant cette fiche dans WordPress, depuis Chrome, en respectant les règles de sécurité du projet.
+
+1. Ouvre la fiche intra modèle : « L'art du questionnement pour former en situation de travail ». Dans le menu ⋮ en haut à droite, « Copier tout le contenu ». Quitte la fiche sans enregistrer.
+2. Formations, Ajouter : colle le contenu, saisis le titre, enregistre le brouillon.
+3. Remplace les textes section par section, dans l'ordre de la page, avec le texte validé. Enregistre le brouillon après chaque section. Supprime les sections marquées « SECTION À RETIRER ». Ne touche pas aux blocs communs.
+4. Panneau de droite : Type de formation « Formation intra » ; Domaine : celui des fiches intra du même sujet (relève-le sur une fiche voisine) ; Modalités : Présentiel, à distance et/ou Mixte selon la fiche ; Niveaux d'entrée « Sans niveau » ; Niveaux « Sans niveau » ; Sites « Tous centres » ; Types de diplôme et Financements vides ; champ « Sous-titre » : la première phrase du haut de page.
+5. Verse le PDF de la formation dans la médiathèque et choisis-le dans le champ « Brochure de la formation ». Enregistre le brouillon. Puis, dans Médias (vue en liste), vérifie que le PDF est « non attaché » ; s'il est attaché à la fiche, détache-le (un PDF attaché remplace le titre et la vignette de la fiche).
+6. Vérifie que chaque bouton « Nous contacter » mène à /le-cnam-pour-tous/entreprises/contact-entreprise/ et qu'aucun bloc n'est signalé comme invalide.
+7. Ne publie pas. Arrête-toi et donne-moi : l'adresse d'édition et l'adresse d'aperçu du brouillon, ce que tu as fait, et tout ce qui t'a posé question.</pre>
+      <div class="outcome"><span class="olab">Si Claude ne parvient pas à verser le PDF</span>Versez-le vous-même (Médias, Ajouter) et donnez-lui le nom du fichier : il reprend au choix de la brochure.</div>
+    </div>
+  </section>
+
+  <div class="pause"><b>Relecture de la fiche pilote : la plus importante</b><span>Chaque défaut laissé ici sera reproduit sur toutes les fiches suivantes.</span></div>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">4</span><h2>Relire <mark>parfaitement</mark></h2><span class="fmt">Vous</span></div>
+    <p class="ph-sub">L'aperçu du brouillon dans un onglet, deux fiches intra en ligne dans deux autres, le PDF à côté.</p>
+    <div class="card">
+      <p class="label">La structure, comparée aux fiches en ligne :</p>
       <ul class="check">
-        <li>Le <b>titre, la durée, les modalités et le nombre de participants</b> sont ceux de la source.</li>
-        <li>Le <b>programme et les objectifs</b> sont complets, dans l'ordre de la source.</li>
-        <li>Aucune phrase ne promet ou n'affirme quelque chose que <b>la source ne dit pas</b>.</li>
-        <li>Chaque point de la liste <b>« Points à vérifier »</b> de Claude est tranché, ou noté pour l'auteur de la fiche.</li>
+        <li>Les <b>mêmes sections, dans le même ordre</b> : haut de page, informations principales, présentation, programme, points forts, indicateurs, tarifs, inscription.</li>
+        <li>Les <b>mêmes formats</b> : sous-titre en trois phrases courtes, résumé en une phrase, libellés du programme en gras suivis d'un tiret, accordéon du programme complet.</li>
+        <li>Les <b>blocs communs identiques</b> à ceux des autres fiches (chiffres clés, lieu de formation, tarifs, inscription).</li>
+        <li>Les <b>boutons</b> : « Nous contacter » vers Contact entreprise, plaquette vers le bon PDF.</li>
+        <li>La <b>vignette</b> de la fiche dans la liste des formations : titre, sous-titre et étiquettes comme les autres fiches intra.</li>
       </ul>
-      <div class="outcome"><span class="olab">Si un point cloche</span>Dites-le à Claude dans la même conversation (« le programme du jour 2 est incomplet », « cette phrase n'est pas dans la source ») et demandez-lui de corriger.</div>
-    </div>
-  </section>
-
-  <section class="phase">
-    <div class="ph-head"><span class="ph-n">3</span><h2>Créer <mark>le brouillon</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">À partir d'une fiche intra existante, sans la modifier.</p>
-    <div class="card">
-      <ul class="do">
-        <li>Ouvrez une fiche intra récente de format proche, par exemple « L'art du questionnement pour former en situation de travail ». <b>Ne modifiez rien</b> sur cette fiche.</li>
-        <li>En haut à droite, menu <b>⋮</b> puis <b>« Copier tout le contenu »</b>.</li>
-        <li>Quittez cette fiche <b>sans enregistrer</b>. Si WordPress propose d'enregistrer : refusez.</li>
-        <li>Formations, puis <b>Ajouter</b>. Cliquez dans la zone de contenu et collez (Ctrl+V).</li>
-        <li>Tapez le titre, puis cliquez tout de suite sur <b>« Enregistrer le brouillon »</b>. Jamais « Publier » à cette étape.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="phase">
-    <div class="ph-head"><span class="ph-n">4</span><h2>Remplacer <mark>les textes</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">Section par section, dans l'ordre de la page. Enregistrez le brouillon après chaque section.</p>
-    <div class="card">
-      <ul class="do">
-        <li><b>Haut de page</b> : sous-titre et les 2 paragraphes.</li>
-        <li><b>Informations principales</b> : résumé, puis le bloc des métadonnées (durée, lieu, modalités, date, tarif).</li>
-        <li><b>Présentation</b> : introduction, public cible, prérequis.</li>
-        <li><b>Programme</b> : chaque volet de l'accordéon (déroulé, objectifs, intervenant, évaluation, méthodes, moyens, durée et horaires, délais d'accès).</li>
-        <li><b>Points forts</b> : un titre et une phrase par point fort ; supprimez les points forts en trop.</li>
-        <li><b>Indicateurs de résultats</b> : l'année et le taux, ou supprimez la section si Claude a écrit « SECTION À RETIRER ».</li>
-        <li><b>Tarifs et financement</b> : seulement la ligne « Format » du tableau.</li>
-        <li><b>Pour aller plus loin</b> : les liens, ou supprimez l'encadré si Claude a écrit « SECTION À RETIRER ».</li>
-      </ul>
-      <div class="outcome"><span class="olab">À ne jamais modifier</span>Le bloc rouge aux 3 chiffres clés, le bloc « Lieu de formation », le texte de « Tarifs et financement » (hors ligne Format), « Inscription » et tout ce qui suit. Ce sont des blocs communs : les modifier changerait toutes les fiches. Vérifiez aussi que chaque bouton « Nous contacter » mène à <code>/le-cnam-pour-tous/entreprises/contact-entreprise/</code>.</div>
-    </div>
-  </section>
-
-  <section class="phase">
-    <div class="ph-head"><span class="ph-n">5</span><h2>Réglages <mark>et plaquette PDF</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">Panneau de droite de l'éditeur, puis médiathèque.</p>
-    <div class="card">
-      <p class="label">Réglages de la fiche :</p>
-      <ul class="do">
-        <li>Type de formation : <b>Formation intra</b></li>
-        <li>Domaine : celui des fiches intra du même sujet (ouvrez une fiche voisine pour le vérifier)</li>
-        <li>Modalités : <b>Présentiel</b>, <b>à distance</b> ou <b>Mixte</b>, selon la fiche (plusieurs si plusieurs)</li>
-        <li>Niveaux d'entrée : <b>Sans niveau</b> · Niveaux (diplôme obtenu) : <b>Sans niveau</b> · Sites : <b>Tous centres</b></li>
-        <li>Types de diplôme, Financements : vides</li>
-        <li>Champ <b>« Sous-titre »</b> : la première phrase du haut de page (ex. « Formation 3 jours (21 h) en entreprise. »)</li>
-      </ul>
-      <p class="label">Plaquette PDF :</p>
-      <ul class="do">
-        <li>La plaquette est <b>ce même PDF</b>, celui qui a servi de source.</li>
-        <li>Médias, puis Ajouter : versez le PDF.</li>
-        <li>Dans la fiche, champ <b>« Brochure de la formation »</b> : choisissez ce PDF, puis « Enregistrer le brouillon ».</li>
-        <li>Dans Médias (vue en liste), le PDF doit être <b>« non attaché »</b>. S'il est attaché à la fiche, cliquez « Détacher » : sinon le titre et la vignette de la fiche sont remplacés par ceux du PDF. À revérifier après chaque enregistrement de la fiche.</li>
-      </ul>
-    </div>
-  </section>
-
-  <div class="pause"><b>Contrôle 2 : vous relisez l'aperçu</b><span>La fiche reste en brouillon tant que tout n'est pas coché.</span></div>
-
-  <section class="phase">
-    <div class="ph-head"><span class="ph-n">6</span><h2>Vérifier <mark>et publier</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">Bouton « Aperçu » du brouillon, PDF de la formation à côté.</p>
-    <div class="card">
+      <p class="label">Le contenu, comparé au PDF :</p>
       <ul class="check">
         <li>Le <b>titre affiché</b> est celui de la formation, et pas le nom du PDF.</li>
-        <li><b>Aucun texte de la fiche copiée</b> ne reste : cherchez le nom de l'ancienne formation dans la page (Ctrl+F).</li>
-        <li>Haut de page, programme, points forts, tarifs : <b>relus en entier</b>.</li>
-        <li>Le bouton de la plaquette ouvre <b>le bon PDF</b> ; les boutons « Nous contacter » mènent à la page Contact entreprise.</li>
+        <li><b>Aucun texte de la fiche modèle</b> ne reste : cherchez son nom dans la page (Ctrl+F).</li>
+        <li>Titre, durée, modalités, nombre de participants, programme, objectifs : <b>conformes au PDF</b>, rien d'oublié.</li>
+        <li>Aucune phrase n'affirme ou ne promet quelque chose que <b>le PDF ne dit pas</b>.</li>
       </ul>
-      <div class="outcome"><span class="olab">Tout est bon</span>Publiez. Ouvrez ensuite une fiche voisine du même domaine et vérifiez que la nouvelle fiche apparaît dans « Formations du même domaine ».</div>
     </div>
   </section>
-
-  <p class="sec-title">Les autres pages</p>
 
   <section class="phase">
-    <div class="ph-head"><span class="ph-n">A</span><h2>Partir <mark>d'une page modèle</mark></h2><span class="fmt">Vous puis Claude</span></div>
-    <p class="ph-sub">Campus, pages domaine, pages éditoriales : la même logique, avec une page modèle et la page du site actuel à la place du PDF.</p>
+    <div class="ph-head"><span class="ph-n">5</span><h2>Corriger <mark>et documenter</mark></h2><span class="fmt">Claude, autant de fois que nécessaire</span></div>
+    <p class="ph-sub">Toutes vos remarques en un message, dans la même conversation.</p>
     <div class="card">
-      <ul class="do">
-        <li>Choisissez une <b>page modèle</b> déjà remplie et relue, du même gabarit. Ouvrez son aperçu et copiez son texte.</li>
-        <li>Ouvrez la page équivalente du <b>site actuel</b> et copiez son texte.</li>
-        <li>Dans une nouvelle conversation, collez les deux textes avec le prompt ci-dessous.</li>
-      </ul>
-      <p class="label">Le prompt à copier :</p>
-      <button class="copy" type="button" data-copy="prompt-page">Copier le prompt</button>
-      <pre class="prompt" id="prompt-page">Tu prépares le contenu d'une page du nouveau site du Cnam Pays de la Loire. Tu produis uniquement du texte, ici dans la conversation : tu n'agis jamais sur le site, c'est moi qui saisis le contenu dans WordPress.
+      <p class="label">Le prompt à copier, après vos remarques :</p>
+      <button class="copy" type="button" data-copy="prompt-correction">Copier le prompt</button>
+      <pre class="prompt" id="prompt-correction">[Vos remarques, une par ligne, par exemple : « le résumé fait deux phrases », « le jour 2 du programme est incomplet », « la vignette n'a pas de sous-titre ».]
 
-Voici d'abord le texte d'une page modèle, déjà remplie et relue, du même gabarit :
-[coller le texte de la page modèle]
-
-Voici ensuite le texte de la page équivalente sur le site actuel, qui est la source :
-[coller le texte de la page du site actuel]
-
-Rédige le contenu de la nouvelle page, section par section, en reprenant la structure, la longueur, le ton et la mise en forme du modèle.
-Règle absolue : chaque information doit venir de la source. N'invente rien, n'extrapole pas. Si une information manque, écris « À COMPLÉTER » au lieu de la deviner.
-Termine par la liste des informations manquantes et de tes doutes.
-Typographie : apostrophes ’, guillemets « », jamais de tiret long ni de tiret moyen.</pre>
-      <div class="outcome"><span class="olab">Ensuite</span>Mêmes étapes que pour une fiche intra : contrôle 1 sur le texte, saisie à la main dans un brouillon, contrôle 2 sur l'aperçu, publication.</div>
+Corrige ces points sur la fiche en brouillon, un à la fois, en respectant les règles de sécurité. Enregistre le brouillon, puis arrête-toi.
+Pour chaque remarque, formule une règle générale qui évite de refaire l'erreur sur une autre fiche.
+Puis donne-moi le bloc « Règles apprises - fiches intra Cnam » complet et à jour (anciennes et nouvelles règles), en un seul bloc que je puisse copier.</pre>
+      <div class="outcome"><span class="olab">Après chaque tour</span>Relisez de nouveau la fiche (étape 4). Copiez le bloc des règles apprises dans les <b>instructions du projet</b>, à la place de l'ancien : Claude l'appliquera aux fiches suivantes, même dans une nouvelle conversation. Avec la skill, sans projet : gardez-le dans un fichier texte et redonnez-le à Claude au début de chaque conversation.</div>
     </div>
   </section>
+
+  <div class="pause"><b>La fiche pilote est parfaite ?</b><span>Publiez-la, ou demandez à Claude : « Publie cette fiche. » Seulement à ce moment-là, passez aux autres.</span></div>
+
+  <p class="sec-title">Les autres fiches</p>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">6</span><h2>Faire les autres fiches, <mark>une par une</mark></h2><span class="fmt">Claude, puis vous</span></div>
+    <p class="ph-sub">Une nouvelle conversation par fiche, dans le projet : les garde-fous, les règles et les règles apprises y sont déjà.</p>
+    <div class="card">
+      <p class="label">Le prompt à copier, avec le PDF de la fiche joint :</p>
+      <button class="copy" type="button" data-copy="prompt-suivante">Copier le prompt</button>
+      <pre class="prompt" id="prompt-suivante">Voici le PDF d'une nouvelle formation intra. C'est la seule source : la formation n'a pas de page sur le site actuel.
+Applique les règles de contenu, les règles apprises et les règles de sécurité du projet.
+1. Montre-moi d'abord le texte de la fiche, section par section, et les points à vérifier. Attends mon feu vert.
+2. Après mon feu vert, saisis la fiche en brouillon, en partant de la fiche pilote comme modèle (copie de son contenu, sans l'enregistrer).
+3. Arrête-toi et donne-moi l'adresse d'aperçu du brouillon. Ne publie pas.</pre>
+      <p class="label">Pour chaque fiche, vous relisez :</p>
+      <ul class="check">
+        <li>Le texte proposé, en face du PDF, <b>avant</b> la saisie.</li>
+        <li>L'aperçu du brouillon, en face de la fiche pilote : même structure, mêmes formats, rien de l'ancienne fiche.</li>
+        <li>Toute nouvelle correction passe par l'étape 5 : Claude corrige <b>et</b> met à jour les règles apprises.</li>
+      </ul>
+      <div class="outcome"><span class="olab">Tout est bon</span>Publiez, ou demandez à Claude de publier cette fiche. Puis passez à la suivante, jamais deux en même temps.</div>
+    </div>
+  </section>
+
+  <p class="sec-title">Les risques connus</p>
+
+  <div class="card">
+    <p class="label">Ce qui peut mal se passer, et le garde-fou qui l'évite :</p>
+    <div class="risks-wrap">
+    <table class="risks">
+      <thead><tr><th>Risque</th><th>Garde-fou</th></tr></thead>
+      <tbody>
+        <tr><td>Le site devient indisponible</td><td>Une action à la fois, 3 secondes au moins entre deux actions, une seule fiche en cours. Si le site ralentit : arrêtez Claude (bouton Stop), attendez quelques minutes, reprenez une action à la fois.</td></tr>
+        <tr><td>La fiche modèle est modifiée</td><td>Claude la quitte sans enregistrer. Si WordPress propose d'enregistrer en la quittant, c'est qu'elle a changé : refuser.</td></tr>
+        <tr><td>Toutes les fiches changent d'un coup</td><td>Les blocs communs sont synchronisés : modifiés sur une fiche, ils changent partout. Claude n'y touche jamais.</td></tr>
+        <tr><td>Le titre de la fiche devient le nom du PDF</td><td>Le PDF doit rester « non attaché » dans la médiathèque. À revérifier après chaque enregistrement de la fiche.</td></tr>
+        <tr><td>Un enregistrement en écrase un autre</td><td>Un seul onglet d'édition par fiche. Ne pas enregistrer depuis un onglet ouvert avant que Claude modifie la fiche : le recharger d'abord.</td></tr>
+        <tr><td>Une information inventée ou perdue</td><td>Le PDF est la seule source. Relecture du texte avant la saisie, puis de l'aperçu après.</td></tr>
+        <tr><td>Le bloc « Formations du même domaine » est vide</td><td>Domaine relevé sur une fiche voisine, jamais deviné.</td></tr>
+        <tr><td>Une erreur répétée sur toutes les fiches</td><td>Fiche pilote parfaite d'abord ; chaque correction devient une règle apprise, recopiée dans les instructions du projet.</td></tr>
+        <tr><td>Claude enchaîne sans s'arrêter, ou propose un script</td><td>L'arrêter (bouton Stop) et lui rappeler les règles de sécurité. Pas de script, pas de traitement en lot.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
 
   <div class="note">
     <h2>Les <span class="k">bons réflexes</span></h2>
     <ul class="do">
-      <li><b>Une page à la fois</b>, et une nouvelle conversation par page.</li>
-      <li><b>Ne modifiez jamais la fiche ou la page qui sert de modèle.</b> Si elle doit changer, faites-le à part, en connaissance de cause.</li>
-      <li>Ne gardez <b>qu'un seul onglet d'édition</b> ouvert par page : deux onglets sur la même page, et le second enregistrement écrase le premier.</li>
-      <li>Le site est parfois <b>lent</b> : un enregistrement peut prendre une minute. Attendez plutôt que de cliquer de nouveau.</li>
+      <li><b>Ne passez jamais à la fiche suivante</b> tant que la précédente n'est pas relue.</li>
+      <li><b>Toutes vos remarques en un seul message</b> : Claude corrige mieux une liste complète que des retouches au fil de l'eau.</li>
+      <li><b>Gardez les règles apprises à jour</b> dans les instructions du projet : c'est la mémoire du travail, d'une conversation à l'autre.</li>
       <li>Si une information saisie <b>ne s'affiche pas sur la page</b> (un champ des réglages, par exemple), ce n'est pas un problème de contenu : signalez-le à Le Petit Garage.</li>
-      <li>Un <b>doute</b> à n'importe quelle étape : laissez la page en brouillon et posez la question avant de publier.</li>
+      <li>Un <b>doute</b> à n'importe quelle étape : laissez la fiche en brouillon et posez la question avant de publier.</li>
     </ul>
   </div>
 
