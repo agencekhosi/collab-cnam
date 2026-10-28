@@ -49,6 +49,7 @@
   .tools-sec h3{margin:0 0 4px; font-size:20px; font-weight:800; letter-spacing:-.01em; color:var(--ink);}
   .tsub{margin:0 0 18px; font-size:14px; color:var(--ink-soft);}
   .tools-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .tools-grid.three{grid-template-columns:repeat(3,1fr);}
   .tool{background:var(--paper); border:1px solid var(--line); border-radius:13px; padding:18px 20px;}
   .tool h4{margin:0 0 4px; font-size:16px; font-weight:800; color:var(--ink);}
   .tool > p{margin:0 0 12px; font-size:13.5px; color:var(--ink-soft);}
@@ -62,7 +63,7 @@
   code{background:var(--paper); border:1px solid var(--line); border-radius:5px; padding:1px 6px; font-size:12px; font-family:ui-monospace, "SFMono-Regular", Menlo, monospace;}
 
   footer{margin:40px 0 60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
-  @media (max-width:760px){ .hero-grid{grid-template-columns:1fr;} .hero-img{margin-top:8px;} .cards, .tools-grid{grid-template-columns:1fr;} }
+  @media (max-width:760px){ .hero-grid{grid-template-columns:1fr;} .hero-img{margin-top:8px;} .cards, .tools-grid, .tools-grid.three{grid-template-columns:1fr;} }
 </style>
 <script src="header.js" defer></script>
 </head>
@@ -118,8 +119,8 @@
 
   <section class="tools-sec">
     <h3>Les assistants</h3>
-    <p class="tsub">Deux outils pour benchmarker, rédiger et relire vos contenus, en GPT (dans ChatGPT) et en skill (dans Claude).</p>
-    <div class="tools-grid">
+    <p class="tsub">Des outils pour benchmarker, rédiger et relire vos contenus, en GPT (dans ChatGPT) et en skill (dans Claude), et pour créer les fiches intra.</p>
+    <div class="tools-grid three">
       <div class="tool">
         <h4>Rédacteur Cnam</h4>
         <p>Analyse la concurrence sur un sujet et propose un brouillon dans le ton du Cnam, qu'il relit lui-même selon la charte.</p>
@@ -136,6 +137,14 @@
           <a class="primary" href="https://chatgpt.com/g/g-6a4c0c4ad6048191844d944a428b3d40-auditeur-cnam-pays-de-la-loire" target="_blank" rel="noopener">Ouvrir le GPT</a>
           <a href="gpt-auditeur-cnam.zip?v=2026-10-23-2" download>Config GPT (.zip)</a>
           <a href="audit-cnam.skill?v=2026-10-23-2" download>Skill Claude</a>
+        </div>
+      </div>
+      <div class="tool">
+        <h4>Fiches intra</h4>
+        <p>Crée les fiches formation intra dans WordPress à partir de leur PDF, depuis Chrome, en vous guidant étape par étape. Vous relisez.</p>
+        <div class="tlinks">
+          <a class="primary" href="tuto-claude.html">Lire le tutoriel</a>
+          <a href="intra-cnam.skill?v=2026-10-28" download>Skill Claude</a>
         </div>
       </div>
     </div>
