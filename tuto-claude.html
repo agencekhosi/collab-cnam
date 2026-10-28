@@ -73,6 +73,19 @@
   pre.prompt{margin:0; white-space:pre-wrap; word-break:break-word; background:#f4f8fa; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:10px; padding:14px 16px; font:13.5px/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; color:var(--ink);}
   code{font:12.5px ui-monospace, Consolas, monospace; background:#f4f8fa; padding:1px 5px; border-radius:5px;}
   .note .do{margin-top:6px;}
+  .copy{float:right; margin:0 0 8px 10px; font:700 12px var(--sans); color:#fff; background:var(--accent); border:0; border-radius:999px; padding:6px 14px; cursor:pointer;}
+  .copy:hover{background:var(--accent-deep);}
+  #prompt-intra{max-height:440px; overflow:auto;}
+  .check{margin:0; padding:0; list-style:none; display:grid; gap:9px;}
+  .check li{position:relative; padding-left:28px; font-size:15px; color:var(--ink-soft); line-height:1.5;}
+  .check li::before{content:""; position:absolute; left:2px; top:4px; width:15px; height:15px; border:2px solid var(--line-strong); border-radius:4px; background:#fff;}
+  .check li b{color:var(--ink);}
+  .stop{margin-top:24px; background:#fee5e6; border:1px solid #f3b6bf; border-radius:16px; padding:20px 24px;}
+  .stop h3{margin:0 0 10px; font-size:16px; font-weight:800; color:var(--accent-deep);}
+  .stop p{margin:0; font-size:14.5px; color:var(--ink); line-height:1.5;}
+  .stop p + p{margin-top:8px;}
+  .card .label + .do{margin-bottom:14px;}
+  .card .do + .label{margin-top:16px;}
 </style>
 <script src="header.js" defer></script>
 </head>
@@ -80,134 +93,271 @@
 
 <div class="inner">
   <header class="hero">
-    <p class="eyebrow">Tutoriel · Préprod 2026</p>
-    <h1>Remplir les pages de la préprod <mark>avec Claude</mark></h1>
-    <p class="sub">Vous remplissez une page à la perfection, puis Claude s'en sert de modèle pour les pages du même type : il repère ce qui manque, va chercher l'information sur le site actuel et remplit lui-même les champs dans votre navigateur. Vous gardez la main à chaque étape.</p>
+    <p class="eyebrow">Tutoriel · Nouveau site 2026</p>
+    <h1>Remplir les pages <mark>avec Claude</mark></h1>
+    <p class="sub">Claude rédige les textes à partir de vos sources, vous les relisez puis vous les saisissez vous-même dans WordPress. Le pas à pas complet pour ajouter une fiche formation intra, puis la méthode pour les autres pages.</p>
   </header>
 
   <div class="essentiel">
     <h3>Le principe en 4 points</h3>
     <ul>
-      <li><b>Une page modèle</b>, remplie et relue par vous, sert de référence pour toutes les pages du même gabarit (campus, fiches formation, pages domaine…).</li>
-      <li>Claude <b>compare</b> chaque autre page au modèle et liste ce qui manque.</li>
-      <li>Il <b>cherche les informations sur le site actuel</b> du Cnam et vous propose les textes, avec leur source.</li>
-      <li>Après votre accord, il <b>remplit les champs</b> dans l'écran d'édition WordPress et enregistre. La publication reste votre décision.</li>
+      <li><b>Claude rédige, vous saisissez.</b> Claude travaille dans une conversation classique et ne touche jamais au site.</li>
+      <li><b>Une source fait foi</b> : la fiche de la formation (Word ou PDF), ou la page du site actuel. Claude n'invente rien.</li>
+      <li><b>Une page à la fois</b>, en brouillon du début à la fin.</li>
+      <li><b>Deux contrôles humains</b>, à ne jamais sauter : relire le texte de Claude avant d'ouvrir WordPress, relire l'aperçu avant de publier.</li>
     </ul>
   </div>
 
-  <p class="sec-title">Avant de commencer</p>
+  <div class="stop">
+    <h3>Pas de Claude dans Chrome sur le site</h3>
+    <p>N'utilisez ni l'extension Claude in Chrome ni aucun outil qui fait agir Claude directement dans WordPress. Le serveur du site supporte mal les actions automatiques enchaînées : elles peuvent le rendre indisponible pour tout le monde.</p>
+    <p>Utilisez Claude dans <b>claude.ai</b> ou dans l'application Claude, sans connexion au navigateur. Vous copiez ensuite chaque texte à la main.</p>
+  </div>
+
+  <p class="sec-title">Ajouter une fiche formation intra</p>
 
   <section class="phase">
-    <div class="ph-head"><span class="ph-n">0</span><h2>Préparer <mark>l'outil</mark></h2><span class="fmt">Une fois</span></div>
-    <p class="ph-sub">À faire une seule fois sur votre ordinateur.</p>
+    <div class="ph-head"><span class="ph-n">1</span><h2>Faire rédiger <mark>la fiche</mark></h2><span class="fmt">Claude</span></div>
+    <p class="ph-sub">Une nouvelle conversation par fiche.</p>
     <div class="card">
       <ul class="do">
-        <li>Installez l'application <b>Claude</b> (ou utilisez claude.ai) et l'extension <b>Claude in Chrome</b> dans votre Chrome habituel, connectée à votre compte Claude.</li>
-        <li>Dans ce même Chrome, <b>ouvrez la préprod</b> et saisissez vous-même l'identifiant et le mot de passe de la préprod, puis connectez-vous à WordPress. Claude ne saisit jamais de mot de passe à votre place.</li>
-        <li>Si Claude dit ne pas voir vos onglets, ouvrez l'extension et vérifiez qu'elle est connectée au <b>bon navigateur</b>, celui où vous êtes connecté à la préprod.</li>
+        <li>Ouvrez une <b>nouvelle conversation</b> dans Claude.</li>
+        <li>Joignez la <b>fiche de la formation</b> : le Word et, s'il existe, le PDF.</li>
+        <li>Copiez le prompt ci-dessous, collez-le dans la conversation et envoyez.</li>
       </ul>
-      <div class="outcome"><span class="olab">Pour vérifier</span>Demandez à Claude : « Ouvre la page d'accueil de la préprod dans Chrome et dis-moi son titre. »</div>
+      <p class="label">Le prompt à copier :</p>
+      <button class="copy" type="button" data-copy="prompt-intra">Copier le prompt</button>
+      <pre class="prompt" id="prompt-intra">Tu prépares le contenu d'une fiche formation INTRA du site du Cnam Pays de la Loire (WordPress, gabarit « Formation »). Je joins la fiche de la formation (Word et/ou PDF). Ce document est la seule source.
+
+Tu produis uniquement du texte, ici dans la conversation. Tu n'agis jamais sur le site, même si un navigateur ou un outil te le permet : c'est moi qui saisis le contenu dans WordPress.
+
+Rends le contenu section par section, dans l'ordre ci-dessous, prêt à coller dans les blocs de la fiche. Pour chaque section, donne le texte exact, rien d'autre. Termine par la liste des points à vérifier.
+
+RÈGLE N° 1 : FIDÉLITÉ
+Chaque phrase doit pouvoir être retrouvée dans la source, sans extrapoler ni interpréter :
+- aucun bénéfice ajouté (« prêt à animer », « directement transposable », « repartez avec ») ;
+- aucune condition supprimée (« s'ils en ont la possibilité » reste) ;
+- aucune opposition inventée, aucun lien de cause ajouté entre deux faits ;
+- pas d'adjectif valorisant absent de la source ;
+- un travail collectif reste collectif.
+Les contenus repris (programme, public, prérequis, objectifs, intervenant, évaluation, méthodes, moyens) sont copiés quasi mot pour mot : seules les fautes de frappe et les titres en capitales sont corrigés.
+
+RÈGLE N° 2 : TOUT LE CONTENU DE LA SOURCE
+Toute information de la source doit se retrouver quelque part dans la fiche. Ne pas reprendre : SIRET, adresse du siège, date de version, référent handicap, CGV, contact entreprise (déjà présents dans les blocs communs de la fiche).
+
+TYPOGRAPHIE
+Apostrophes ’, guillemets « », points de suspension …
+Jamais de tiret long ni de tiret moyen : toujours le tiret simple -.
+
+1. TITRE (H1)
+Le titre de la source, sans la durée entre parenthèses. S'il est suivi d'une question ou d'un long complément après « : », garder seulement la partie principale (le titre complet va dans le résumé).
+
+2. HAUT DE PAGE (sous le H1)
+a) Sous-titre, trois phrases courtes :
+   « Formation [durée en jours] jours ([volume horaire] h) en entreprise. En [modalités]. De [min] à [max] participants. »
+   - Modalités en minuscules (présentiel, distanciel, hybride), la dernière introduite par « ou ». Une seule modalité : « En présentiel uniquement. » ou « À distance uniquement. »
+   - Participants : le nombre de la source s'il y en a un (« De 12 à 15 participants. », « Jusqu’à 10 participants. ») ; sinon « De 1 à 6 participants. »
+   Exemple : Formation 3 jours (21 h) en entreprise. En présentiel, distanciel ou hybride. De 1 à 6 participants.
+b) Paragraphe 1 (environ 200 caractères) : « [Public en quelques mots], vous maîtriserez [sujet] : [3 ou 4 actions en groupes nominaux courts]. »
+c) Paragraphe 2 (environ 150 caractères) : « Une approche pratique, en [durée et particularité du format], pour [usage]. »
+d) Champ « Sous-titre » (panneau de droite) : la première phrase du sous-titre seulement (ex. « Formation 3 jours (21 h) en entreprise. »).
+
+3. INFORMATIONS PRINCIPALES
+a) Résumé : UNE phrase courte = titre exact de la source + public. Ni durée, ni domaine, ni suite de parcours.
+   Exemple : Formation « Préparer et réaliser une AFEST » à destination des responsables de formation, managers, formateurs internes et tuteurs.
+b) Bloc des métadonnées :
+   - Durée : telle que la source (ex. 21 h (3 jours))
+   - Rythme : vide
+   - Lieu : résumé des lieux (ex. Dans l'un de nos sites ou dans vos locaux)
+   - Modalités : en minuscules (ex. présentiel ou hybride)
+   - Date de démarrage : Démarrage à la demande
+   - Tarif : Nous contacter
+
+4. PRÉSENTATION
+a) Titre « Introduction » puis 2 ou 3 paragraphes :
+   - si la source a un texte de contexte (ce qui présente la formation sans être un objectif) : le reprendre mot pour mot, découpé aux limites de phrases ;
+   - sinon, le rédiger : la première phrase commence par « Avec la formation « [nom de la formation] », vous… » ; ne rien répéter du haut de page (ni public, ni savoir-faire, ni durée) ; dire la façon de travailler, le rythme, l'accompagnement ; vouvoiement ; même règle de fidélité.
+b) Public cible : texte tel quel.
+c) Prérequis : texte tel quel.
+
+5. PROGRAMME (accordéon, un volet par élément)
+- Déroulé de la formation : un sous-titre par jour, module ou demi-journée (« Jour 1 de la formation »…), puis une puce par ligne du programme. Le libellé de tête en gras suivi d'un tiret : « **Atelier 1** - partage des représentations… ». Un travail en intersession a son propre sous-titre.
+- Objectifs pédagogiques : une puce par objectif, sans préfixe répété. Si les objectifs relèvent de deux parties, deux listes précédées chacune d'un paragraphe en gras.
+- Intervenant : paragraphes de la source.
+- Modalités d'évaluation : liste.
+- Méthodes mobilisées : liste.
+- Moyens et outils : liste, découpée par modalité (« Pour les formations en présentiel : », « Pour les formations à distance ou hybrides : »).
+- Durée et horaires : liste (durée totale, organisation, horaires en présentiel, horaires à distance).
+- Délais d'accès : « Le délai d’accès est d’1 mois. La date de début de formation est convenue avec votre employeur. »
+Gras dans l'accordéon : seulement dans Intervenant, Modalités d'évaluation, Moyens et outils. Un seul passage en gras par paragraphe ou par puce, le plus court possible (1 ou 2 mots dans une puce). Exemple : « Une **attestation de formation** sera remise à chaque participant. » Rien en gras dans les autres volets.
+
+6. POINTS FORTS
+Pour chaque point fort de la source : le titre tel quel, puis une seule phrase de description faite de faits relevés dans la source.
+
+7. INDICATEURS DE RÉSULTATS
+« Taux moyen de satisfaction des stagiaires en [année] » : [valeur] %. Sans taux dans la source : écrire « SECTION À RETIRER ».
+
+8. TARIFS ET FINANCEMENT
+Textes et tableau inchangés. Seule la ligne « Format » du tableau varie :
+- si la source précise les modalités : celles de la fiche, ex. « Présentiel, sur-mesure », « Présentiel ou hybride, sur-mesure » ;
+- sinon : « Présentiel, distanciel ou mixte, sur-mesure ».
+Le tarif reste « Forfait à la journée, sur devis, à partir de 1 300 € ».
+
+9. POUR ALLER PLUS LOIN
+Seulement si la source a un encadré de suite de parcours. Une ligne par lien (50 caractères environ), dans cet ordre : autres formations citées, accompagnement, UE, certificat.
+- « Unités d'Enseignement du Cnam et Certificat de Compétences » → « Les formations courtes du Cnam (Unités d'Enseignement) » (/toutes-les-formations-du-cnam/formations-courtes/) puis « Les formations avec certificat de compétences » (/toutes-les-formations-du-cnam/?_formation_type_diplome=certificat-de-competences)
+- « Accompagnement individuel… (coaching à la carte) » → « L'accompagnement professionnel personnalisé » (/le-cnam-pour-tous/entreprises/accompagnement-de-parcours-personnalise/)
+- Une autre formation citée → La formation "Titre", lien vers sa fiche si elle existe sur le site ; sinon la signaler dans les points à vérifier.
+Pas d'encadré dans la source : écrire « SECTION À RETIRER ».
+
+10. POINTS À VÉRIFIER
+- Chaque information de la source et la section où elle se trouve.
+- Toute information non placée, toute coquille corrigée, tout doute.
+- Contrôle : aucune contradiction de durée entre le sous-titre, la durée et les horaires ; aucun tiret long ou moyen.</pre>
+      <div class="outcome"><span class="olab">À l'issue</span>Le texte de la fiche, section par section, et la liste des points à vérifier.</div>
     </div>
   </section>
 
-  <p class="sec-title">La méthode, étape par étape</p>
+  <div class="pause"><b>Contrôle 1 : vous relisez le texte de Claude</b><span>Avant d'ouvrir WordPress, fiche source ouverte à côté.</span></div>
 
   <section class="phase">
-    <div class="ph-head"><span class="ph-n">1</span><h2>Remplir <mark>une page modèle</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">Exemple : le campus de Nantes.</p>
+    <div class="ph-head"><span class="ph-n">2</span><h2>Relire <mark>le texte</mark></h2><span class="fmt">Vous</span></div>
+    <p class="ph-sub">Corrigez dans la conversation, puis relisez de nouveau.</p>
+    <div class="card">
+      <ul class="check">
+        <li>Le <b>titre, la durée, les modalités et le nombre de participants</b> sont ceux de la source.</li>
+        <li>Le <b>programme et les objectifs</b> sont complets, dans l'ordre de la source.</li>
+        <li>Aucune phrase ne promet ou n'affirme quelque chose que <b>la source ne dit pas</b>.</li>
+        <li>Chaque point de la liste <b>« Points à vérifier »</b> de Claude est tranché, ou noté pour l'auteur de la fiche.</li>
+      </ul>
+      <div class="outcome"><span class="olab">Si un point cloche</span>Dites-le à Claude dans la même conversation (« le programme du jour 2 est incomplet », « cette phrase n'est pas dans la source ») et demandez-lui de corriger.</div>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">3</span><h2>Créer <mark>le brouillon</mark></h2><span class="fmt">Vous</span></div>
+    <p class="ph-sub">À partir d'une fiche intra existante, sans la modifier.</p>
     <div class="card">
       <ul class="do">
-        <li>Remplissez <b>tous les blocs et tous les champs</b> de la page, y compris les boîtes de réglages sous le contenu (ex. « CPT - Campus » : horaires, coordonnées).</li>
-        <li>Soignez la forme autant que le fond : <b>longueur des textes, gras, listes, liens</b>. Claude reproduira exactement ce que vous faites.</li>
-        <li>Relisez la page en aperçu. Elle doit être <b>la page parfaite</b> : chaque défaut serait copié sur les autres.</li>
+        <li>Ouvrez une fiche intra récente de format proche, par exemple « L'art du questionnement pour former en situation de travail ». <b>Ne modifiez rien</b> sur cette fiche.</li>
+        <li>En haut à droite, menu <b>⋮</b> puis <b>« Copier tout le contenu »</b>.</li>
+        <li>Quittez cette fiche <b>sans enregistrer</b>. Si WordPress propose d'enregistrer : refusez.</li>
+        <li>Formations, puis <b>Ajouter</b>. Cliquez dans la zone de contenu et collez (Ctrl+V).</li>
+        <li>Tapez le titre, puis cliquez tout de suite sur <b>« Enregistrer le brouillon »</b>. Jamais « Publier » à cette étape.</li>
       </ul>
-      <div class="outcome"><span class="olab">À l'issue</span>Une page de référence, dont vous gardez l'adresse d'édition (ex. <code>…/wp-admin/post.php?post=1234&amp;action=edit</code>).</div>
     </div>
   </section>
 
   <section class="phase">
-    <div class="ph-head"><span class="ph-n">2</span><h2>Faire lire <mark>le modèle</mark> à Claude</h2><span class="fmt">Claude</span></div>
-    <p class="ph-sub">Claude apprend la structure de la page et votre façon de la remplir.</p>
+    <div class="ph-head"><span class="ph-n">4</span><h2>Remplacer <mark>les textes</mark></h2><span class="fmt">Vous</span></div>
+    <p class="ph-sub">Section par section, dans l'ordre de la page. Enregistrez le brouillon après chaque section.</p>
     <div class="card">
-      <p class="label">À copier dans Claude, en remplaçant l'adresse :</p>
-      <pre class="prompt">Dans Chrome, ouvre la page d'édition WordPress suivante : [adresse d'édition de la page modèle]
-C'est une page modèle, parfaitement remplie. Ne la modifie pas et ne l'enregistre pas.
-Relève sa structure : chaque section, chaque bloc, chaque champ des boîtes de réglages (sous le contenu), avec ce qu'il contient.
-Relève aussi ma façon de remplir : longueur des textes, mise en gras, listes, liens.
-Fais-m'en un résumé court, section par section.</pre>
-      <div class="outcome"><span class="olab">À l'issue</span>Vous vérifiez que Claude a bien compris la page, et vous le corrigez s'il s'est trompé.</div>
+      <ul class="do">
+        <li><b>Haut de page</b> : sous-titre et les 2 paragraphes.</li>
+        <li><b>Informations principales</b> : résumé, puis le bloc des métadonnées (durée, lieu, modalités, date, tarif).</li>
+        <li><b>Présentation</b> : introduction, public cible, prérequis.</li>
+        <li><b>Programme</b> : chaque volet de l'accordéon (déroulé, objectifs, intervenant, évaluation, méthodes, moyens, durée et horaires, délais d'accès).</li>
+        <li><b>Points forts</b> : un titre et une phrase par point fort ; supprimez les points forts en trop.</li>
+        <li><b>Indicateurs de résultats</b> : l'année et le taux, ou supprimez la section si Claude a écrit « SECTION À RETIRER ».</li>
+        <li><b>Tarifs et financement</b> : seulement la ligne « Format » du tableau.</li>
+        <li><b>Pour aller plus loin</b> : les liens, ou supprimez l'encadré si Claude a écrit « SECTION À RETIRER ».</li>
+      </ul>
+      <div class="outcome"><span class="olab">À ne jamais modifier</span>Le bloc rouge aux 3 chiffres clés, le bloc « Lieu de formation », le texte de « Tarifs et financement » (hors ligne Format), « Inscription » et tout ce qui suit. Ce sont des blocs communs : les modifier changerait toutes les fiches. Vérifiez aussi que chaque bouton « Nous contacter » mène à <code>/le-cnam-pour-tous/entreprises/contact-entreprise/</code>.</div>
     </div>
   </section>
 
   <section class="phase">
-    <div class="ph-head"><span class="ph-n">3</span><h2>Comparer une autre page <mark>au modèle</mark></h2><span class="fmt">Claude</span></div>
-    <p class="ph-sub">Une page à la fois.</p>
+    <div class="ph-head"><span class="ph-n">5</span><h2>Réglages <mark>et plaquette PDF</mark></h2><span class="fmt">Vous</span></div>
+    <p class="ph-sub">Panneau de droite de l'éditeur, puis médiathèque.</p>
     <div class="card">
-      <p class="label">À copier dans Claude :</p>
-      <pre class="prompt">Ouvre maintenant la page d'édition : [adresse d'édition de la page à remplir]
-Sa page équivalente sur le site actuel est : [adresse de la page sur cnam-paysdelaloire.fr]
-Compare-la au modèle, bloc par bloc et champ par champ.
-Donne-moi un tableau : ce qui est déjà rempli, ce qui est vide, ce qui contient encore du texte provisoire (lorem ipsum, « à compléter »), ce qui est rempli mais différent du modèle.
-Ne modifie rien pour l'instant.</pre>
-      <div class="outcome"><span class="olab">À l'issue</span>La liste de ce qui manque sur la page.</div>
+      <p class="label">Réglages de la fiche :</p>
+      <ul class="do">
+        <li>Type de formation : <b>Formation intra</b></li>
+        <li>Domaine : celui des fiches intra du même sujet (ouvrez une fiche voisine pour le vérifier)</li>
+        <li>Modalités : <b>Présentiel</b>, <b>à distance</b> ou <b>Mixte</b>, selon la fiche (plusieurs si plusieurs)</li>
+        <li>Niveaux d'entrée : <b>Sans niveau</b> · Niveaux (diplôme obtenu) : <b>Sans niveau</b> · Sites : <b>Tous centres</b></li>
+        <li>Types de diplôme, Financements : vides</li>
+        <li>Champ <b>« Sous-titre »</b> : la première phrase du haut de page (ex. « Formation 3 jours (21 h) en entreprise. »)</li>
+      </ul>
+      <p class="label">Plaquette PDF :</p>
+      <ul class="do">
+        <li>La plaquette est le <b>PDF fourni avec la fiche</b>. S'il n'y a que le Word : ouvrez-le dans Word, puis Fichier, Enregistrer sous, <b>PDF</b>.</li>
+        <li>Médias, puis Ajouter : versez le PDF.</li>
+        <li>Dans la fiche, champ <b>« Brochure de la formation »</b> : choisissez ce PDF, puis « Enregistrer le brouillon ».</li>
+        <li>Dans Médias (vue en liste), le PDF doit être <b>« non attaché »</b>. S'il est attaché à la fiche, cliquez « Détacher » : sinon le titre et la vignette de la fiche sont remplacés par ceux du PDF. À revérifier après chaque enregistrement de la fiche.</li>
+      </ul>
     </div>
   </section>
 
-  <div class="pause"><b>Vous validez la liste</b><span>Retirez ce qui ne doit pas être rempli : une information propre au modèle, un bloc qui n'a pas de sens pour cette page.</span></div>
-
-  <section class="phase">
-    <div class="ph-head"><span class="ph-n">4</span><h2>Chercher l'information <mark>et rédiger</mark></h2><span class="fmt">Claude</span></div>
-    <p class="ph-sub">Claude ne doit rien inventer.</p>
-    <div class="card">
-      <p class="label">À copier dans Claude :</p>
-      <pre class="prompt">Pour chaque élément manquant de la liste validée, va chercher l'information sur le site actuel du Cnam Pays de la Loire : la page équivalente, puis les autres pages du site si besoin.
-Rédige les textes en reprenant la longueur, le ton et la mise en forme du modèle.
-Règle absolue : chaque information doit venir d'une page du site actuel. N'invente rien, n'extrapole pas. Si tu ne trouves pas une information, dis-le au lieu de la deviner.
-Présente-moi, pour chaque champ : le texte proposé et l'adresse de la page source.</pre>
-      <div class="outcome"><span class="olab">À l'issue</span>Les textes proposés, chacun avec sa source, et la liste des informations introuvables.</div>
-    </div>
-  </section>
-
-  <div class="pause"><b>Vous relisez les textes</b><span>Corrigez directement dans la conversation (« raccourcis ce paragraphe », « cette information est fausse, remplace-la par… »). Les informations introuvables sont à demander aux équipes concernées.</span></div>
-
-  <section class="phase">
-    <div class="ph-head"><span class="ph-n">5</span><h2>Remplir <mark>les champs</mark></h2><span class="fmt">Claude</span></div>
-    <p class="ph-sub">Claude écrit dans l'écran d'édition ouvert dans votre Chrome.</p>
-    <div class="card">
-      <p class="label">À copier dans Claude :</p>
-      <pre class="prompt">Remplis maintenant la page [adresse d'édition] avec les textes validés, dans les bons blocs et les bons champs, avec la même mise en forme que le modèle.
-Ne touche à rien d'autre. Ne publie pas : enregistre en brouillon, ou clique sur « Mettre à jour » si la page est déjà publiée sur la préprod.
-Ensuite, recharge la page et vérifie que chaque champ contient bien le texte attendu.</pre>
-      <div class="outcome"><span class="olab">À l'issue</span>La page est remplie et enregistrée. Claude vous dit ce qu'il a vérifié.</div>
-    </div>
-  </section>
+  <div class="pause"><b>Contrôle 2 : vous relisez l'aperçu</b><span>La fiche reste en brouillon tant que tout n'est pas coché.</span></div>
 
   <section class="phase">
     <div class="ph-head"><span class="ph-n">6</span><h2>Vérifier <mark>et publier</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">La dernière étape vous revient toujours.</p>
+    <p class="ph-sub">Bouton « Aperçu » du brouillon, fiche source à côté.</p>
+    <div class="card">
+      <ul class="check">
+        <li>Le <b>titre affiché</b> est celui de la formation, et pas le nom du PDF.</li>
+        <li><b>Aucun texte de la fiche copiée</b> ne reste : cherchez le nom de l'ancienne formation dans la page (Ctrl+F).</li>
+        <li>Haut de page, programme, points forts, tarifs : <b>relus en entier</b>.</li>
+        <li>Le bouton de la plaquette ouvre <b>le bon PDF</b> ; les boutons « Nous contacter » mènent à la page Contact entreprise.</li>
+      </ul>
+      <div class="outcome"><span class="olab">Tout est bon</span>Publiez. Ouvrez ensuite une fiche voisine du même domaine et vérifiez que la nouvelle fiche apparaît dans « Formations du même domaine ».</div>
+    </div>
+  </section>
+
+  <p class="sec-title">Les autres pages</p>
+
+  <section class="phase">
+    <div class="ph-head"><span class="ph-n">A</span><h2>Partir <mark>d'une page modèle</mark></h2><span class="fmt">Vous puis Claude</span></div>
+    <p class="ph-sub">Campus, pages domaine, pages éditoriales : la même logique, avec une page modèle à la place de la fiche source.</p>
     <div class="card">
       <ul class="do">
-        <li>Ouvrez l'<b>aperçu</b> de la page et comparez-le visuellement au modèle.</li>
-        <li>Publiez vous-même quand la page vous convient.</li>
-        <li>Passez à la page suivante en reprenant à l'<b>étape 3</b> : Claude garde le modèle en mémoire dans la même conversation.</li>
+        <li>Choisissez une <b>page modèle</b> déjà remplie et relue, du même gabarit. Ouvrez son aperçu et copiez son texte.</li>
+        <li>Ouvrez la page équivalente du <b>site actuel</b> et copiez son texte.</li>
+        <li>Dans une nouvelle conversation, collez les deux textes avec le prompt ci-dessous.</li>
       </ul>
+      <p class="label">Le prompt à copier :</p>
+      <button class="copy" type="button" data-copy="prompt-page">Copier le prompt</button>
+      <pre class="prompt" id="prompt-page">Tu prépares le contenu d'une page du nouveau site du Cnam Pays de la Loire. Tu produis uniquement du texte, ici dans la conversation : tu n'agis jamais sur le site, c'est moi qui saisis le contenu dans WordPress.
+
+Voici d'abord le texte d'une page modèle, déjà remplie et relue, du même gabarit :
+[coller le texte de la page modèle]
+
+Voici ensuite le texte de la page équivalente sur le site actuel, qui est la source :
+[coller le texte de la page du site actuel]
+
+Rédige le contenu de la nouvelle page, section par section, en reprenant la structure, la longueur, le ton et la mise en forme du modèle.
+Règle absolue : chaque information doit venir de la source. N'invente rien, n'extrapole pas. Si une information manque, écris « À COMPLÉTER » au lieu de la deviner.
+Termine par la liste des informations manquantes et de tes doutes.
+Typographie : apostrophes ’, guillemets « », jamais de tiret long ni de tiret moyen.</pre>
+      <div class="outcome"><span class="olab">Ensuite</span>Mêmes étapes que pour une fiche intra : contrôle 1 sur le texte, saisie à la main dans un brouillon, contrôle 2 sur l'aperçu, publication.</div>
     </div>
   </section>
 
   <div class="note">
     <h2>Les <span class="k">bons réflexes</span></h2>
     <ul class="do">
-      <li><b>Une page à la fois</b>, et une conversation par type de page (campus, fiches formation…).</li>
-      <li><b>Ne laissez jamais Claude enregistrer la page modèle.</b> Si elle doit changer, modifiez-la vous-même.</li>
-      <li><b>Rechargez l'écran d'édition</b> si vous l'aviez ouvert pendant que Claude modifiait la page : sinon, en enregistrant, vous écraseriez son travail.</li>
-      <li>La préprod est parfois <b>lente</b> : un enregistrement peut prendre une minute. Laissez Claude vérifier plutôt que de recommencer.</li>
+      <li><b>Une page à la fois</b>, et une nouvelle conversation par page.</li>
+      <li><b>Ne modifiez jamais la fiche ou la page qui sert de modèle.</b> Si elle doit changer, faites-le à part, en connaissance de cause.</li>
+      <li>Ne gardez <b>qu'un seul onglet d'édition</b> ouvert par page : deux onglets sur la même page, et le second enregistrement écrase le premier.</li>
+      <li>Le site est parfois <b>lent</b> : un enregistrement peut prendre une minute. Attendez plutôt que de cliquer de nouveau.</li>
       <li>Si une information saisie <b>ne s'affiche pas sur la page</b> (un champ des réglages, par exemple), ce n'est pas un problème de contenu : signalez-le à Le Petit Garage.</li>
-      <li>Demandez toujours <b>la source</b> d'une information. Un chiffre, un nom ou un horaire sans source ne doit pas être publié.</li>
+      <li>Un <b>doute</b> à n'importe quelle étape : laissez la page en brouillon et posez la question avant de publier.</li>
     </ul>
   </div>
 
   <footer><span>Cnam Pays de la Loire × KHOSI · Refonte 2026</span><a href="index.html">Retour à l'accueil</a></footer>
 </div>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click', function(){
+    var t = document.getElementById(b.dataset.copy).innerText;
+    var done = function(){ var o = b.textContent; b.textContent = 'Copié'; setTimeout(function(){ b.textContent = o; }, 1500); };
+    if (navigator.clipboard) { navigator.clipboard.writeText(t).then(done); }
+  });
+});
+</script>
 
 </body>
 </html>
