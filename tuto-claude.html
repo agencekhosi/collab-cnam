@@ -102,7 +102,7 @@
     <h3>Le principe en 4 points</h3>
     <ul>
       <li><b>Claude rédige, vous saisissez.</b> Claude travaille dans une conversation classique et ne touche jamais au site.</li>
-      <li><b>Une source fait foi</b> : la fiche de la formation (Word ou PDF), ou la page du site actuel. Claude n'invente rien.</li>
+      <li><b>Une seule source fait foi</b> : le PDF de la formation pour une fiche intra (il n'existe pas de page sur le site actuel), la page du site actuel pour les autres pages. Claude n'invente rien.</li>
       <li><b>Une page à la fois</b>, en brouillon du début à la fin.</li>
       <li><b>Deux contrôles humains</b>, à ne jamais sauter : relire le texte de Claude avant d'ouvrir WordPress, relire l'aperçu avant de publier.</li>
     </ul>
@@ -122,12 +122,12 @@
     <div class="card">
       <ul class="do">
         <li>Ouvrez une <b>nouvelle conversation</b> dans Claude.</li>
-        <li>Joignez la <b>fiche de la formation</b> : le Word et, s'il existe, le PDF.</li>
+        <li>Joignez le <b>PDF de la formation</b>. C'est la seule source : la formation n'a pas de page sur le site actuel.</li>
         <li>Copiez le prompt ci-dessous, collez-le dans la conversation et envoyez.</li>
       </ul>
       <p class="label">Le prompt à copier :</p>
       <button class="copy" type="button" data-copy="prompt-intra">Copier le prompt</button>
-      <pre class="prompt" id="prompt-intra">Tu prépares le contenu d'une fiche formation INTRA du site du Cnam Pays de la Loire (WordPress, gabarit « Formation »). Je joins la fiche de la formation (Word et/ou PDF). Ce document est la seule source.
+      <pre class="prompt" id="prompt-intra">Tu prépares le contenu d'une fiche formation INTRA du site du Cnam Pays de la Loire (WordPress, gabarit « Formation »). Je joins le PDF de la formation. Ce PDF est la seule source : la formation n'a pas de page sur le site actuel, ne cherche rien ailleurs.
 
 Tu produis uniquement du texte, ici dans la conversation. Tu n'agis jamais sur le site, même si un navigateur ou un outil te le permet : c'est moi qui saisis le contenu dans WordPress.
 
@@ -218,7 +218,7 @@ Pas d'encadré dans la source : écrire « SECTION À RETIRER ».
     </div>
   </section>
 
-  <div class="pause"><b>Contrôle 1 : vous relisez le texte de Claude</b><span>Avant d'ouvrir WordPress, fiche source ouverte à côté.</span></div>
+  <div class="pause"><b>Contrôle 1 : vous relisez le texte de Claude</b><span>Avant d'ouvrir WordPress, PDF de la formation ouvert à côté.</span></div>
 
   <section class="phase">
     <div class="ph-head"><span class="ph-n">2</span><h2>Relire <mark>le texte</mark></h2><span class="fmt">Vous</span></div>
@@ -281,7 +281,7 @@ Pas d'encadré dans la source : écrire « SECTION À RETIRER ».
       </ul>
       <p class="label">Plaquette PDF :</p>
       <ul class="do">
-        <li>La plaquette est le <b>PDF fourni avec la fiche</b>. S'il n'y a que le Word : ouvrez-le dans Word, puis Fichier, Enregistrer sous, <b>PDF</b>.</li>
+        <li>La plaquette est <b>ce même PDF</b>, celui qui a servi de source.</li>
         <li>Médias, puis Ajouter : versez le PDF.</li>
         <li>Dans la fiche, champ <b>« Brochure de la formation »</b> : choisissez ce PDF, puis « Enregistrer le brouillon ».</li>
         <li>Dans Médias (vue en liste), le PDF doit être <b>« non attaché »</b>. S'il est attaché à la fiche, cliquez « Détacher » : sinon le titre et la vignette de la fiche sont remplacés par ceux du PDF. À revérifier après chaque enregistrement de la fiche.</li>
@@ -293,7 +293,7 @@ Pas d'encadré dans la source : écrire « SECTION À RETIRER ».
 
   <section class="phase">
     <div class="ph-head"><span class="ph-n">6</span><h2>Vérifier <mark>et publier</mark></h2><span class="fmt">Vous</span></div>
-    <p class="ph-sub">Bouton « Aperçu » du brouillon, fiche source à côté.</p>
+    <p class="ph-sub">Bouton « Aperçu » du brouillon, PDF de la formation à côté.</p>
     <div class="card">
       <ul class="check">
         <li>Le <b>titre affiché</b> est celui de la formation, et pas le nom du PDF.</li>
@@ -309,7 +309,7 @@ Pas d'encadré dans la source : écrire « SECTION À RETIRER ».
 
   <section class="phase">
     <div class="ph-head"><span class="ph-n">A</span><h2>Partir <mark>d'une page modèle</mark></h2><span class="fmt">Vous puis Claude</span></div>
-    <p class="ph-sub">Campus, pages domaine, pages éditoriales : la même logique, avec une page modèle à la place de la fiche source.</p>
+    <p class="ph-sub">Campus, pages domaine, pages éditoriales : la même logique, avec une page modèle et la page du site actuel à la place du PDF.</p>
     <div class="card">
       <ul class="do">
         <li>Choisissez une <b>page modèle</b> déjà remplie et relue, du même gabarit. Ouvrez son aperçu et copiez son texte.</li>
