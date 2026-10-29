@@ -5,7 +5,8 @@
   var NAV = [
     {href:"index.html",              label:"Accueil"},
     {href:"etat-des-lieux-seo.html", label:"État des lieux SEO"},
-    {href:"arborescence.html",       label:"Arborescence"},
+    {href:"pages-a-creer.html",      label:"Pages à créer"},
+    {href:"points-en-suspens.html",  label:"Points en suspens"},
     {label:"Ressources", items:[
       {href:"checklist.html",        label:"Checklist de création de contenu"},
       {href:"deroule-atelier.html",  label:"Déroulé de l'atelier"},
