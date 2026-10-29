@@ -7,42 +7,29 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Points en suspens · CNAM Pays de la Loire</title>
 <link rel="stylesheet" href="../fonts.css">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../assets/composants.css">
 <style>
-  :root{
-    --paper:#fcfdfd; --card:#fff; --ink:#18232a; --ink-soft:#375363; --ink-faint:#6f8695;
-    --line:#deeaef; --accent:#c5243e; --accent-deep:#981935; --tint:#deeaef;
-    --good:#147a55; --good-soft:#e3f0ea; --warn:#8a5a00; --warn-soft:#fbefd6;
-    --shadow:0 1px 2px rgba(24,35,42,.06), 0 10px 26px -14px rgba(24,35,42,.20);
-    --sans:'Raleway', ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased;}
-  .inner{max-width:1080px; margin:0 auto; padding:0 clamp(16px,4vw,44px);}
-  .hero{padding:clamp(18px,3vw,36px) 0 8px;}
-  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#fff; margin:0 0 16px; background:var(--accent); padding:6px 14px 6px 12px; border-radius:999px;}
-  h1{font-size:clamp(28px,5vw,42px); font-weight:800; line-height:1.07; letter-spacing:-.02em; margin:0 0 14px;}
-  .sub{font-size:clamp(15px,2vw,17px); color:var(--ink-soft); margin:0; max-width:66ch;}
   .ancres{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 0;}
-  .ancres a{font-size:13.5px; font-weight:700; color:var(--ink-soft); text-decoration:none; background:var(--tint); padding:6px 13px; border-radius:999px;}
-  .ancres a:hover{color:var(--accent-deep);}
+  .ancres a{font-size:13.5px; font-weight:700; color:var(--cn-ink-soft); text-decoration:none; background:var(--cn-tint); padding:6px 13px; border-radius:999px;}
+  .ancres a:hover{color:var(--cn-accent-deep);}
   h2{font-size:clamp(20px,3vw,26px); font-weight:800; letter-spacing:-.01em; margin:44px 0 6px;}
   h3{font-size:16px; font-weight:800; margin:26px 0 10px;}
-  .intro{margin:0 0 6px; color:var(--ink-soft); max-width:72ch;}
-  .table-zone{overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow);}
+  .intro{margin:0 0 6px; color:var(--cn-ink-soft); max-width:72ch;}
+  .table-zone{overflow-x:auto; background:var(--cn-card); border:1px solid var(--cn-line); border-radius:14px; box-shadow:var(--cn-shadow);}
   table{width:100%; border-collapse:collapse; min-width:640px; font-size:14px;}
-  th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); font-weight:800; padding:10px 14px; border-bottom:1px solid var(--line);}
-  td{padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-soft);}
-  td:first-child{color:var(--ink); font-weight:700; width:28%;}
+  th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--cn-ink-faint); font-weight:800; padding:10px 14px; border-bottom:1px solid var(--cn-line);}
+  td{padding:11px 14px; border-bottom:1px solid var(--cn-line); vertical-align:top; color:var(--cn-ink-soft);}
+  td:first-child{color:var(--cn-ink); font-weight:700; width:28%;}
   tr:last-child td{border-bottom:0;}
   .tag{display:inline-block; font-size:11px; font-weight:800; padding:2px 9px; border-radius:999px; white-space:nowrap;}
-  .avant{background:var(--warn-soft); color:var(--warn);}
-  .apres{background:var(--tint); color:var(--ink-soft);}
-  .regle{background:var(--good-soft); color:var(--good);}
-  ul.liste{margin:0; padding:16px 20px 16px 36px; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); display:grid; gap:8px; font-size:14px; color:var(--ink-soft);}
-  ul.liste b{color:var(--ink);}
-  a{color:var(--accent-deep);}
-  code{font-size:12.5px; background:var(--tint); padding:1px 5px; border-radius:4px;}
-  footer{margin:44px 0 60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+  .avant{background:var(--cn-warn-soft); color:var(--cn-warn);}
+  .apres{background:var(--cn-tint); color:var(--cn-ink-soft);}
+  .regle{background:var(--cn-good-soft); color:var(--cn-good);}
+  ul.liste{margin:0; padding:16px 20px 16px 36px; background:var(--cn-card); border:1px solid var(--cn-line); border-radius:14px; box-shadow:var(--cn-shadow); display:grid; gap:8px; font-size:14px; color:var(--cn-ink-soft);}
+  ul.liste b{color:var(--cn-ink);}
+  a{color:var(--cn-accent-deep);}
+  code{font-size:12.5px; background:var(--cn-tint); padding:1px 5px; border-radius:4px;}
 </style>
 <script src="../header.js" defer></script>
 </head>

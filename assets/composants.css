@@ -1,0 +1,13 @@
+/* Socle commun aux pages du site : corps, conteneur, haut de page, pied de page.
+   Une page ne garde dans son propre style que ce qui n'appartient qu'à elle. */
+*{box-sizing:border-box;}
+body{margin:0; background:var(--cn-paper); color:var(--cn-ink); font-family:var(--cn-sans); line-height:1.55; -webkit-font-smoothing:antialiased;}
+.inner{max-width:1080px; margin:0 auto; padding:0 clamp(16px,4vw,44px);}
+.hero{padding:clamp(18px,3vw,36px) 0 clamp(12px,2vw,18px);}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#fff; margin:0 0 16px; background:var(--cn-accent); padding:6px 14px 6px 12px; border-radius:999px;}
+.eyebrow::before{content:""; width:6px; height:6px; border-radius:50%; background:#fff; display:inline-block;}
+h1{font-size:clamp(28px,5vw,44px); font-weight:800; line-height:1.07; letter-spacing:-.02em; margin:0 0 14px; color:var(--cn-ink); text-wrap:balance;}
+h1 mark{background:var(--cn-accent); color:#fff; padding:.02em .26em; border-radius:0; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+.sub{font-size:clamp(15px,2vw,17px); color:var(--cn-ink-soft); margin:0; max-width:62ch;}
+footer{margin:44px 0 60px; padding-top:18px; border-top:1px solid var(--cn-line); font-size:12.5px; color:var(--cn-ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+:focus-visible{outline:2px solid var(--cn-accent); outline-offset:2px;}

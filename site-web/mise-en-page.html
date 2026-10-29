@@ -7,50 +7,33 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Mettre en page une page · CNAM Pays de la Loire</title>
 <link rel="stylesheet" href="../fonts.css">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../assets/composants.css">
 <style>
-  :root{
-    --paper:#fcfdfd; --card:#fff; --ink:#18232a; --ink-soft:#375363; --ink-faint:#6f8695;
-    --line:#deeaef; --line-strong:#97bcc9; --accent:#c5243e; --accent-deep:#981935; --tint:#deeaef;
-    --good:#147a55; --good-soft:#e3f0ea; --bad:#b3261e; --bad-soft:#fdecea;
-    --shadow:0 1px 2px rgba(24,35,42,.06), 0 10px 26px -14px rgba(24,35,42,.20);
-    --sans:'Raleway', ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.55; -webkit-font-smoothing:antialiased;}
-  .inner{max-width:1080px; margin:0 auto; padding:0 clamp(18px,4vw,44px);}
 
-  .hero{padding:clamp(18px,3vw,36px) 0 clamp(12px,2vw,18px);}
-  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:#fff; margin:0 0 16px; background:var(--accent); padding:6px 14px 6px 12px; border-radius:999px;}
-  .eyebrow::before{content:""; width:6px; height:6px; border-radius:50%; background:#fff;}
-  h1{font-size:clamp(28px,5vw,44px); font-weight:800; line-height:1.07; letter-spacing:-.02em; margin:0 0 14px; text-wrap:balance; color:var(--ink); max-width:20ch;}
-  h1 mark{background:var(--accent); color:#fff; padding:.02em .26em; border-radius:0; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
-  .sub{font-size:clamp(15px,2vw,17px); color:var(--ink-soft); margin:0; max-width:62ch;}
-
-  .essentiel{background:var(--good-soft); border:1px solid color-mix(in srgb,var(--good) 28%,transparent); border-radius:16px; padding:22px 24px; margin-top:24px;}
-  .essentiel h2{margin:0 0 13px; font-size:16px; font-weight:800; color:var(--ink);}
+  .essentiel{background:var(--cn-good-soft); border:1px solid color-mix(in srgb,var(--cn-good) 28%,transparent); border-radius:16px; padding:22px 24px; margin-top:24px;}
+  .essentiel h2{margin:0 0 13px; font-size:16px; font-weight:800; color:var(--cn-ink);}
   .essentiel ul{margin:0; padding:0; list-style:none; display:grid; gap:9px;}
-  .essentiel li{position:relative; padding-left:26px; font-size:14.5px; color:var(--ink-soft); line-height:1.45;}
-  .essentiel li::before{content:""; position:absolute; left:2px; top:6px; width:11px; height:11px; border-radius:50%; background:var(--good);}
-  .essentiel li b{color:var(--ink);}
+  .essentiel li{position:relative; padding-left:26px; font-size:14.5px; color:var(--cn-ink-soft); line-height:1.45;}
+  .essentiel li::before{content:""; position:absolute; left:2px; top:6px; width:11px; height:11px; border-radius:50%; background:var(--cn-good);}
+  .essentiel li b{color:var(--cn-ink);}
 
-  .sec-title{font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; color:var(--ink-faint); margin:38px 0 4px;}
+  .sec-title{font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:800; color:var(--cn-ink-faint); margin:38px 0 4px;}
 
   .regles{display:grid; gap:16px; margin-top:16px;}
-  .regle{background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:18px 22px; display:grid; gap:12px;}
+  .regle{background:var(--cn-card); border:1px solid var(--cn-line); border-radius:16px; box-shadow:var(--cn-shadow); padding:18px 22px; display:grid; gap:12px;}
   .r-head{display:flex; align-items:center; gap:13px;}
-  .r-n{font-size:14px; color:#fff; font-weight:800; background:var(--accent); border-radius:10px; width:31px; height:31px; display:grid; place-items:center; flex:none;}
+  .r-n{font-size:14px; color:#fff; font-weight:800; background:var(--cn-accent); border-radius:10px; width:31px; height:31px; display:grid; place-items:center; flex:none;}
   .r-head h3{font-size:clamp(17px,2.6vw,20px); font-weight:800; letter-spacing:-.01em; margin:0; text-wrap:balance;}
-  .r-why{margin:0; font-size:15px; color:var(--ink-soft); max-width:70ch;}
+  .r-why{margin:0; font-size:15px; color:var(--cn-ink-soft); max-width:70ch;}
   .duo{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px;}
   .faire,.eviter{border-radius:11px; padding:11px 15px; font-size:14px; line-height:1.5;}
-  .faire{background:var(--good-soft); border:1px solid color-mix(in srgb,var(--good) 28%,transparent); color:var(--ink);}
-  .eviter{background:var(--bad-soft); border:1px solid color-mix(in srgb,var(--bad) 25%,transparent); color:var(--ink);}
+  .faire{background:var(--cn-good-soft); border:1px solid color-mix(in srgb,var(--cn-good) 28%,transparent); color:var(--cn-ink);}
+  .eviter{background:var(--cn-bad-soft); border:1px solid color-mix(in srgb,var(--cn-bad) 25%,transparent); color:var(--cn-ink);}
   .lab{display:block; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:800; margin-bottom:3px;}
-  .faire .lab{color:var(--good);}
-  .eviter .lab{color:var(--bad);}
-
-  footer{margin:44px 0 60px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-faint); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
-  footer a{color:var(--accent-deep); font-weight:600; text-decoration:none;}
+  .faire .lab{color:var(--cn-good);}
+  .eviter .lab{color:var(--cn-bad);}
+  footer a{color:var(--cn-accent-deep); font-weight:600; text-decoration:none;}
   footer a:hover{text-decoration:underline;}
 </style>
 <script src="../header.js" defer></script>

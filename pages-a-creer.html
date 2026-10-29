@@ -6,71 +6,72 @@
 <link rel="icon" href="favicon.ico">
 <meta name="robots" content="noindex, nofollow">
 <title>Pages à créer · CNAM Pays de la Loire</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="design-system/tokens.css">
+<link rel="stylesheet" href="assets/composants.css">
 <style>
-:root { --bg: #f6f6f4; --surface: #ffffff; --line: #dcdcd6; --fg: #1d1f22; --muted: #646870; --accent: #b0102c;
-  --ok: #1d7a45; --ok-soft: #e1f2e7; --warn: #9a6200; --warn-soft: #fbefd6; --info: #2f5f98; --info-soft: #e3ecf7; --gris-soft: #ececea;
-  --f-body: "IBM Plex Sans", system-ui, sans-serif; --f-head: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif; --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace; }
-body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 14px; line-height: 1.5; }
-.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); max-width: 1400px; margin: 0 auto; }
-header.wrap { padding-block: 24px 8px; }
-h1 { font-family: var(--f-head); font-size: 28px; margin: 0 0 6px; text-wrap: balance; }
-h2 { font-family: var(--f-head); font-size: 21px; margin: 0 0 6px; text-wrap: balance; }
-h3 { font-family: var(--f-head); font-size: 17px; margin: 0; display: flex; gap: 8px; align-items: center; }
-p { max-width: 75ch; margin: 0 0 8px; }
-.muted, .meta { color: var(--muted); }
-.meta { font-size: 12px; margin-top: 2px; }
-nav.ancres { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-block: 1px solid var(--line); }
-nav.ancres .wrap { display: flex; gap: 6px 16px; flex-wrap: wrap; padding-block: 9px; font-size: 13px; }
-nav.ancres a { color: var(--fg); text-decoration: none; border-bottom: 1px solid transparent; }
-nav.ancres a:hover { border-color: var(--accent); }
-main { padding-block: 8px 48px; display: grid; gap: 32px; }
-.chiffres { display: flex; gap: 28px; flex-wrap: wrap; margin-block: 14px 6px; font-variant-numeric: tabular-nums; }
-.chiffres div { display: grid; }
-.chiffres b { font-family: var(--f-head); font-size: 24px; }
-.chiffres span { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-.methode { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
-.methode ul { margin: 6px 0 0; padding-left: 18px; max-width: 80ch; }
-.prio { display: grid; gap: 10px; margin-top: 14px; }
-.prio-tete p { font-size: 13px; color: var(--muted); margin-top: 4px; }
-.badge { font-size: 12px; padding: 2px 8px; border-radius: 4px; font-family: var(--f-body); font-weight: 600; }
-.b-p1 { background: var(--accent); color: var(--surface); } .b-p2 { background: var(--warn-soft); color: var(--warn); } .b-p3 { background: var(--info-soft); color: var(--info); } .b-gris { background: var(--gris-soft); color: var(--muted); }
-.table-zone { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
-table { width: 100%; border-collapse: collapse; min-width: 860px; }
-th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 500; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-tr:last-child td { border-bottom: 0; }
-.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-td.num .meta { white-space: normal; max-width: 24ch; text-align: left; }
-.nom { font-weight: 600; }
-.url, .url a { font-family: var(--f-mono); font-size: 12px; word-break: break-all; }
-a { color: inherit; text-decoration-color: var(--muted); text-underline-offset: 2px; }
-a:hover { color: var(--accent); }
-ul.req, ul.src { margin: 0; padding-left: 16px; font-size: 12.5px; }
-.n { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-details { margin-top: 6px; font-size: 12.5px; } summary { cursor: pointer; color: var(--muted); }
-.pill { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; margin-top: 4px; }
-.p-warn { background: var(--warn-soft); color: var(--warn); } .p-info { background: var(--info-soft); color: var(--info); } .p-neutre { background: var(--gris-soft); color: var(--muted); }
-.autres { font-size: 13px; padding-left: 18px; max-width: 110ch; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  h2{font-size:clamp(20px,3vw,26px); font-weight:800; letter-spacing:-.01em; margin:0 0 6px; text-wrap:balance;}
+  h3{font-size:17px; font-weight:800; margin:0; display:flex; gap:8px; align-items:center;}
+  p{max-width:75ch; margin:0 0 8px;}
+  .sub{max-width:72ch;}
+  .meta{font-size:12px; margin-top:2px; color:var(--cn-ink-faint);}
+  .ancres{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 0;}
+  .ancres a{font-size:13.5px; font-weight:700; color:var(--cn-ink-soft); text-decoration:none; background:var(--cn-tint); padding:6px 13px; border-radius:999px;}
+  .ancres a:hover{color:var(--cn-accent-deep);}
+  .chiffres{display:flex; gap:28px; flex-wrap:wrap; margin:18px 0 0; font-variant-numeric:tabular-nums;}
+  .chiffres div{display:grid;}
+  .chiffres b{font-size:28px; font-weight:800; color:var(--cn-accent);}
+  .chiffres span{font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--cn-ink-faint);}
+  main{padding:24px 0 0; display:grid; gap:40px; font-size:14px;}
+  main > section{display:grid; gap:10px;}
+  .methode{background:var(--cn-card); border:1px solid var(--cn-line); border-radius:14px; box-shadow:var(--cn-shadow); padding:20px 24px;}
+  .methode ul{margin:6px 0 0; padding-left:18px; max-width:80ch; color:var(--cn-ink-soft); display:grid; gap:6px;}
+  .methode li b{color:var(--cn-ink);}
+  .prio{display:grid; gap:10px; margin-top:18px;}
+  .prio-tete p{font-size:13px; color:var(--cn-ink-soft); margin-top:4px;}
+  .badge{font-size:12px; padding:2px 10px; border-radius:999px; font-weight:800;}
+  .b-p1{background:var(--cn-accent); color:#fff;} .b-p2{background:var(--cn-accent-soft); color:var(--cn-accent-deep);}
+  .b-p3{background:var(--cn-tint); color:var(--cn-ink-soft);} .b-gris{background:var(--cn-paper-2); color:var(--cn-ink-faint);}
+  .table-zone{overflow-x:auto; background:var(--cn-card); border:1px solid var(--cn-line); border-radius:14px; box-shadow:var(--cn-shadow);}
+  table{width:100%; border-collapse:collapse; min-width:860px;}
+  th{text-align:left; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--cn-ink-faint); font-weight:800; padding:10px 12px; border-bottom:1px solid var(--cn-line);}
+  td{padding:11px 12px; border-bottom:1px solid var(--cn-line); vertical-align:top; color:var(--cn-ink-soft);}
+  tr:last-child td{border-bottom:0;}
+  .num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  td.num .meta{white-space:normal; max-width:24ch; text-align:left;}
+  .nom{font-weight:700; color:var(--cn-ink);}
+  .url, .url a{font-family:var(--cn-mono); font-size:12px; word-break:break-all;}
+  a{color:inherit; text-decoration-color:var(--cn-line-strong); text-underline-offset:2px;}
+  a:hover{color:var(--cn-accent-deep);}
+  ul.req, ul.src{margin:0; padding-left:16px; font-size:12.5px;}
+  .n{color:var(--cn-ink-faint); font-variant-numeric:tabular-nums; white-space:nowrap;}
+  details{margin-top:6px; font-size:12.5px;} summary{cursor:pointer; color:var(--cn-ink-faint);}
+  .pill{display:inline-block; font-size:11px; font-weight:700; padding:1px 8px; border-radius:999px; margin-top:4px;}
+  .p-warn{background:var(--cn-warn-soft); color:var(--cn-warn);} .p-info{background:var(--cn-tint); color:var(--cn-ink-soft);} .p-neutre{background:var(--cn-paper-2); color:var(--cn-ink-faint);}
+  .autres{font-size:13px; padding-left:18px; max-width:110ch; color:var(--cn-ink-soft); display:grid; gap:6px;}
 </style>
 <script src="header.js" defer></script>
 </head>
-<body style="margin:0">
-<header class="wrap">
+<body>
+<div class="inner">
+
+<section class="hero">
+
+  <p class="eyebrow">Analyse du 28 octobre 2026</p>
   <h1>Feuille de route des pages à créer</h1>
-  <p class="muted">Site du Cnam Pays de la Loire après la refonte. Requêtes Search Console du 25/06/2025 au 25/10/2026, offre relevée sur la préprod le 28/10/2026.</p>
+  <p class="sub">Site du Cnam Pays de la Loire après la refonte. Requêtes Search Console du 25/06/2025 au 25/10/2026, offre relevée sur la préprod le 28/10/2026.</p>
   <div class="chiffres">
     <div><b>73</b><span>pages à créer</span></div>
     <div><b>13</b><span>en priorité 1</span></div>
     <div><b>80 890</b><span>impressions P1</span></div>
     <div><b>93</b><span>pages à enrichir</span></div>
   </div>
-</header>
-<nav class="ancres" aria-label="Sections"><div class="wrap">
-  <a href="#methode">Méthode</a><a href="#creer">Pages à créer</a><a href="#p-p1">P1</a><a href="#p-p2">P2</a><a href="#p-p3">P3</a><a href="#enrichir">Pages à enrichir</a><a href="#ecarte">Hors sujet</a>
-</div></nav>
-<main class="wrap">
+  <nav class="ancres" aria-label="Sections">
+    <a href="#methode">Méthode</a><a href="#creer">Pages à créer</a><a href="#p-p1">P1</a><a href="#p-p2">P2</a><a href="#p-p3">P3</a><a href="#enrichir">Pages à enrichir</a><a href="#ecarte">Hors sujet</a>
+  </nav>
+</section>
+
+<main>
   <section class="methode" id="methode">
     <h2>Méthode</h2>
     <p>Chaque ancienne page du plan de redirections a été comparée à sa cible. Une requête compte comme perdue quand elle porte une précision que la cible n'a pas : une modalité (à distance, en alternance), une ville, un niveau (licence, master, bac +2, ingénieur).</p>
@@ -550,5 +551,12 @@ details { margin-top: 6px; font-size: 12.5px; } summary { cursor: pointer; color
     <ul class="autres"><li><a href="https://cnam.lpg.rocks/actualites/2026-07-24-lecole-du-solaire-dediee-aux-metiers-du-photovoltaique-a-ouvert-ses-portes/" target="_blank" rel="noopener">/actualites/2026-07-24-lecole-du-solaire-dediee-aux-metiers-du-photovoltaique-a-ouvert-ses-portes/</a> + <b>Vendée</b> <span class="n">5 220 impr. · 0 clics</span> : les requêtes cherchent un installateur de panneaux solaires, pas une formation (panneaux solaires en vendée (85), panneau solaire vendée, photovoltaïque vendée)</li><li><a href="https://cnam.lpg.rocks/actualites/2026-07-24-lecole-du-solaire-dediee-aux-metiers-du-photovoltaique-a-ouvert-ses-portes/" target="_blank" rel="noopener">/actualites/2026-07-24-lecole-du-solaire-dediee-aux-metiers-du-photovoltaique-a-ouvert-ses-portes/</a> + <b>La Roche-sur-Yon</b> <span class="n">1 255 impr. · 0 clics</span> : les requêtes cherchent un installateur de panneaux solaires, pas une formation (photovoltaique la roche sur yon, photovoltaïque la roche sur yon, panneau solaire la roche sur yon)</li><li><a href="https://cnam.lpg.rocks/realiser-alternance/cvec/" target="_blank" rel="noopener">/realiser-alternance/cvec/</a> + <b>Nantes</b> <span class="n">1 116 impr. · 0 clics</span> : les requêtes cherchent la CVEC du Crous, pas le Cnam (cvec nantes, cvec nantes université, cvec crous nantes)</li><li><a href="https://cnam.lpg.rocks/evenements/" target="_blank" rel="noopener">/evenements/</a> + <b>Vendée</b> <span class="n">1 109 impr. · 19 clics</span> : les requêtes cherchent un salon ponctuel (Vendée Métiers 2026) (vendee metier 2026, vendée métiers 2026, forum des métiers vendée 2026)</li><li><a href="https://cnam.lpg.rocks/evenements/" target="_blank" rel="noopener">/evenements/</a> + <b>Angers</b> <span class="n">992 impr. · 11 clics</span> : les requêtes cherchent un salon ponctuel (Vendée Métiers 2026) (iforis angers, cnam iforis angers, cours du soir angers)</li><li><a href="https://cnam.lpg.rocks/realiser-alternance/candidater-alternance/" target="_blank" rel="noopener">/realiser-alternance/candidater-alternance/</a> + <b>master (bac +5)</b> <span class="n">991 impr. · 0 clics</span> : les requêtes cherchent la plateforme nationale Mon Master (mon master connexion, mon master candidatures, cnam candidature master)</li><li><a href="https://cnam.lpg.rocks/evenements/" target="_blank" rel="noopener">/evenements/</a> + <b>La Roche-sur-Yon</b> <span class="n">535 impr. · 69 clics</span> : les requêtes cherchent un salon ponctuel (Vendée Métiers 2026) (forum des métiers la roche-sur-yon 2026, salon orientation, la roche-sur-yon 2026, forum des métiers la roche sur yon)</li><li><a href="https://cnam.lpg.rocks/realiser-alternance/cvec/" target="_blank" rel="noopener">/realiser-alternance/cvec/</a> + <b>Angers</b> <span class="n">318 impr. · 1 clics</span> : les requêtes cherchent la CVEC du Crous, pas le Cnam (cvec angers)</li><li><a href="https://cnam.lpg.rocks/evenements/" target="_blank" rel="noopener">/evenements/</a> + <b>Nantes</b> <span class="n">317 impr. · 1 clics</span> : les requêtes cherchent un salon ponctuel (Vendée Métiers 2026) (master cca nantes, alexis bellas nantes, conférence développement personnel nantes)</li></ul>
   </section>
 </main>
+
+<footer>
+  <span>Espace de collaboration refonte · Cnam Pays de la Loire &times; KHOSI</span>
+  <span>Mis à jour le 29/10/2026</span>
+</footer>
+
+</div>
 </body>
 </html>

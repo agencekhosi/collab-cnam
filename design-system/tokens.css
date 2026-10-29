@@ -1,0 +1,15 @@
+/* Charte du Cnam Pays de la Loire : couleurs, police, ombres. Toutes les pages du site l'importent. */
+:root{
+  --cn-paper:#fcfdfd; --cn-paper-2:#f4f7f9; --cn-card:#fff;
+  --cn-ink:#18232a; --cn-ink-soft:#375363; --cn-ink-faint:#6f8695;
+  --cn-line:#deeaef; --cn-line-strong:#97bcc9; --cn-tint:#deeaef;
+  --cn-accent:#c5243e; --cn-accent-deep:#981935; --cn-accent-soft:#fee5e6; --cn-coral:#f47883;
+  --cn-band:#18232a; --cn-band-2:#28353e; --cn-on-band:#eaf2f5; --cn-on-band-faint:#9db6c1;
+  --cn-good:#147a55; --cn-good-soft:#e3f0ea;
+  --cn-warn:#8a5a00; --cn-warn-soft:#fbefd6;
+  --cn-bad:#b3261e; --cn-bad-soft:#fdecea;
+  --cn-shadow:0 1px 2px rgba(24,35,42,.06), 0 10px 26px -14px rgba(24,35,42,.20);
+  --cn-shadow-lg:0 1px 2px rgba(24,35,42,.06), 0 12px 30px -16px rgba(24,35,42,.22);
+  --cn-sans:'Raleway', ui-sans-serif, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --cn-mono:ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
