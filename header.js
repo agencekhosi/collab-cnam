@@ -5,14 +5,12 @@
   var NAV = [
     {href:"index.html",              label:"Accueil"},
     {href:"pages-a-creer.html",      label:"Pages à créer"},
-    {label:"Refonte", items:[
-      {href:"refonte/etat-des-lieux-seo.html", label:"État des lieux SEO"},
-      {href:"refonte/deroule-atelier.html",    label:"Déroulé de l'atelier"}
-    ]},
-    {label:"Administration", items:[
-      {href:"administration/points-en-suspens.html", label:"Points en suspens"},
-      {href:"administration/mise-en-page.html",      label:"Mettre en page une page"},
-      {href:"administration/archive-intra.html",     label:"Sauvegarde des fiches intra"}
+    {label:"Site web", items:[
+      {href:"site-web/points-en-suspens.html",         label:"Points en suspens"},
+      {href:"site-web/mise-en-page.html",              label:"Mettre en page une page"},
+      {href:"site-web/archive-intra.html",             label:"Sauvegarde des fiches intra"},
+      {href:"site-web/refonte/etat-des-lieux-seo.html", label:"Refonte : état des lieux SEO"},
+      {href:"site-web/refonte/deroule-atelier.html",   label:"Refonte : déroulé de l'atelier"}
     ]},
     {label:"Ressources", items:[
       {href:"checklist.html",        label:"Checklist de création de contenu"},
